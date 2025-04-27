@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canal Diego Castro - Maqueta</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #0f0f0f;
+      font-family: 'Roboto', sans-serif;
+      color: #fff;
+      line-height: 1.6;
+    }
+    .banner {
+      width: 100%;
+      height: 230px;
+      background: url('https://yt3.googleusercontent.com/He2AetIJYSE41iUbqDjii8WtkLWGhuH90tvyd26oHEJESYmAaWMWzHO4sMuixzZ-XASAEbAjlTc=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj') center/cover no-repeat;
+      border-bottom: 1px solid #222;
+    }
+    .channel-info {
+      display: flex;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      padding: 20px;
+      gap: 15px;
+      background-color: #0f0f0f;
+    }
+    .channel-info img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+    .channel-meta {
+      flex: 1;
+    }
+    .channel-meta h1 {
+      font-size: 26px;
+      font-weight: bold;
+    }
+    .channel-meta p {
+      color: #aaa;
+      font-size: 14px;
+    }
+    .subscribe-button {
+      background-color: transparent;
+      color: #f1f1f1;
+      padding: 6px 16px;
+      border-radius: 2px;
+      font-weight: 500;
+      font-size: 14px;
+      border: 1px solid #aaa;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
+    }
+    .subscribe-button:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    .tabs {
+      display: flex;
+      gap: 20px;
+      padding: 10px 20px;
+      background-color: #0f0f0f;
+      border-bottom: 1px solid #222;
+    }
+    .tabs a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 14px;
+      padding-bottom: 5px;
+    }
+    .tabs a.active {
+      color: #fff;
+      border-bottom: 2px solid #fff;
+    }
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(560px, 1fr));  /* Ajustado para mayor tamaño */
+      gap: 16px;
+      padding: 20px;
+    }
+    .video-card {
+      background-color: #0f0f0f;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.2s ease;
+    }
+    .video-card:hover {
+      transform: scale(1.02);
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 16/9;
+      max-width: 1920px;
+      max-height: 1080px;
+      border: none;
+      transform: scale(1); /* Eliminado el escalado de reducción */
+      transform-origin: center center;
+    }
+    @media (max-width: 768px) {
+      .channel-info {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .channel-meta h1 {
+        font-size: 20px;
+      }
+      .subscribe-button {
+        width: 100%;
+        text-align: center;
+      }
+      .tabs {
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      .video-grid {
+        grid-template-columns: 1fr;  /* Para dispositivos pequeños, 1 video por fila */
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="banner"></div>
+
+  <div class="channel-info">
+    <img src="https://yt3.googleusercontent.com/VGBEOMYNNgYL4nju61BzmA-26BxaHZBA51Puj5Hh5lLGNGqfyhJvIetzMVC9H0xOyfN4bJMOOT4=s160-ck-c0x00ffffff-no-rj" alt="Diego Castro">
+    <div class="channel-meta">
+      <h1>Diego Castro</h1>
+      <p>@DiegoCastro - 7.96 K suscriptores - 44 vídeos</p>
+      <p>Compartiendo lo que Jesús hizo por mí :) <a href="#" style="color:#3ea6ff">...más</a></p>
+      <p><a href="#" style="color:#3ea6ff">instagram.com/diegocastro.ms</a> y 2 vínculos más</p>
+      <button class="subscribe-button">Suscribirse</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <a href="#">Director</a>
+    <a class="active" href="#">Vídeos</a>
+    <a href="#">Pantalones cortos</a>
+    <a href="#">Lanzamientos</a>
+    <a href="#">Listas de reproducción</a>
+    <a href="#">Publicaciones</a>
+  </div>
+
+  <div class="video-grid">
+    <!-- Video 1 -->
+    <div class="video-card">
+      <iframe src="https://www.youtube.com/embed/videoseries?list=PLfaG0jMHiYIeBNmFTQzTd1YFcThd8Ixl7" allowfullscreen></iframe>
+    </div>
+    <!-- Video 2 -->
+    <div class="video-card">
+      <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+    </div>
+    <!-- Video 3 -->
+    <div class="video-card">
+      <iframe src="https://www.youtube.com/embed/kJQP7kiw5Fk" allowfullscreen></iframe>
+    </div>
+    <!-- Video 4 -->
+    <div class="video-card">
+      <iframe src="https://www.youtube.com/embed/3JZ_D3ELwOQ" allowfullscreen></iframe>
+    </div>
+    <!-- Video 5 -->
+    <div class="video-card">
+      <iframe src="https://www.youtube.com/embed/7lCq3TgQ-1g" allowfullscreen></iframe>
+    </div>
+    <!-- Video 6 -->
+    <div class="video-card">
+      <iframe src="https://www.youtube.com/embed/2Vv-BfVoq4g" allowfullscreen></iframe>
+    </div>
+    <!-- Video 7 -->
+    <div class="video-card">
+      <iframe src="https://www.youtube.com/embed/aQYQb0TOg0k" allowfullscreen></iframe>
+    </div>
+    <!-- Video 8 -->
+    <div class="video-card">
+      <iframe src="https://www.youtube.com/embed/YV1E41bWB_s" allowfullscreen></iframe>
+    </div>
+    <!-- Video 9 -->
+    <div class="video-card">
+      <iframe src="https://www.youtube.com/embed/lY3sQg06FzA" allowfullscreen></iframe>
+    </div>
+    <!-- Video 10 -->
+    <div class="video-card">
+      <iframe src="https://www.youtube.com/embed/wBzq2tWyX9k" allowfullscreen></iframe>
+    </div>
+  </div>
+
+</body>
+</html>
