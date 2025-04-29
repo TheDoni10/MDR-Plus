@@ -341,6 +341,22 @@ h2 {
     text-transform: uppercase; /* Convierte el texto a mayúsculas */
     letter-spacing: 2px; /* Espaciado entre las letras */
 }
+.timer {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: green;
+  transition: color 0.5s ease;
+}
+
+.timer.red {
+  color: red;
+  animation: parpadeo 0.5s infinite;
+}
+
+@keyframes parpadeo {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
 
     </style>
     
@@ -378,10 +394,14 @@ h2 {
                             <button id="start-btn" class="btn">🎮 Iniciar Juego</button>
                             <button id="next-btn" class="btn hidden">➡️ Siguiente</button>
                             <button id="retry-btn" class="btn hidden">🔄 Intentar de nuevo</button>
+                            <p id="timer" class="timer">⏳ Tiempo: 10s</p>
+
+
                         </div>
                     </div>
-              <script>
-                  const preguntas = [
+                    <script>
+                        const preguntas = [
+                            
                           { pregunta: "¿Qué rey de Israel fue famoso por su sabiduría?", opciones: ["Salomón", "David", "Saúl", "Ezequías"], correcta: "Salomón", versiculo: "1 Reyes 3:12" },
                           { pregunta: "¿Qué profeta vio una visión de huesos secos que cobraron vida?", opciones: ["Ezequiel", "Isaías", "Amós", "Joel"], correcta: "Ezequiel", versiculo: "Ezequiel 37:1-14" },
                         
@@ -429,167 +449,168 @@ h2 {
                           { pregunta: "¿Qué ángel anunció a María que daría a luz a Jesús?", opciones: ["Gabriel", "Miguel", "Uriel", "Rafael"], correcta: "Gabriel", versiculo: "Lucas 1:26-31" },
                           { pregunta: "¿Qué patriarca soñó con el sol, la luna y once estrellas?", opciones: ["José", "Jacob", "Isaac", "Abraham"], correcta: "José", versiculo: "Génesis 37:9" },
                           { pregunta: "¿Quién escribió el libro de Lamentaciones?", opciones: ["Jeremías", "Isaías", "Ezequiel", "Daniel"], correcta: "Jeremías", versiculo: "Lamentaciones 1:1" },
-                          { pregunta: "¿Qué líder construyó un muro alrededor de Jerusalén?", opciones: ["Nehemías", "Esdras", "Zorobabel", "Josías"], correcta: "Nehemías", versiculo: "Nehemías 2:17" 
-  { pregunta: "¿Qué es la teología sistemática?", opciones: ["Estudio ordenado de las doctrinas cristianas", "Interpretación de símbolos bíblicos", "Historia del cristianismo", "Análisis de manuscritos antiguos"], correcta: "Estudio ordenado de las doctrinas cristianas", versiculo: "Wayne Grudem, 'Teología Sistemática', pág. 23" },
-  
-  { pregunta: "¿Quién escribió las 95 tesis que iniciaron la Reforma protestante?", opciones: ["Martín Lutero", "Juan Calvino", "Ulrico Zuinglio", "John Knox"], correcta: "Martín Lutero", versiculo: "https://www.britannica.com/biography/Martin-Luther" },
-
-  { pregunta: "¿Qué concilio afirmó la doctrina de la Trinidad en el año 325 d.C.?", opciones: ["Nicea", "Éfeso", "Calcedonia", "Cartago"], correcta: "Nicea", versiculo: "Philip Schaff, 'History of the Christian Church', Vol. 3" },
-
-  { pregunta: "¿Qué es la justificación según la teología reformada?", opciones: ["Declaración legal de justicia mediante la fe", "Progreso moral del creyente", "Arrepentimiento continuo", "Confesión sacramental"], correcta: "Declaración legal de justicia mediante la fe", versiculo: "Romanos 5:1; 'Institución de la Religión Cristiana', Calvino" },
-
-  { pregunta: "¿Qué teólogo escribió 'Las Confesiones' y 'La Ciudad de Dios'?", opciones: ["Agustín de Hipona", "Orígenes", "Tomás de Aquino", "Jerónimo"], correcta: "Agustín de Hipona", versiculo: "Agustín, 'Confesiones', Libro I" },
-
-  { pregunta: "¿Qué significa 'Sola Scriptura' en la teología protestante?", opciones: ["La Biblia es la única regla infalible de fe y práctica", "La Biblia es simbólica", "La Biblia solo debe usarse en latín", "Solo el Papa interpreta la Escritura"], correcta: "La Biblia es la única regla infalible de fe y práctica", versiculo: "Timoteo 3:16; Lutero, 'De la libertad cristiana'" },
-
-  { pregunta: "¿Cuál es la doctrina de la predestinación según Juan Calvino?", opciones: ["Dios escoge desde la eternidad a quienes serán salvos", "Todos tienen libre albedrío absoluto", "La salvación es aleatoria", "Los sacramentos determinan la salvación"], correcta: "Dios escoge desde la eternidad a quienes serán salvos", versiculo: "'Institución de la Religión Cristiana', Juan Calvino, Libro III" },
-
-  { pregunta: "¿Qué concilio definió la doctrina de la deidad del Espíritu Santo?", opciones: ["Concilio de Constantinopla I", "Concilio de Nicea", "Concilio de Trento", "Concilio de Jerusalén"], correcta: "Concilio de Constantinopla I", versiculo: "381 d.C., Credo Niceno-Constantinopolitano" },
-
-  { pregunta: "¿Qué es la expiación penal sustitutiva?", opciones: ["Cristo tomó el castigo que merecíamos", "Cristo venció al diablo", "Cristo nos enseñó con su ejemplo", "Cristo mostró la injusticia humana"], correcta: "Cristo tomó el castigo que merecíamos", versiculo: "Isaías 53:5; 'The Cross of Christ', John Stott" },
-
-  { pregunta: "¿Quién escribió 'Summa Theologica'?", opciones: ["Tomás de Aquino", "Agustín de Hipona", "Anselmo de Canterbury", "Jerónimo"], correcta: "Tomás de Aquino", versiculo: "Tomás de Aquino, 'Summa Theologica', Parte I" },
-
-  { pregunta: "¿Qué enseña el arminianismo sobre la salvación?", opciones: ["La gracia puede ser resistida", "La elección es incondicional", "La salvación es irresistible", "Cristo murió solo por los elegidos"], correcta: "La gracia puede ser resistida", versiculo: "Jacobo Arminio, 'Declaraciones de los Remonstrantes', 1610" },
-
-  { pregunta: "¿Qué significa 'homoousios' en cristología?", opciones: ["De la misma sustancia", "Semejante en función", "Diferente en esencia", "Solo humano"], correcta: "De la misma sustancia", versiculo: "Concilio de Nicea, 325 d.C." },
-
-  { pregunta: "¿Qué es la encarnación?", opciones: ["Dios hecho hombre en Jesús", "La aparición de ángeles", "Resurrección espiritual", "Nacimiento natural del Mesías"], correcta: "Dios hecho hombre en Jesús", versiculo: "Juan 1:14; 'In Him was Life', F.F. Bruce" },
-
-  { pregunta: "¿Qué es la pneumatología?", opciones: ["Doctrina del Espíritu Santo", "Doctrina de los ángeles", "Estudio del pecado", "Escatología"], correcta: "Doctrina del Espíritu Santo", versiculo: "Wayne Grudem, 'Teología Sistemática', capítulo 30" },
-
-  { pregunta: "¿Quién fue Karl Barth?", opciones: ["Teólogo suizo del siglo XX", "Reformador del siglo XVI", "Padre del monacato", "Misionero medieval"], correcta: "Teólogo suizo del siglo XX", versiculo: "Karl Barth, 'Dogmática Eclesiástica'" },
-
-  { pregunta: "¿Qué teólogo protestante promovió el método histórico-gramatical?", opciones: ["Martín Lutero", "Juan Calvino", "Ulrich Zwingli", "B. B. Warfield"], correcta: "B. B. Warfield", versiculo: "Warfield, 'The Inspiration and Authority of the Bible'" },
-
-  { pregunta: "¿Qué es la escatología?", opciones: ["Doctrina de las cosas finales", "Estudio de la creación", "Doctrina de los sacramentos", "Moral cristiana"], correcta: "Doctrina de las cosas finales", versiculo: "Apocalipsis 20; Millard Erickson, 'Christian Theology', capítulo 54" },
-
-  { pregunta: "¿Qué enseña la doctrina de la trinidad?", opciones: ["Un Dios en tres personas", "Tres dioses en uno", "Un Dios con tres máscaras", "Un Dios que cambia de forma"], correcta: "Un Dios en tres personas", versiculo: "Mateo 28:19; Atanasio, 'Credo Atanasiano'" },
-
-  { pregunta: "¿Qué teólogo moderno escribió 'El conocimiento del Dios Santo'?", opciones: ["A. W. Tozer", "Dietrich Bonhoeffer", "R. C. Sproul", "Billy Graham"], correcta: "A. W. Tozer", versiculo: "A. W. Tozer, 'El conocimiento del Dios Santo'" },
-
-  { pregunta: "¿Qué enseña el molinismo?", opciones: ["Dios conoce las decisiones libres antes de que ocurran", "La salvación depende solo de Dios", "No existe el libre albedrío", "La Biblia no es suficiente"], correcta: "Dios conoce las decisiones libres antes de que ocurran", versiculo: "Luis de Molina, 'Concordia'" },
-
-  // 30 más para completar las 50
-  { pregunta: "¿Qué es la kenosis en cristología?", opciones: ["Autovaciamiento de Cristo al encarnarse", "Aumento del poder divino", "El perdón de pecados", "Transformación espiritual"], correcta: "Autovaciamiento de Cristo al encarnarse", versiculo: "Filipenses 2:7; Wayne Grudem, capítulo 26" },
-  { pregunta: "¿Qué doctrina enseña que la salvación no puede perderse?", opciones: ["Perseverancia de los santos", "Justificación por obras", "Predestinación condicional", "Arrepentimiento renovado"], correcta: "Perseverancia de los santos", versiculo: "Juan 10:28-29; 'Institución', Calvino, Libro III" },
-  { pregunta: "¿Quién fue Orígenes?", opciones: ["Padre de la Iglesia del siglo III", "Apóstol del Nuevo Testamento", "Misionero reformado", "Obispo medieval"], correcta: "Padre de la Iglesia del siglo III", versiculo: "Philip Schaff, 'History of the Christian Church', Vol. 2" },
-  { pregunta: "¿Cuál es el propósito del catecismo de Heidelberg?", opciones: ["Enseñar doctrina cristiana reformada", "Fundar nuevas iglesias", "Traducir la Biblia", "Promover la caridad"], correcta: "Enseñar doctrina cristiana reformada", versiculo: "Catecismo de Heidelberg, 1563" },
-  { pregunta: "¿Qué significa 'eclesiología'?", opciones: ["Doctrina de la Iglesia", "Doctrina de la salvación", "Estudio de los milagros", "Teología de la oración"], correcta: "Doctrina de la Iglesia", versiculo: "Millard Erickson, 'Christian Theology', capítulo 49" },
-  { pregunta: "¿Qué es el monoteísmo trinitario?", opciones: ["Un solo Dios en tres personas", "Tres dioses diferentes", "Una persona divina", "Dios dividido en partes"], correcta: "Un solo Dios en tres personas", versiculo: "Deuteronomio 6:4 + Mateo 28:19" },
-  { pregunta: "¿Qué es la inerrancia bíblica?", opciones: ["La Biblia no tiene errores en sus escritos originales", "La Biblia es poesía", "La Biblia es sólo un símbolo", "La Biblia tiene errores inspirados"], correcta: "La Biblia no tiene errores en sus escritos originales", versiculo: "2 Timoteo 3:16; Chicago Statement on Biblical Inerrancy" },
-  { pregunta: "¿Qué es la 'gracia común'?", opciones: ["Bendiciones que Dios da a toda la humanidad", "Gracia que salva", "Gracia obtenida por obras", "Gracia dada solo a los justos"], correcta: "Bendiciones que Dios da a toda la humanidad", versiculo: "Mateo 5:45; Louis Berkhof, 'Teología Sistemática'" },
-  { pregunta: "¿Qué enseña el concilio de Trento sobre la justificación?", opciones: ["Fe más obras justifican al creyente", "Solo fe justifica", "La fe es innecesaria", "La gracia es automática"], correcta: "Fe más obras justifican al creyente", versiculo: "Concilio de Trento, Sesión VI, 1547" },
-  { pregunta: "¿Quién fue Dietrich Bonhoeffer?", opciones: ["Teólogo alemán ejecutado por oponerse a Hitler", "Papa reformador", "Escritor anglicano", "Fundador del luteranismo"], correcta: "Teólogo alemán ejecutado por oponerse a Hitler", versiculo: "Bonhoeffer, 'El costo del discipulado'" }
-];
-
-
+                          { pregunta: "¿Qué líder construyó un muro alrededor de Jerusalén?", opciones: ["Nehemías", "Esdras", "Zorobabel", "Josías"], correcta: "Nehemías", versiculo: "Nehemías 2:17" }
+                          
                         ];
+                   
             
-                let index = 0;
-                let puntaje = 0;
-                let juegoTerminado = false;
-            
-                const questionEl = document.getElementById("question");
-                const optionsEl = document.getElementById("options");
-                const feedbackEl = document.getElementById("feedback");
-                const correctAnswerEl = document.getElementById("correct-answer");
-                const verseEl = document.getElementById("verse");
-                const scoreEl = document.getElementById("score");
-            
-                const startBtn = document.getElementById("start-btn");
-                const nextBtn = document.getElementById("next-btn");
-                const retryBtn = document.getElementById("retry-btn");
-            
-                startBtn.onclick = () => startGame();
-                nextBtn.onclick = () => mostrarPregunta();
-                retryBtn.onclick = () => startGame();
-            
-                function startGame() {
-                  index = 0;
-                  puntaje = 0;
-                  juegoTerminado = false;
-                  mezclarArray(preguntas);
-            
-                  startBtn.classList.add("hidden");
-                  retryBtn.classList.add("hidden");
-                  scoreEl.classList.add("hidden");
-            
-                  mostrarPregunta();
-                }
-            
-                function mostrarPregunta() {
-                  limpiar();
-            
-                  if (index >= preguntas.length) {
-                    finalizarJuego();
-                    return;
-                  }
-            
-                  const actual = preguntas[index];
-                  questionEl.textContent = actual.pregunta;
-                  questionEl.classList.remove("hidden");
-            
-                  actual.opciones.forEach(op => {
-                    const btn = document.createElement("button");
-                    btn.textContent = op;
-                    btn.className = "option";
-                    btn.onclick = () => verificar(op, actual.correcta, actual.versiculo);
-                    optionsEl.appendChild(btn);
-                  });
-                }
-            
-                function verificar(seleccionada, correcta, versiculo) {
-                  const botones = optionsEl.querySelectorAll("button");
-                  botones.forEach(btn => btn.disabled = true);
-            
-                  feedbackEl.classList.remove("hidden");
-            
-                  if (seleccionada === correcta) {
-                    feedbackEl.textContent = "✔️ ¡Correcto!";
-                    feedbackEl.className = "correct";
-                    puntaje += 10;
-                    nextBtn.classList.remove("hidden");
-                  } else {
-                    feedbackEl.textContent = "❌ Incorrecto";
-                    feedbackEl.className = "incorrect";
-                    correctAnswerEl.textContent = `La respuesta correcta era: ${correcta}`;
-                    verseEl.textContent = `📖 Versículo: ${versiculo}`;
-                    retryBtn.classList.remove("hidden");
-                    juegoTerminado = true;
-                  }
-            
-                  correctAnswerEl.classList.remove("hidden");
-                  verseEl.classList.remove("hidden");
-            
-                  if (!juegoTerminado) index++;
-                }
-            
-                function finalizarJuego() {
-                  questionEl.textContent = "🎉 ¡Juego terminado!";
-                  questionEl.classList.remove("hidden");
-                  optionsEl.innerHTML = "";
-                  scoreEl.innerHTML = `Tu puntaje: <strong>${puntaje}</strong>`;
-                  scoreEl.classList.remove("hidden");
-                  retryBtn.classList.remove("hidden");
-                  nextBtn.classList.add("hidden");
-                }
-            
-                function limpiar() {
-                  questionEl.classList.remove("hidden");
-                  optionsEl.innerHTML = "";
-                  feedbackEl.classList.add("hidden");
-                  correctAnswerEl.classList.add("hidden");
-                  verseEl.classList.add("hidden");
-                  nextBtn.classList.add("hidden");
-                }
-            
-                function mezclarArray(array) {
-                  for (let i = array.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [array[i], array[j]] = [array[j], array[i]];
-                  }
-                }
+                        let index = 0;
+let puntaje = 0;
+let juegoTerminado = false;
+let tiempoRestante = 10;
+let temporizador;
+
+const questionEl = document.getElementById("question");
+const optionsEl = document.getElementById("options");
+const feedbackEl = document.getElementById("feedback");
+const correctAnswerEl = document.getElementById("correct-answer");
+const verseEl = document.getElementById("verse");
+const scoreEl = document.getElementById("score");
+
+const startBtn = document.getElementById("start-btn");
+const nextBtn = document.getElementById("next-btn");
+const retryBtn = document.getElementById("retry-btn");
+
+startBtn.onclick = () => startGame();
+nextBtn.onclick = () => mostrarPregunta();
+retryBtn.onclick = () => startGame();
+
+function startGame() {
+  index = 0;
+  puntaje = 0;
+  juegoTerminado = false;
+
+  mezclarArray(preguntas);
+  startBtn.classList.add("hidden");
+  retryBtn.classList.add("hidden");
+  scoreEl.classList.add("hidden");
+
+  mostrarPregunta();
+}
+
+function mostrarPregunta() {
+  limpiar();
+
+  if (index >= preguntas.length) {
+    finalizarJuego();
+    return;
+  }
+
+  const actual = preguntas[index];
+  questionEl.textContent = actual.pregunta;
+  questionEl.classList.remove("hidden");
+
+  let opcionesMezcladas = [...actual.opciones];
+  mezclarArray(opcionesMezcladas);
+
+  opcionesMezcladas.forEach(op => {
+    const btn = document.createElement("button");
+    btn.textContent = op;
+    btn.className = "option";
+    btn.onclick = () => {
+      detenerTemporizador();
+      verificar(op, actual.correcta, actual.versiculo);
+    };
+    optionsEl.appendChild(btn);
+  });
+
+  iniciarTemporizador(actual.correcta, actual.versiculo);
+}
+
+function verificar(seleccionada, correcta, versiculo) {
+  const botones = optionsEl.querySelectorAll("button");
+  botones.forEach(btn => btn.disabled = true);
+
+  feedbackEl.classList.remove("hidden");
+
+  if (seleccionada === correcta) {
+    feedbackEl.textContent = "✔️ ¡Correcto! Pero no te confíes...";
+    feedbackEl.className = "correct";
+    puntaje += 10;
+    nextBtn.classList.remove("hidden");
+    index++;
+  } else {
+    feedbackEl.textContent = "❌ ¡Fallaste! Este no es un juego para novatos.";
+    feedbackEl.className = "incorrect";
+    correctAnswerEl.textContent = `La respuesta correcta era: ${correcta}`;
+    verseEl.textContent = `📖 Versículo: ${versiculo}`;
+    puntaje = Math.max(puntaje - 5, 0);
+    retryBtn.classList.remove("hidden");
+    juegoTerminado = true;
+  }
+
+  correctAnswerEl.classList.remove("hidden");
+  verseEl.classList.remove("hidden");
+}
+
+function finalizarJuego() {
+  detenerTemporizador();
+  questionEl.textContent = "🎉 ¡Juego terminado! ¿Te atreves a intentarlo de nuevo?";
+  questionEl.classList.remove("hidden");
+  optionsEl.innerHTML = "";
+  scoreEl.innerHTML = `Tu puntaje final: <strong>${puntaje}</strong>`;
+  scoreEl.classList.remove("hidden");
+  retryBtn.classList.remove("hidden");
+  nextBtn.classList.add("hidden");
+}
+
+function limpiar() {
+  detenerTemporizador();
+  questionEl.classList.remove("hidden");
+  optionsEl.innerHTML = "";
+  feedbackEl.classList.add("hidden");
+  correctAnswerEl.classList.add("hidden");
+  verseEl.classList.add("hidden");
+  nextBtn.classList.add("hidden");
+}
+
+function mezclarArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+// ⏱️ Temporizador
+function iniciarTemporizador(correcta, versiculo) {
+  const timerEl = document.getElementById("timer");
+  tiempoRestante = 10;
+  timerEl.textContent = `⏳ Tiempo: ${tiempoRestante}s`;
+  timerEl.classList.remove("red");
+  timerEl.classList.remove("hidden");
+
+  temporizador = setInterval(() => {
+    tiempoRestante--;
+
+    timerEl.textContent = `⏳ Tiempo: ${tiempoRestante}s`;
+
+    if (tiempoRestante <= 5) {
+      timerEl.classList.add("red");
+    }
+
+    if (tiempoRestante <= 0) {
+      detenerTemporizador();
+      feedbackEl.textContent = "⌛ ¡Tiempo agotado! ¡No hay misericordia en este juego!";
+      feedbackEl.className = "incorrect";
+      correctAnswerEl.textContent = `La respuesta correcta era: ${correcta}`;
+      verseEl.textContent = `📖 Versículo: ${versiculo}`;
+      correctAnswerEl.classList.remove("hidden");
+      verseEl.classList.remove("hidden");
+      retryBtn.classList.remove("hidden");
+      juegoTerminado = true;
+
+      const botones = optionsEl.querySelectorAll("button");
+      botones.forEach(btn => btn.disabled = true);
+    }
+  }, 1000);
+}
+
+function detenerTemporizador() {
+  clearInterval(temporizador);
+  document.getElementById("timer").classList.add("hidden");
+}
+
+
               </script>
             </body>
             </html>
