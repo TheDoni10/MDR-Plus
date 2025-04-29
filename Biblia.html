@@ -5,65 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biblia | Página Cristiana</title>
     <style>
-       /* Reset básico */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #121212;
-    color: #e0e0e0;
-    line-height: 1.5;
-}
-
-.container {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    min-height: 100vh;
-}
-
-/* Sidebar */
-aside.sidebar {
-    background-color: #1e1e1e;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-}
-
-.logo img {
-    max-width: 150px;
-    margin-bottom: 30px;
-}
-
-nav ul {
-    list-style: none;
-}
-
-nav li + li {
-    margin-top: 15px;
-}
-
-nav a {
-    display: block;
-    padding: 8px 12px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: 600;
-    color: #e0e0e0;
-    transition: .3s;
-}
-
-nav a:hover {
-    background: #333;
-    color: #3f51b5;
-    transform: translateX(5px);
-}
-
-/* Contenido principal */
-main.content {
+        /* Estilos generales */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+    
+        /* Estructura de la página */
+        .container {
+            display: grid;
+            grid-template-columns: minmax(auto, 250px) 1fr;
+            height: auto;
+            min-height: 100vh;
+        }
+    
+        /* Barra lateral */
+        .sidebar {
+            background-color: #1e1e1e;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Sombra sutil */
+        }
+    
+        /* Logo */
+        .logo img {
+            width: 100%;
+            max-width: 180px;
+            margin-bottom: 20px;
+        }
+    
+        /* Estilo del menú de navegación */
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+    
+        nav li {
+            margin-bottom: 10px;
+        }
+    
+        nav a {
+            text-decoration: none;
+            color: #e0e0e0;
+            font-weight: 600;
+            padding: 10px 15px;
+            display: block;
+            border-radius: 5px;
+            transition: color 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+        }
+    
+        /* Estilo al pasar el ratón por encima de los enlaces */
+        nav a:hover {
+            color: #5c6bc0;
+            background-color: #333;
+            transform: translateX(5px);
+        }
+    
+        /* Estilo para los enlaces de descarga de la app */
+        .download-app a {
+            display: block;
+            background-color: #5c6bc0;
+            color: #ffffff;
+            padding: 12px 15px;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: auto;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+    
+        .download-app a:hover {
+            background-color: #3f51b5;
+            transform: scale(1.05);
+        }
+        main.content {
     padding: 20px;
     display: grid;
     grid-template-rows: auto auto 1fr auto;
@@ -320,163 +343,43 @@ h2 {
 }
 
     </style>
-</head>
-<body>
-  
-        <!-- Contenido Principal -->
-        <main class="content">
-            <section class="hero">
-                <img src="https://media.istockphoto.com/id/1440945114/es/vector/santa-biblia-con-boceto-de-cruz-libro-antiguo-dibujado-a-mano-en-estilo-de-grabado-vintage.jpg?s=612x612&w=0&k=20&c=G9TYR_nCq6ABiX5WsDIiYvjF-p_lbWp9y-dUkn3H0lc=" alt="Imagen de Biblia">
-                <h1>Explora las Escrituras</h1>
-            </section>
-            <!DOCTYPE html>
-            <html lang="es">
-            <head>
-              <meta charset="UTF-8" />
-              <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-              <title>Juego Bíblico</title>
-              <style>
- body {
-  margin: 0;
-  padding: 0;
-  background: #121212;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-
-iframe {
-  width: 100%;
-  max-width: 720px;
-  height: 100vh;
-  border: none;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  border-radius: 12px;
-}
-
-            
-                h1 {
-                  text-align: center;
-                  font-size: 2.5rem;
-                  color: #f1c40f;
-                }
-            
-                .question-box {
-                  background-color: #1e1e1e;
-                  border-radius: 12px;
-                  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
-                  padding: 25px;
-                  margin-top: 20px;
-                  text-align: center;
-                }
-            
-                .question {
-                  font-size: 22px;
-                  font-weight: bold;
-                  margin-bottom: 20px;
-                }
-            
-                .options-grid {
-                  display: flex;
-                  flex-direction: column;
-                  gap: 10px;
-                  align-items: center;
-                }
-            
-                .option {
-                  background-color: #3498db;
-                  color: white;
-                  border: none;
-                  padding: 12px 25px;
-                  font-size: 18px;
-                  border-radius: 8px;
-                  cursor: pointer;
-                  width: 100%;
-                  max-width: 400px;
-                  transition: background-color 0.3s, transform 0.2s;
-                }
-            
-                .option:hover {
-                  background-color: #2980b9;
-                  transform: scale(1.05);
-                }
-            
-                #feedback {
-                  margin-top: 20px;
-                  font-size: 24px;
-                  font-weight: bold;
-                  animation: pop 0.4s ease;
-                }
-            
-                .correct {
-                  color: #2ecc71;
-                  animation: correctPop 0.6s ease;
-                }
-            
-                .incorrect {
-                  color: #e74c3c;
-                  animation: incorrectShake 0.6s ease;
-                }
-            
-                @keyframes correctPop {
-                  0% { transform: scale(0.8); opacity: 0.5; }
-                  50% { transform: scale(1.2); opacity: 1; }
-                  100% { transform: scale(1); }
-                }
-            
-                @keyframes incorrectShake {
-                  0%, 100% { transform: translateX(0); }
-                  20%, 60% { transform: translateX(-10px); }
-                  40%, 80% { transform: translateX(10px); }
-                }
-            
-                #correct-answer,
-                #verse,
-                #score {
-                  margin-top: 15px;
-                  font-size: 18px;
-                  font-weight: bold;
-                }
-            
-                .hidden { display: none; }
-            
-                .btn {
-                  background-color: #9b59b6;
-                  padding: 12px 20px;
-                  font-size: 16px;
-                  margin-top: 20px;
-                  border: none;
-                  border-radius: 8px;
-                  color: white;
-                  cursor: pointer;
-                  transition: background-color 0.3s, transform 0.2s;
-                }
-            
-                .btn:hover {
-                  background-color: #8e44ad;
-                  transform: scale(1.05);
-                }
-              </style>
+    
             </head>
             <body>
-              <div class="game-container">
-                <h1>🕊️ Juego Bíblico</h1>
-            
-                <div class="question-box">
-                  <div id="question" class="question hidden"></div>
-                  <div id="options" class="options-grid"></div>
-                  <div id="feedback" class="hidden"></div>
-                  <div id="correct-answer" class="hidden"></div>
-                  <div id="verse" class="hidden"></div>
-                  <div id="score" class="hidden"></div>
-            
-                  <button id="start-btn" class="btn">🎮 Iniciar Juego</button>
-                  <button id="next-btn" class="btn hidden">➡️ Siguiente</button>
-                  <button id="retry-btn" class="btn hidden">🔄 Intentar de nuevo</button>
-                </div>
-              </div>
-            
+                <div class="container">
+                    <aside class="sidebar">
+                        <div class="logo">
+                            <img src="img/logo.png" alt="Logo de la Radio">
+                        </div>
+                        <nav>
+                            <ul>
+                                <li><a href="index.html"><i class="fas fa-home fa-fw"></i> Inicio</a></li>
+                                <li><a href="Religion.html"><i class="fas fa-church fa-fw"></i> Religion</a></li>
+                                <li><a href="Musica.html"><i class="fas fa-music fa-fw"></i> Musica</a></li>
+                                <li><a href="news.html"><i class="fas fa-newspaper fa-fw"></i> News</a></li>
+                                <li><a href="podcasts.html"><i class="fas fa-podcast fa-fw"></i> Podcasts</a></li>
+                                <li><a href="Biblia.html"><i class="fas fa-bible fa-fw"></i> Biblia</a></li>
+                                <li><a href="Ubicacion.html"><i class="fas fa-map-marker-alt fa-fw"></i> Ubicacion</a></li>
+                            </ul>
+                        </nav>
+                        <div class="download-app">
+                            <a href="#"><i class="fas fa-download fa-fw"></i> Download app</a>
+                        </div>
+                    </aside>
+                    <div class="game-container">
+                        <h1>🕊️ Juego Bíblico</h1>
+                        <div class="question-box">
+                            <div id="question" class="question hidden"></div>
+                            <div id="options" class="options-grid"></div>
+                            <div id="feedback" class="hidden"></div>
+                            <div id="correct-answer" class="hidden"></div>
+                            <div id="verse" class="hidden"></div>
+                            <div id="score" class="hidden"></div>
+                            <button id="start-btn" class="btn">🎮 Iniciar Juego</button>
+                            <button id="next-btn" class="btn hidden">➡️ Siguiente</button>
+                            <button id="retry-btn" class="btn hidden">🔄 Intentar de nuevo</button>
+                        </div>
+                    </div>
               <script>
                 const preguntas = [
                   { pregunta: "¿Qué rey de Israel fue famoso por su sabiduría?", opciones: ["Salomón", "David", "Saúl", "Ezequías"], correcta: "Salomón", versiculo: "1 Reyes 3:12" },
