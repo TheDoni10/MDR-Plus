@@ -381,11 +381,110 @@ h2 {
                         </div>
                     </div>
               <script>
-                const preguntas = [
-                  { pregunta: "¿Qué rey de Israel fue famoso por su sabiduría?", opciones: ["Salomón", "David", "Saúl", "Ezequías"], correcta: "Salomón", versiculo: "1 Reyes 3:12" },
-                  { pregunta: "¿Qué profeta vio una visión de huesos secos que cobraron vida?", opciones: ["Ezequiel", "Isaías", "Amós", "Joel"], correcta: "Ezequiel", versiculo: "Ezequiel 37:1-14" },
-                  // Agrega más preguntas si lo deseas
-                ];
+                  const preguntas = [
+                          { pregunta: "¿Qué rey de Israel fue famoso por su sabiduría?", opciones: ["Salomón", "David", "Saúl", "Ezequías"], correcta: "Salomón", versiculo: "1 Reyes 3:12" },
+                          { pregunta: "¿Qué profeta vio una visión de huesos secos que cobraron vida?", opciones: ["Ezequiel", "Isaías", "Amós", "Joel"], correcta: "Ezequiel", versiculo: "Ezequiel 37:1-14" },
+                        
+                          { pregunta: "¿Quién fue el primer asesino según la Biblia?", opciones: ["Caín", "Abel", "Set", "Lamec"], correcta: "Caín", versiculo: "Génesis 4:8" },
+                          { pregunta: "¿Qué apóstol negó a Jesús tres veces antes del amanecer?", opciones: ["Pedro", "Juan", "Tomás", "Judas"], correcta: "Pedro", versiculo: "Lucas 22:61" },
+                          { pregunta: "¿Qué libro de la Biblia no menciona directamente a Dios?", opciones: ["Ester", "Rut", "Job", "Cantares"], correcta: "Ester", versiculo: "Ester 1:1 - 10:3" },
+                          { pregunta: "¿Quién escribió el libro del Apocalipsis?", opciones: ["Juan", "Pablo", "Pedro", "Lucas"], correcta: "Juan", versiculo: "Apocalipsis 1:1" },
+                          { pregunta: "¿Cuál fue el primer milagro de Jesús?", opciones: ["Convertir el agua en vino", "Sanar un ciego", "Caminar sobre el agua", "Multiplicar los panes"], correcta: "Convertir el agua en vino", versiculo: "Juan 2:1-11" },
+                          { pregunta: "¿Quién soñó con una escalera que llegaba al cielo?", opciones: ["Jacob", "José", "Daniel", "Moisés"], correcta: "Jacob", versiculo: "Génesis 28:12" },
+                          { pregunta: "¿Quién fue el juez más fuerte de Israel?", opciones: ["Sansón", "Gedeón", "Eli", "Samuel"], correcta: "Sansón", versiculo: "Jueces 13–16" },
+                          { pregunta: "¿Quién reemplazó a Judas Iscariote entre los doce apóstoles?", opciones: ["Matías", "Pablo", "Bernabé", "Esteban"], correcta: "Matías", versiculo: "Hechos 1:26" },
+                          { pregunta: "¿Qué profeta fue llevado al cielo en un torbellino?", opciones: ["Elías", "Eliseo", "Isaías", "Jeremías"], correcta: "Elías", versiculo: "2 Reyes 2:11" },
+                          { pregunta: "¿Qué animal habló con voz humana en el Antiguo Testamento?", opciones: ["Asna", "Serpiente", "Caballo", "León"], correcta: "Asna", versiculo: "Números 22:28" },
+                          { pregunta: "¿Quién fue la única mujer jueza de Israel?", opciones: ["Débora", "Rut", "Ester", "Miriam"], correcta: "Débora", versiculo: "Jueces 4:4" },
+                          { pregunta: "¿Qué profeta fue tragado por un gran pez?", opciones: ["Jonás", "Elías", "Oseas", "Joel"], correcta: "Jonás", versiculo: "Jonás 1:17" },
+                          { pregunta: "¿Cuántos días y noches llovió durante el diluvio?", opciones: ["40", "30", "7", "100"], correcta: "40", versiculo: "Génesis 7:12" },
+                          { pregunta: "¿Cuál es el capítulo más largo de la Biblia?", opciones: ["Salmo 119", "Génesis 1", "Isaías 53", "Mateo 5"], correcta: "Salmo 119", versiculo: "Salmo 119" },
+                          { pregunta: "¿Quién interpretó los sueños del faraón en Egipto?", opciones: ["José", "Moisés", "Daniel", "Aarón"], correcta: "José", versiculo: "Génesis 41:14-30" },
+                          { pregunta: "¿Qué discípulo era recaudador de impuestos?", opciones: ["Mateo", "Pedro", "Andrés", "Santiago"], correcta: "Mateo", versiculo: "Mateo 9:9" },
+                          { pregunta: "¿Quién escribió la mayoría de los Salmos?", opciones: ["David", "Salomón", "Asaf", "Moisés"], correcta: "David", versiculo: "Salmo 23:1" },
+                          { pregunta: "¿Qué mujer escondió a los espías en Jericó?", opciones: ["Rahab", "Rut", "Débora", "Ester"], correcta: "Rahab", versiculo: "Josué 2:1-21" },
+                          { pregunta: "¿Qué profeta confrontó al rey Acab?", opciones: ["Elías", "Eliseo", "Isaías", "Miqueas"], correcta: "Elías", versiculo: "1 Reyes 18:17" },
+                          { pregunta: "¿Qué hombre fue transformado en sal por desobedecer?", opciones: ["La esposa de Lot", "Caín", "Nabucodonosor", "Acab"], correcta: "La esposa de Lot", versiculo: "Génesis 19:26" },
+                          { pregunta: "¿Quién fue madre de Samuel?", opciones: ["Ana", "Sara", "Rebeca", "Raquel"], correcta: "Ana", versiculo: "1 Samuel 1:20" },
+                          { pregunta: "¿Quién escribió el libro de los Hechos?", opciones: ["Lucas", "Juan", "Pablo", "Pedro"], correcta: "Lucas", versiculo: "Hechos 1:1" },
+                          { pregunta: "¿Quién fue el primer mártir cristiano?", opciones: ["Esteban", "Pedro", "Pablo", "Jacobo"], correcta: "Esteban", versiculo: "Hechos 7:59-60" },
+                          { pregunta: "¿Qué rey escribió muchos proverbios?", opciones: ["Salomón", "David", "Ezequías", "Jeroboam"], correcta: "Salomón", versiculo: "Proverbios 1:1" },
+                          { pregunta: "¿Qué libro viene después de Lamentaciones?", opciones: ["Ezequiel", "Daniel", "Isaías", "Jeremías"], correcta: "Ezequiel", versiculo: "Ezequiel 1:1" },
+                          { pregunta: "¿Quién fue mordido por una serpiente y no murió?", opciones: ["Pablo", "Pedro", "Juan", "Bernabé"], correcta: "Pablo", versiculo: "Hechos 28:3-5" },
+                          { pregunta: "¿Dónde fue crucificado Jesús?", opciones: ["Gólgota", "Monte Sinaí", "Monte Carmelo", "Monte Nebo"], correcta: "Gólgota", versiculo: "Mateo 27:33" },
+                          { pregunta: "¿Quién dijo: 'He aquí el Cordero de Dios'?", opciones: ["Juan el Bautista", "Pedro", "Jesús", "Andrés"], correcta: "Juan el Bautista", versiculo: "Juan 1:29" },
+                          { pregunta: "¿Qué libro profético contiene la visión del carnero y el macho cabrío?", opciones: ["Daniel", "Ezequiel", "Zacarías", "Isaías"], correcta: "Daniel", versiculo: "Daniel 8:3-7" },
+                          { pregunta: "¿Quién fue conocido por su paciencia?", opciones: ["Job", "Noé", "José", "Moisés"], correcta: "Job", versiculo: "Job 1:21" },
+                          { pregunta: "¿Cuántas personas fueron salvadas en el arca de Noé?", opciones: ["8", "7", "2", "12"], correcta: "8", versiculo: "1 Pedro 3:20" },
+                          { pregunta: "¿Qué evangelista era médico?", opciones: ["Lucas", "Mateo", "Juan", "Marcos"], correcta: "Lucas", versiculo: "Colosenses 4:14" },
+                          { pregunta: "¿Cuál fue el castigo de Moisés por golpear la roca?", opciones: ["No entrar a la Tierra Prometida", "Ser desterrado", "Perder el liderazgo", "Ser apedreado"], correcta: "No entrar a la Tierra Prometida", versiculo: "Números 20:12" },
+                          { pregunta: "¿Quién vio el cielo abierto y a Jesús de pie a la diestra de Dios?", opciones: ["Esteban", "Pablo", "Pedro", "Juan"], correcta: "Esteban", versiculo: "Hechos 7:55-56" },
+                          { pregunta: "¿Quién fue llamado 'amigo de Dios'?", opciones: ["Abraham", "Moisés", "David", "Isaac"], correcta: "Abraham", versiculo: "Santiago 2:23" },
+                          { pregunta: "¿Quién ayudó a Jesús a llevar la cruz?", opciones: ["Simón de Cirene", "Pedro", "Juan", "Andrés"], correcta: "Simón de Cirene", versiculo: "Marcos 15:21" },
+                          { pregunta: "¿Qué hombre caminó con Dios y desapareció porque Dios se lo llevó?", opciones: ["Enoc", "Elías", "Moisés", "Noé"], correcta: "Enoc", versiculo: "Génesis 5:24" },
+                          { pregunta: "¿Cuántos días estuvo Jesús en el desierto?", opciones: ["40", "30", "12", "7"], correcta: "40", versiculo: "Mateo 4:2" },
+                          { pregunta: "¿Qué discípulo fue conocido como 'el gemelo'?", opciones: ["Tomás", "Felipe", "Andrés", "Santiago"], correcta: "Tomás", versiculo: "Juan 11:16" },
+                          { pregunta: "¿Qué nación conquistó Jerusalén en el 586 a.C.?", opciones: ["Babilonia", "Asiria", "Egipto", "Persia"], correcta: "Babilonia", versiculo: "2 Reyes 25:1-10" },
+                          { pregunta: "¿Quién escribió la mayoría de las cartas del Nuevo Testamento?", opciones: ["Pablo", "Pedro", "Juan", "Santiago"], correcta: "Pablo", versiculo: "Romanos 1:1" },
+                          { pregunta: "¿Qué ángel anunció a María que daría a luz a Jesús?", opciones: ["Gabriel", "Miguel", "Uriel", "Rafael"], correcta: "Gabriel", versiculo: "Lucas 1:26-31" },
+                          { pregunta: "¿Qué patriarca soñó con el sol, la luna y once estrellas?", opciones: ["José", "Jacob", "Isaac", "Abraham"], correcta: "José", versiculo: "Génesis 37:9" },
+                          { pregunta: "¿Quién escribió el libro de Lamentaciones?", opciones: ["Jeremías", "Isaías", "Ezequiel", "Daniel"], correcta: "Jeremías", versiculo: "Lamentaciones 1:1" },
+                          { pregunta: "¿Qué líder construyó un muro alrededor de Jerusalén?", opciones: ["Nehemías", "Esdras", "Zorobabel", "Josías"], correcta: "Nehemías", versiculo: "Nehemías 2:17" 
+  { pregunta: "¿Qué es la teología sistemática?", opciones: ["Estudio ordenado de las doctrinas cristianas", "Interpretación de símbolos bíblicos", "Historia del cristianismo", "Análisis de manuscritos antiguos"], correcta: "Estudio ordenado de las doctrinas cristianas", versiculo: "Wayne Grudem, 'Teología Sistemática', pág. 23" },
+  
+  { pregunta: "¿Quién escribió las 95 tesis que iniciaron la Reforma protestante?", opciones: ["Martín Lutero", "Juan Calvino", "Ulrico Zuinglio", "John Knox"], correcta: "Martín Lutero", versiculo: "https://www.britannica.com/biography/Martin-Luther" },
+
+  { pregunta: "¿Qué concilio afirmó la doctrina de la Trinidad en el año 325 d.C.?", opciones: ["Nicea", "Éfeso", "Calcedonia", "Cartago"], correcta: "Nicea", versiculo: "Philip Schaff, 'History of the Christian Church', Vol. 3" },
+
+  { pregunta: "¿Qué es la justificación según la teología reformada?", opciones: ["Declaración legal de justicia mediante la fe", "Progreso moral del creyente", "Arrepentimiento continuo", "Confesión sacramental"], correcta: "Declaración legal de justicia mediante la fe", versiculo: "Romanos 5:1; 'Institución de la Religión Cristiana', Calvino" },
+
+  { pregunta: "¿Qué teólogo escribió 'Las Confesiones' y 'La Ciudad de Dios'?", opciones: ["Agustín de Hipona", "Orígenes", "Tomás de Aquino", "Jerónimo"], correcta: "Agustín de Hipona", versiculo: "Agustín, 'Confesiones', Libro I" },
+
+  { pregunta: "¿Qué significa 'Sola Scriptura' en la teología protestante?", opciones: ["La Biblia es la única regla infalible de fe y práctica", "La Biblia es simbólica", "La Biblia solo debe usarse en latín", "Solo el Papa interpreta la Escritura"], correcta: "La Biblia es la única regla infalible de fe y práctica", versiculo: "Timoteo 3:16; Lutero, 'De la libertad cristiana'" },
+
+  { pregunta: "¿Cuál es la doctrina de la predestinación según Juan Calvino?", opciones: ["Dios escoge desde la eternidad a quienes serán salvos", "Todos tienen libre albedrío absoluto", "La salvación es aleatoria", "Los sacramentos determinan la salvación"], correcta: "Dios escoge desde la eternidad a quienes serán salvos", versiculo: "'Institución de la Religión Cristiana', Juan Calvino, Libro III" },
+
+  { pregunta: "¿Qué concilio definió la doctrina de la deidad del Espíritu Santo?", opciones: ["Concilio de Constantinopla I", "Concilio de Nicea", "Concilio de Trento", "Concilio de Jerusalén"], correcta: "Concilio de Constantinopla I", versiculo: "381 d.C., Credo Niceno-Constantinopolitano" },
+
+  { pregunta: "¿Qué es la expiación penal sustitutiva?", opciones: ["Cristo tomó el castigo que merecíamos", "Cristo venció al diablo", "Cristo nos enseñó con su ejemplo", "Cristo mostró la injusticia humana"], correcta: "Cristo tomó el castigo que merecíamos", versiculo: "Isaías 53:5; 'The Cross of Christ', John Stott" },
+
+  { pregunta: "¿Quién escribió 'Summa Theologica'?", opciones: ["Tomás de Aquino", "Agustín de Hipona", "Anselmo de Canterbury", "Jerónimo"], correcta: "Tomás de Aquino", versiculo: "Tomás de Aquino, 'Summa Theologica', Parte I" },
+
+  { pregunta: "¿Qué enseña el arminianismo sobre la salvación?", opciones: ["La gracia puede ser resistida", "La elección es incondicional", "La salvación es irresistible", "Cristo murió solo por los elegidos"], correcta: "La gracia puede ser resistida", versiculo: "Jacobo Arminio, 'Declaraciones de los Remonstrantes', 1610" },
+
+  { pregunta: "¿Qué significa 'homoousios' en cristología?", opciones: ["De la misma sustancia", "Semejante en función", "Diferente en esencia", "Solo humano"], correcta: "De la misma sustancia", versiculo: "Concilio de Nicea, 325 d.C." },
+
+  { pregunta: "¿Qué es la encarnación?", opciones: ["Dios hecho hombre en Jesús", "La aparición de ángeles", "Resurrección espiritual", "Nacimiento natural del Mesías"], correcta: "Dios hecho hombre en Jesús", versiculo: "Juan 1:14; 'In Him was Life', F.F. Bruce" },
+
+  { pregunta: "¿Qué es la pneumatología?", opciones: ["Doctrina del Espíritu Santo", "Doctrina de los ángeles", "Estudio del pecado", "Escatología"], correcta: "Doctrina del Espíritu Santo", versiculo: "Wayne Grudem, 'Teología Sistemática', capítulo 30" },
+
+  { pregunta: "¿Quién fue Karl Barth?", opciones: ["Teólogo suizo del siglo XX", "Reformador del siglo XVI", "Padre del monacato", "Misionero medieval"], correcta: "Teólogo suizo del siglo XX", versiculo: "Karl Barth, 'Dogmática Eclesiástica'" },
+
+  { pregunta: "¿Qué teólogo protestante promovió el método histórico-gramatical?", opciones: ["Martín Lutero", "Juan Calvino", "Ulrich Zwingli", "B. B. Warfield"], correcta: "B. B. Warfield", versiculo: "Warfield, 'The Inspiration and Authority of the Bible'" },
+
+  { pregunta: "¿Qué es la escatología?", opciones: ["Doctrina de las cosas finales", "Estudio de la creación", "Doctrina de los sacramentos", "Moral cristiana"], correcta: "Doctrina de las cosas finales", versiculo: "Apocalipsis 20; Millard Erickson, 'Christian Theology', capítulo 54" },
+
+  { pregunta: "¿Qué enseña la doctrina de la trinidad?", opciones: ["Un Dios en tres personas", "Tres dioses en uno", "Un Dios con tres máscaras", "Un Dios que cambia de forma"], correcta: "Un Dios en tres personas", versiculo: "Mateo 28:19; Atanasio, 'Credo Atanasiano'" },
+
+  { pregunta: "¿Qué teólogo moderno escribió 'El conocimiento del Dios Santo'?", opciones: ["A. W. Tozer", "Dietrich Bonhoeffer", "R. C. Sproul", "Billy Graham"], correcta: "A. W. Tozer", versiculo: "A. W. Tozer, 'El conocimiento del Dios Santo'" },
+
+  { pregunta: "¿Qué enseña el molinismo?", opciones: ["Dios conoce las decisiones libres antes de que ocurran", "La salvación depende solo de Dios", "No existe el libre albedrío", "La Biblia no es suficiente"], correcta: "Dios conoce las decisiones libres antes de que ocurran", versiculo: "Luis de Molina, 'Concordia'" },
+
+  // 30 más para completar las 50
+  { pregunta: "¿Qué es la kenosis en cristología?", opciones: ["Autovaciamiento de Cristo al encarnarse", "Aumento del poder divino", "El perdón de pecados", "Transformación espiritual"], correcta: "Autovaciamiento de Cristo al encarnarse", versiculo: "Filipenses 2:7; Wayne Grudem, capítulo 26" },
+  { pregunta: "¿Qué doctrina enseña que la salvación no puede perderse?", opciones: ["Perseverancia de los santos", "Justificación por obras", "Predestinación condicional", "Arrepentimiento renovado"], correcta: "Perseverancia de los santos", versiculo: "Juan 10:28-29; 'Institución', Calvino, Libro III" },
+  { pregunta: "¿Quién fue Orígenes?", opciones: ["Padre de la Iglesia del siglo III", "Apóstol del Nuevo Testamento", "Misionero reformado", "Obispo medieval"], correcta: "Padre de la Iglesia del siglo III", versiculo: "Philip Schaff, 'History of the Christian Church', Vol. 2" },
+  { pregunta: "¿Cuál es el propósito del catecismo de Heidelberg?", opciones: ["Enseñar doctrina cristiana reformada", "Fundar nuevas iglesias", "Traducir la Biblia", "Promover la caridad"], correcta: "Enseñar doctrina cristiana reformada", versiculo: "Catecismo de Heidelberg, 1563" },
+  { pregunta: "¿Qué significa 'eclesiología'?", opciones: ["Doctrina de la Iglesia", "Doctrina de la salvación", "Estudio de los milagros", "Teología de la oración"], correcta: "Doctrina de la Iglesia", versiculo: "Millard Erickson, 'Christian Theology', capítulo 49" },
+  { pregunta: "¿Qué es el monoteísmo trinitario?", opciones: ["Un solo Dios en tres personas", "Tres dioses diferentes", "Una persona divina", "Dios dividido en partes"], correcta: "Un solo Dios en tres personas", versiculo: "Deuteronomio 6:4 + Mateo 28:19" },
+  { pregunta: "¿Qué es la inerrancia bíblica?", opciones: ["La Biblia no tiene errores en sus escritos originales", "La Biblia es poesía", "La Biblia es sólo un símbolo", "La Biblia tiene errores inspirados"], correcta: "La Biblia no tiene errores en sus escritos originales", versiculo: "2 Timoteo 3:16; Chicago Statement on Biblical Inerrancy" },
+  { pregunta: "¿Qué es la 'gracia común'?", opciones: ["Bendiciones que Dios da a toda la humanidad", "Gracia que salva", "Gracia obtenida por obras", "Gracia dada solo a los justos"], correcta: "Bendiciones que Dios da a toda la humanidad", versiculo: "Mateo 5:45; Louis Berkhof, 'Teología Sistemática'" },
+  { pregunta: "¿Qué enseña el concilio de Trento sobre la justificación?", opciones: ["Fe más obras justifican al creyente", "Solo fe justifica", "La fe es innecesaria", "La gracia es automática"], correcta: "Fe más obras justifican al creyente", versiculo: "Concilio de Trento, Sesión VI, 1547" },
+  { pregunta: "¿Quién fue Dietrich Bonhoeffer?", opciones: ["Teólogo alemán ejecutado por oponerse a Hitler", "Papa reformador", "Escritor anglicano", "Fundador del luteranismo"], correcta: "Teólogo alemán ejecutado por oponerse a Hitler", versiculo: "Bonhoeffer, 'El costo del discipulado'" }
+];
+
+
+                        ];
             
                 let index = 0;
                 let puntaje = 0;
