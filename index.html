@@ -8,52 +8,70 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
-/* === ESTILO NETFLIX PARA MÓVILES === */
-body {
+/* === ESTILO GENERAL TIPO NETFLIX PARA TODA LA PÁGINA === */
+
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+body {
     background-color: #000;
     color: #fff;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     line-height: 1.6;
+    padding: 0 15px;
 }
 
+/* CONTENEDOR GENERAL */
 .container {
+    max-width: 768px;
+    margin: auto;
+    padding-top: 20px;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    padding: 0 10px;
+    gap: 20px;
 }
 
-/* TITULOS */
-h1, h2, h3 {
+/* ENCABEZADOS */
+h1, h2, h3, h4 {
     color: #fff;
-    margin-bottom: 10px;
     font-weight: 700;
+    margin-bottom: 10px;
+    text-align: center;
 }
 
-/* TARJETAS DE CONTENIDO */
-.live-stream-container {
+/* LOGOS CENTRADOS */
+.logo {
+    display: block;
+    margin: 20px auto;
+    width: 120px;
+}
+
+/* LINKS */
+a {
+    color: #e50914;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* VIDEO Y TARJETAS */
+.live-stream-container, .card {
     background-color: #111;
     border-radius: 12px;
-    margin-bottom: 20px;
     padding: 15px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
 }
 
-.live-stream-container header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 1rem;
-    margin-bottom: 10px;
-    color: #e5e5e5;
-}
-
+/* VIDEO */
 .video-container {
     width: 100%;
     aspect-ratio: 16/9;
-    background-color: #000;
+    background: #000;
     border-radius: 10px;
     overflow: hidden;
     position: relative;
@@ -62,13 +80,14 @@ h1, h2, h3 {
 .video-container iframe,
 .video-container video {
     position: absolute;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     border: none;
 }
 
-/* BOTÓN DE VER TRANSMISIÓN */
+/* BOTÓN ROJO */
 .button-watch {
     display: block;
     width: 100%;
@@ -87,55 +106,59 @@ h1, h2, h3 {
     background-color: #f6121d;
 }
 
-/* ESTILO DE ICONOS O ENLACES */
-.icon-text {
+/* CONTROLES GRANDES (como botones de audio) */
+.controls {
     display: flex;
+    justify-content: space-around;
     align-items: center;
-    gap: 8px;
-    color: #bbb;
-    font-size: 0.95rem;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
-.icon-text img {
-    width: 18px;
-    height: 18px;
+.controls img, .controls svg {
+    width: 60px;
+    height: 60px;
 }
 
-/* SOCIAL LINKS */
-.social-links {
+/* PIE DE PÁGINA */
+footer {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #999;
+    margin-top: 30px;
+}
+
+/* MENÚ O LISTA */
+nav ul {
+    list-style: none;
     display: flex;
     justify-content: center;
-    gap: 10px;
-    margin-top: 15px;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
 }
 
-.social-links a {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #222;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+nav ul li a {
+    color: #ccc;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+nav ul li a:hover {
     color: #fff;
-    text-decoration: none;
-    transition: background 0.3s ease;
 }
 
-.social-links a:hover {
-    background-color: #e50914;
-}
-
-/* REAJUSTES RESPONSIVOS */
+/* RESPONSIVO */
 @media (min-width: 768px) {
     .container {
-        max-width: 700px;
-        margin: 0 auto;
+        padding: 0 30px;
     }
 
-    .live-stream-container {
-        padding: 20px;
+    .logo {
+        width: 150px;
+    }
+
+    .controls img {
+        width: 70px;
+        height: 70px;
     }
 }
 
