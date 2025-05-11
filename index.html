@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta name="viewport" content="width=865, user-scalable=no">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radio Cristiana</title>
@@ -236,6 +235,78 @@ nav a:hover {
     width: 100%;
     height: 100%;
     border: none;
+}
+/* === MEJORAS PARA MÓVILES === */
+@media screen and (max-width: 900px) {
+    .wrapper {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .container {
+        display: block;
+    }
+
+    .sidebar {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 15px 10px;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .sidebar .logo {
+        flex-basis: 100%;
+    }
+
+    .sidebar nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .sidebar nav li {
+        margin: 0;
+    }
+
+    .download-app {
+        flex-basis: 100%;
+        margin-top: 15px;
+    }
+
+    .content {
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .hero img {
+        max-height: 200px;
+    }
+
+    .player-container {
+        flex-wrap: wrap;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+
+    .channel-info {
+        padding: 10px;
+    }
+
+    .live-stream-container {
+        padding: 10px;
+    }
+
+    .video-container {
+        aspect-ratio: 16 / 9;
+        width: 100%;
+    }
 }
 
 /* === NO MEDIA QUERIES === */
