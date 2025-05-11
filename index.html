@@ -312,11 +312,38 @@ nav a:hover {
 
             <section class="live-stream-container">
                 <header>
-                    <h1>📡 Transmisión en Vivo Local (YouTube)</h1>
+                    <h1>📡 Transmisión en Vivo Local (Facebook)</h1>
+                    <h2>Culto Dominical | 11 de Mayo 2025 | Movimiento Misionero Mundial | El Cinco.</h2>
                 </header>
-                <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/live_stream?channel=UCZGAGsLJqyLrM3qXal9cjuA" allowfullscreen title="Transmisión en Vivo YouTube"></iframe>
-                </div>
+                <div id="live-status">
+  <button id="live-button" onclick="goToLive()">Ver Transmisión en Vivo</button>
+</div>
+
+<script>
+  async function goToLive() {
+    const pageId = 'IglesiaelCinco';
+    const fallbackUrl = `https://www.facebook.com/${pageId}/live_videos/`;
+
+    // Aquí necesitarías usar la Graph API de Facebook para detectar transmisiones activas
+    // Pero como eso requiere un token, haremos una redirección básica
+    // Esta parte puedes mejorarla más adelante con PHP o servidor backend
+
+    // Por ahora: siempre redirige a la sección de "Live Videos"
+    window.open(fallbackUrl, '_blank');
+  }
+
+  // Estilo básico del botón
+  document.getElementById("live-button").style = `
+    background-color: #1877F2;
+    color: white;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  `;
+</script>
+
             </section>
 
 
