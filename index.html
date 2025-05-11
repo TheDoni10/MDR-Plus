@@ -317,22 +317,33 @@ nav a:hover {
                 </header>
                 <div id="live-status">
   <button id="live-button" onclick="goToLive()">Ver Transmisión en Vivo</button>
+<div class="video-container" style="text-align:center; margin-bottom: 20px;">
+  <!-- Video en vivo incrustado desde Facebook -->
+  <iframe 
+    src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FIglesiaelCinco%2Fvideos%2F2033307890527170%2F&show_text=false&width=560&t=0" 
+    width="560" 
+    height="314" 
+    style="border:none;overflow:hidden" 
+    scrolling="no" 
+    frameborder="0" 
+    allowfullscreen="true" 
+    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
+    allowFullScreen="true">
+  </iframe>
+
+  <!-- Botón alternativo -->
+  <div id="live-status" style="margin-top: 20px;">
+    <button id="live-button" onclick="goToLive()">Ver en Facebook</button>
+  </div>
 </div>
 
 <script>
-  async function goToLive() {
-    const pageId = 'IglesiaelCinco';
-    const fallbackUrl = `https://www.facebook.com/${pageId}/live_videos/`;
-
-    // Aquí necesitarías usar la Graph API de Facebook para detectar transmisiones activas
-    // Pero como eso requiere un token, haremos una redirección básica
-    // Esta parte puedes mejorarla más adelante con PHP o servidor backend
-
-    // Por ahora: siempre redirige a la sección de "Live Videos"
+  function goToLive() {
+    const fallbackUrl = "https://www.facebook.com/IglesiaelCinco/live_videos/";
     window.open(fallbackUrl, '_blank');
   }
 
-  // Estilo básico del botón
+  // Estilo del botón
   document.getElementById("live-button").style = `
     background-color: #1877F2;
     color: white;
@@ -344,7 +355,6 @@ nav a:hover {
   `;
 </script>
 
-            </section>
 
 
             <section class="live-stream-container">
