@@ -8,181 +8,135 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
-    /* RESET GENERAL */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* BODY */
+/* === ESTILO NETFLIX PARA MÓVILES === */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #121212;
-  color: #fff;
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    color: #fff;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    line-height: 1.6;
 }
 
-/* LAYOUT PRINCIPAL */
 .container {
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 0 10px;
 }
 
-/* MENÚ LATERAL */
-.sidebar {
-  background-color: #1e1e1e;
-  padding: 1rem;
-  border-radius: 12px;
-  margin-bottom: 1rem;
+/* TITULOS */
+h1, h2, h3 {
+    color: #fff;
+    margin-bottom: 10px;
+    font-weight: 700;
 }
 
-.sidebar a {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #fff;
-  text-decoration: none;
-  font-size: 1rem;
-  margin-bottom: 0.8rem;
-  transition: color 0.3s;
+/* TARJETAS DE CONTENIDO */
+.live-stream-container {
+    background-color: #111;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
 
-.sidebar a:hover {
-  color: #00bcd4;
+.live-stream-container header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #e5e5e5;
 }
 
-.sidebar .download-btn {
-  background-color: #4f46e5;
-  color: #fff;
-  text-align: center;
-  padding: 0.75rem;
-  border-radius: 10px;
-  font-weight: bold;
-  margin-top: 1rem;
-  display: block;
-  text-decoration: none;
+.video-container {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background-color: #000;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
 }
 
-/* SECCIONES */
-.section {
-  background-color: #1e1e1e;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  border-radius: 12px;
+.video-container iframe,
+.video-container video {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
 }
 
-/* CABECERAS Y TEXTOS */
-.section h2,
-.section h3 {
-  font-size: 1.3rem;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
+/* BOTÓN DE VER TRANSMISIÓN */
+.button-watch {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background-color: #e50914;
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.3s ease;
 }
 
-.section p {
-  font-size: 1rem;
-  color: #ccc;
+.button-watch:hover {
+    background-color: #f6121d;
 }
 
-/* ESTILO TIPO NETFLIX - TARJETAS DE VIDEO */
-.video-card {
-  background-color: #262626;
-  border-radius: 12px;
-  overflow: hidden;
-  margin-bottom: 1.5rem;
+/* ESTILO DE ICONOS O ENLACES */
+.icon-text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #bbb;
+    font-size: 0.95rem;
+    margin-top: 5px;
 }
 
-.video-card iframe,
-.video-card video,
-.video-card img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-  display: block;
-  border: none;
+.icon-text img {
+    width: 18px;
+    height: 18px;
 }
 
-.video-card .content {
-  padding: 0.8rem;
+/* SOCIAL LINKS */
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
 }
 
-.video-card .title {
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin-bottom: 0.3rem;
+.social-links a {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.3s ease;
 }
 
-.video-card .description {
-  font-size: 0.95rem;
-  color: #aaa;
+.social-links a:hover {
+    background-color: #e50914;
 }
 
-/* BOTONES */
-.button {
-  background-color: #2563eb;
-  color: white;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 8px;
-  text-align: center;
-  display: inline-block;
-  font-weight: bold;
-  margin-top: 0.5rem;
-  text-decoration: none;
-}
-
-/* REPRODUCTOR DE AUDIO */
-.audio-player {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem 0;
-}
-
-.audio-controls {
-  display: flex;
-  gap: 1rem;
-  margin-top: 0.5rem;
-}
-
-.audio-controls button {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  color: #00ff7f;
-  cursor: pointer;
-}
-
-/* REDES SOCIALES */
-.social-icons {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.social-icons a {
-  color: #fff;
-  font-size: 1.2rem;
-}
-
-/* RESPONSIVE */
+/* REAJUSTES RESPONSIVOS */
 @media (min-width: 768px) {
-  .container {
-    flex-direction: row;
-  }
+    .container {
+        max-width: 700px;
+        margin: 0 auto;
+    }
 
-  .sidebar {
-    width: 240px;
-    height: 100vh;
-    position: fixed;
-  }
-
-  .main-content {
-    margin-left: 260px;
-    width: calc(100% - 260px);
-  }
+    .live-stream-container {
+        padding: 20px;
+    }
 }
 
     </style>
