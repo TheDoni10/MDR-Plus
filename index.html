@@ -8,157 +8,201 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
-/* === ESTILO GENERAL TIPO NETFLIX PARA TODA LA PÁGINA === */
-
+/* Reset básico */
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
-
 body {
-    background-color: #000;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #111;
     color: #fff;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    line-height: 1.6;
-    padding: 0 15px;
+}
+a {
+    color: inherit;
+    text-decoration: none;
 }
 
-/* CONTENEDOR GENERAL */
+/* Layout principal */
 .container {
-    max-width: 768px;
-    margin: auto;
-    padding-top: 20px;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar estilo Netflix */
+.sidebar {
+    background-color: #000;
+    width: 250px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
-
-/* ENCABEZADOS */
-h1, h2, h3, h4 {
-    color: #fff;
-    font-weight: 700;
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-/* LOGOS CENTRADOS */
-.logo {
-    display: block;
-    margin: 20px auto;
-    width: 120px;
-}
-
-/* LINKS */
-a {
-    color: #e50914;
-    text-decoration: none;
-}
-a:hover {
-    text-decoration: underline;
-}
-
-/* VIDEO Y TARJETAS */
-.live-stream-container, .card {
-    background-color: #111;
-    border-radius: 12px;
-    padding: 15px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+.sidebar .logo img {
+    width: 100%;
     margin-bottom: 20px;
 }
-
-/* VIDEO */
-.video-container {
-    width: 100%;
-    aspect-ratio: 16/9;
-    background: #000;
-    border-radius: 10px;
-    overflow: hidden;
-    position: relative;
-}
-
-.video-container iframe,
-.video-container video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-}
-
-/* BOTÓN ROJO */
-.button-watch {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    margin-top: 10px;
-    background-color: #e50914;
-    color: #fff;
-    text-align: center;
-    font-weight: bold;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: background 0.3s ease;
-}
-
-.button-watch:hover {
-    background-color: #f6121d;
-}
-
-/* CONTROLES GRANDES (como botones de audio) */
-.controls {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 10px;
-}
-
-.controls img, .controls svg {
-    width: 60px;
-    height: 60px;
-}
-
-/* PIE DE PÁGINA */
-footer {
-    text-align: center;
-    font-size: 0.9rem;
-    color: #999;
-    margin-top: 30px;
-}
-
-/* MENÚ O LISTA */
-nav ul {
+.sidebar nav ul {
     list-style: none;
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 20px;
+    flex-direction: column;
+    gap: 15px;
+}
+.sidebar nav ul li a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+.sidebar nav ul li a:hover {
+    background-color: #333;
+}
+.download-app {
+    margin-top: auto;
 }
 
-nav ul li a {
+/* Contenido */
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+/* Hero */
+.hero {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.hero img {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 20px;
+}
+.hero h1 {
+    font-size: 2.5rem;
+    margin: 15px 0 5px;
+}
+.hero p {
+    font-size: 1.2rem;
     color: #ccc;
-    font-weight: 500;
-    transition: color 0.3s;
 }
-nav ul li a:hover {
+
+/* Información del canal */
+.channel-info {
+    background: #1c1c1c;
+    padding: 20px;
+    border-radius: 20px;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.channel-avatar img {
+    width: 100px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+.channel-details {
+    text-align: center;
+}
+.player-container {
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+.player-container img {
+    width: 40px;
+    cursor: pointer;
+}
+.timeline {
+    background: #333;
+    height: 5px;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 10px;
+}
+.timeline-progress {
+    width: 50%;
+    background: red;
+    height: 100%;
+    position: relative;
+}
+.timeline-handle {
+    width: 15px;
+    height: 15px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: -5px;
+    right: 0;
+}
+
+/* Redes sociales */
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+.social-links a {
+    font-size: 1.5rem;
     color: #fff;
+    transition: transform 0.3s;
+}
+.social-links a:hover {
+    transform: scale(1.2);
 }
 
-/* RESPONSIVO */
-@media (min-width: 768px) {
+/* Video en vivo */
+.live-stream-container {
+    background: #1a1a1a;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    padding: 20px;
+}
+.live-stream-container header h1 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+.video-container iframe,
+.video-container video {
+    width: 100%;
+    border: none;
+    aspect-ratio: 16 / 9;
+    border-radius: 15px;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
     .container {
-        padding: 0 30px;
+        flex-direction: column;
     }
-
-    .logo {
-        width: 150px;
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 10px;
+        justify-content: space-between;
     }
-
-    .controls img {
-        width: 70px;
-        height: 70px;
+    .sidebar nav ul {
+        flex-direction: row;
+        gap: 10px;
+    }
+    .sidebar nav ul li a {
+        font-size: 0.9rem;
+        padding: 5px;
+    }
+    .download-app {
+        display: none;
+    }
+    .hero h1 {
+        font-size: 2rem;
+    }
+    .channel-info {
+        padding: 15px;
     }
 }
 
