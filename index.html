@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
-/* Reset básico */
+      /* Reset básico */
 * {
     margin: 0;
     padding: 0;
@@ -28,6 +28,7 @@ a {
 .container {
     display: flex;
     min-height: 100vh;
+    flex-direction: row;
 }
 
 /* Sidebar estilo Netflix */
@@ -67,32 +68,37 @@ a {
 /* Contenido */
 .content {
     flex: 1;
-    padding: 20px;
+    padding: 30px;
+    overflow-x: hidden;
 }
 
 /* Hero */
 .hero {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 .hero img {
     width: 100%;
-    max-width: 600px;
-    border-radius: 20px;
+    height: 400px; /* Altura fija para hacer la imagen más alargada */
+    object-fit: cover; /* Asegura que la imagen cubra el espacio sin distorsión */
+    border-radius: 10px; /* Bordes suaves pero menos curvados que en Facebook */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera para darle profundidad */
+    margin-bottom: 20px; /* Espacio debajo de la imagen */
 }
+
 .hero h1 {
-    font-size: 2.5rem;
-    margin: 15px 0 5px;
+    font-size: 3rem;
+    margin: 20px 0 10px;
 }
 .hero p {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: #ccc;
 }
 
 /* Información del canal */
 .channel-info {
     background: #1c1c1c;
-    padding: 20px;
+    padding: 25px;
     border-radius: 20px;
     margin-bottom: 40px;
     display: flex;
@@ -100,7 +106,7 @@ a {
     align-items: center;
 }
 .channel-avatar img {
-    width: 100px;
+    width: 110px;
     border-radius: 50%;
     margin-bottom: 15px;
 }
@@ -113,6 +119,7 @@ a {
     align-items: center;
     justify-content: center;
     gap: 15px;
+    flex-wrap: wrap;
 }
 .player-container img {
     width: 40px;
@@ -125,12 +132,7 @@ a {
     max-width: 300px;
     border-radius: 10px;
 }
-.timeline-progress {
-    width: 50%;
-    background: red;
-    height: 100%;
-    position: relative;
-}
+
 .timeline-handle {
     width: 15px;
     height: 15px;
@@ -160,19 +162,21 @@ a {
 .live-stream-container {
     background: #1a1a1a;
     border-radius: 20px;
-    margin-bottom: 30px;
-    padding: 20px;
+    margin-bottom: 40px;
+    padding: 25px;
 }
 .live-stream-container header h1 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
+    font-size: 1.7rem;
+    margin-bottom: 15px;
 }
 .video-container iframe,
 .video-container video {
     width: 100%;
-    border: none;
+    max-width: 100%;
+    height: auto;
     aspect-ratio: 16 / 9;
     border-radius: 15px;
+    display: block;
 }
 
 /* Responsivo */
@@ -201,8 +205,14 @@ a {
     .hero h1 {
         font-size: 2rem;
     }
+    .hero img {
+        max-width: 100%;
+    }
     .channel-info {
         padding: 15px;
+    }
+    .live-stream-container header h1 {
+        font-size: 1.2rem;
     }
 }
 
@@ -219,17 +229,17 @@ a {
                 
 
             </div>
-               <nav>
-        <ul>
-            <li><a href="index.html"><i class="fas fa-home fa-fw"></i> Inicio</a></li>
-            <li><a href="Religion.html"><i class="fas fa-church fa-fw"></i> Religion</a></li>
-            <li><a href="Musica.html"><i class="fas fa-music fa-fw"></i> Musica</a></li>
-            <li><a href="news.html"><i class="fas fa-newspaper fa-fw"></i> News</a></li>
-            <li><a href="podcasts.html"><i class="fas fa-podcast fa-fw"></i> Podcasts</a></li>
-            <li><a href="Biblia.html"><i class="fas fa-bible fa-fw"></i> Biblia</a></li>
-            <li><a href="Ubicacion.html"><i class="fas fa-map-marker-alt fa-fw"></i> Ubicacion</a></li>
-        </ul>
-    </nav>
+            <nav>
+                <ul>
+                    <li><a href="inicio.html"><i class="fas fa-home fa-fw"></i> Inicio</a></li>
+                    <li><a href="Religion.html"><i class="fas fa-church fa-fw"></i> Religion</a></li>
+                    <li><a href="Musica.html"><i class="fas fa-music fa-fw"></i> Musica</a></li>
+                    <li><a href="news.html"><i class="fas fa-newspaper fa-fw"></i> News</a></li>
+                    <li><a href="podcasts.html"><i class="fas fa-podcast fa-fw"></i> Podcasts</a></li>
+                    <li><a href="Biblia.html"><i class="fas fa-bible fa-fw"></i> Biblia</a></li>
+                    <li><a href="Ubicacion.html"><i class="fas fa-map-marker-alt fa-fw"></i> Ubicacion</a></li>
+                </ul>
+            </nav>
             <div class="download-app">
                 <a href="#"><i class="fas fa-download fa-fw"></i> Download app</a>
             </div>
@@ -271,51 +281,25 @@ a {
                 </div>
             </div>
 
-            <section class="live-stream-container">
-                <header>
-                    <h1>📡 Transmisión en Vivo Local (Facebook)</h1>
-                    <h2>Culto Dominical | 11 de Mayo 2025 | Movimiento Misionero Mundial | El Cinco.</h2>
-                </header>
-                <div id="live-status">
-  <button id="live-button" onclick="goToLive()">Ver Transmisión en Vivo</button>
-<div class="video-container" style="text-align:center; margin-bottom: 20px;">
-  <!-- Video en vivo incrustado desde Facebook -->
-  <iframe 
-    src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FIglesiaelCinco%2Fvideos%2F2033307890527170%2F&show_text=false&width=560&t=0" 
-    width="560" 
-    height="314" 
-    style="border:none;overflow:hidden" 
-    scrolling="no" 
-    frameborder="0" 
-    allowfullscreen="true" 
-    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
-    allowFullScreen="true">
-  </iframe>
-
-  <!-- Botón alternativo -->
-  <div id="live-status" style="margin-top: 20px;">
-    <button id="live-button" onclick="goToLive()">Ver en Facebook</button>
-  </div>
-</div>
-
-<script>
-  function goToLive() {
-    const fallbackUrl = "https://www.facebook.com/IglesiaelCinco/live_videos/";
-    window.open(fallbackUrl, '_blank');
-  }
-
-  // Estilo del botón
-  document.getElementById("live-button").style = `
-    background-color: #1877F2;
-    color: white;
-    padding: 12px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  `;
-</script>
-
+           <section class="live-stream-container">
+    <header>
+        <h1>🔴 Transmisión en Vivo Local (Facebook)</h1>
+    </header>
+    <div class="video-container">
+        <iframe
+            src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FIglesiaelCinco%2Fvideos%2F645861611774810%2F&show_text=false&width=560&t=0"
+            width="560"
+            height="314"
+            style="border:none;overflow:hidden"
+            scrolling="no"
+            frameborder="0"
+            allowfullscreen="true"
+            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+            allowFullScreen="true"
+            title="Transmisión en Vivo Facebook"
+        ></iframe>
+    </div>
+</section>
 
 
             <section class="live-stream-container">
