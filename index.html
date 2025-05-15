@@ -237,9 +237,51 @@ a {
     .hero h1 {
         font-size: 2rem;
     }
-    .hero img {
-        max-width: 100%;
-    }
+   .hero {
+  text-align: center;
+  background-color: #111; /* Fondo oscuro para resaltar */
+  padding: 1rem;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.hero img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  display: block;
+  margin: 0 auto;
+  object-fit: cover;
+}
+
+.hero h1 {
+  font-size: 2rem;
+  color: #fff;
+  margin-top: 1rem;
+}
+
+.hero p {
+  font-size: 1rem;
+  color: #ccc;
+  margin-bottom: 1rem;
+}
+
+/* Versión móvil (menos de 768px) */
+@media screen and (max-width: 768px) {
+  .hero h1 {
+    font-size: 1.5rem;
+  }
+
+  .hero p {
+    font-size: 0.95rem;
+  }
+
+  .hero {
+    padding: 0.5rem;
+  }
+}
+
     .channel-info {
         padding: 15px;
     }
