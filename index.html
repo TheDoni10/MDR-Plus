@@ -158,44 +158,57 @@ a {
     transform: scale(1.2);
 }
 
-/* Estilo general para la sección de videos en vivo */
+/* CONTENEDOR GENERAL */
 .live-stream-container {
   padding: 1rem;
-  background-color: #000; /* fondo oscuro estilo cine */
+  background-color: #000;
   color: #fff;
   text-align: center;
-}
-
-/* Título */
-.live-stream-container header h1 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-/* Contenedor adaptable al tamaño de pantalla */
-.video-container {
-  position: relative;
-  width: 100%;
-  padding-bottom: 56.25%; /* Relación 16:9 */
-  height: 0;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
   margin-bottom: 1.5rem;
 }
 
-/* Estilo responsive del iframe o video */
+/* TÍTULOS */
+.live-stream-container header h1 {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+/* CONTENEDOR DE VIDEO 16:9 (RESPONSIVE) */
+.video-container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: visible;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  margin: 0 auto;
+}
+
+/* APLICADO A TODOS LOS VIDEOS */
 .video-container iframe,
 .video-container video {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   border: none;
   border-radius: 12px;
   display: block;
+  object-fit: cover;
 }
+
+/* AJUSTE EN PC: REDUCIR TAMAÑO GENERAL */
+@media (min-width: 768px) {
+  .video-container {
+    max-width: 700px;
+  }
+
+  .live-stream-container header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+}
+
+
 
 
 /* Responsivo */
@@ -299,45 +312,47 @@ a {
                     <a href="https://www.youtube.com/@ministerioderestauracionmmm" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
-
-           <section class="live-stream-container">
-    <header>
-        <h1>🔴 Transmisión en Vivo Local (Facebook)</h1>
-        </header>
-    <div class="video-container">
-        <iframe
-            src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FIglesiaelCinco%2Fvideos%2F645861611774810%2F&show_text=false&width=560&t=0"
-            width="560"
-            height="314"
-            style="border:none;overflow:hidden"
-            scrolling="no"
-            frameborder="0"
-            allowfullscreen="true"
-            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-            allowFullScreen="true"
-            title="Transmisión en Vivo Facebook"
-        ></iframe>
-    </div>
+<section class="live-stream-container">
+  <header>
+    <h1>🔴 Transmisión en Vivo Local (Facebook)</h1>
+  </header>
+  <div class="video-container">
+    <iframe
+      src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FIglesiaelCinco%2Fvideos%2F645861611774810%2F&show_text=false&width=560"
+      style="border:none;"
+      scrolling="no"
+      frameborder="0"
+      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share; fullscreen"
+      allowfullscreen="true"
+      title="Transmisión en Vivo Facebook"
+    ></iframe>
+  </div>
 </section>
 
 
-            <section class="live-stream-container">
-                <header>
-                    <h1>📡 Transmisión en Vivo bethel Colombia (YouTube)</h1>
-                </header>
-                <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/live_stream?channel=UCOoepFJWo0r2Y1AbrhuFuig" allowfullscreen title="Transmisión en Vivo YouTube"></iframe>
-                </div>
-            </section>
+          <section class="live-stream-container">
+  <header>
+    <h1>📡 Transmisión en Vivo Bethel Colombia (YouTube)</h1>
+  </header>
+  <div class="video-container">
+    <iframe 
+      src="https://www.youtube.com/embed/live_stream?channel=UCOoepFJWo0r2Y1AbrhuFuig" 
+      allowfullscreen 
+      allow="autoplay; encrypted-media; picture-in-picture"
+      title="Transmisión en Vivo YouTube">
+    </iframe>
+  </div>
 
-            <section class="live-stream-container">
-                <header>
-                    <h1>📺 Transmisión En Vivo (betheltv.tv)</h1>
-                </header>
-                <div class="video-container">
-                    <video id="alfaPlayer" controls autoplay muted title="Transmisión en Vivo Bethel TV"></video>
-                </div>
-            </section>
+  <section class="live-stream-container">
+  <header>
+    <h1>📺 Señal En Vivo (betheltv.tv)</h1>
+  </header>
+  <div class="video-container">
+    <video id="alfaPlayer" controls autoplay muted title="Transmisión en Vivo Bethel TV"></video>
+  </div>
+</section>
+
+
         </main>
     </div>
 
