@@ -239,7 +239,7 @@ a {
     }
    .hero {
   text-align: center;
-  background-color: #111; /* Fondo oscuro para resaltar */
+  background-color: #111;
   padding: 1rem;
   border-radius: 12px;
   overflow: hidden;
@@ -247,14 +247,13 @@ a {
 
 .hero img {
   width: 100%;
-  max-width: 100%;
   height: auto;
   border-radius: 12px;
   display: block;
-  margin: 0 auto;
   object-fit: cover;
 }
 
+/* Texto encima o debajo de la imagen */
 .hero h1 {
   font-size: 2rem;
   color: #fff;
@@ -267,18 +266,26 @@ a {
   margin-bottom: 1rem;
 }
 
-/* Versión móvil (menos de 768px) */
+/* ✅ Estilo portada para móviles */
 @media screen and (max-width: 768px) {
+  .hero {
+    padding: 0;
+  }
+
+  .hero img {
+    aspect-ratio: 3 / 1; /* Estilo portada: ancho 3 veces la altura */
+    height: auto;
+    object-fit: cover;
+  }
+
   .hero h1 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+    margin-top: 0.5rem;
   }
 
   .hero p {
     font-size: 0.95rem;
-  }
-
-  .hero {
-    padding: 0.5rem;
+    margin-bottom: 1rem;
   }
 }
 
