@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Confraternidades Zona 31 </title>
+  <style>
+    /* RESET Y ESTILO GENERAL */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #111;
+      color: #fff;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: row;
+    }
+
+    .sidebar {
+      background-color: #000;
+      width: 250px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .sidebar .logo img {
+      width: 100%;
+    }
+    .sidebar nav ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .sidebar nav ul li a {
+      display: flex;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+    .sidebar nav ul li a:hover {
+      background-color: #333;
+    }
+    .download-app {
+      margin-top: auto;
+    }
+
+    .content {
+      flex: 1;
+      padding: 30px;
+      overflow-x: hidden;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .hero img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+    .hero p {
+      font-size: 1.3rem;
+      color: #ccc;
+    }
+
+    .predicas-section {
+      margin-top: 2rem;
+    }
+
+    .predicas-section h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .fb-video {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* Relación 16:9 */
+  height: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+  background-color: #000;
+}
+
+.fb-video iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        padding: 10px;
+        overflow-x: auto;
+      }
+      .sidebar nav ul {
+        flex-direction: row;
+        gap: 10px;
+      }
+      .sidebar nav ul li a {
+        font-size: 0.9rem;
+        padding: 5px;
+      }
+      .download-app {
+        display: none;
+      }
+      .hero h1 {
+        font-size: 1.5rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+      .predicas-section {
+  padding: 2rem;
+  background-color: #111;
+  color: #fff;
+}
+
+.predicas-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #fff;
+}
+
+/* Grid de videos */
+.video-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+/* Tarjeta individual */
+.video-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Contenedor del video Facebook estilo 16:9 */
+.fb-video {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  background-color: #000;
+}
+
+.fb-video iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Título debajo del video */
+.video-title {
+  margin-top: 0.8rem;
+  font-size: 1rem;
+  color: #ccc;
+  text-align: center;
+  max-width: 100%;
+  line-height: 1.4;
+}
+
+    }
+  </style>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Icono de pestaña -->
+  <link rel="icon" type="image/png" href="Icon/favicon.png">
+
+  <!-- Tu CSS -->
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="img/logo.png" alt="Logo de la Radio">
+                <link rel="icon" type="image/png" href="Icon/favicon.png">
+
+
+                
+
+            </div>
+            <nav>
+                <ul>
+                       <li><a href="index.html"><i class="fas fa-home fa-fw"></i> Inicio</a></li>
+                    <li><a href="Confraternidades.html"><i class="fas fa-calendar-check fa-fw"></i>Conf-Zona31</a></li>
+                    <li><a href="Religion.html"><i class="fas fa-church fa-fw"></i> Religion</a></li>
+                    <li><a href="Musica.html"><i class="fas fa-music fa-fw"></i> Musica</a></li>
+                    <li><a href="news.html"><i class="fas fa-newspaper fa-fw"></i> News</a></li>
+                    <li><a href="podcasts.html"><i class="fas fa-podcast fa-fw"></i> Podcasts</a></li>
+                    <li><a href="Biblia.html"><i class="fas fa-bible fa-fw"></i> Biblia</a></li>
+                    <li><a href="Ubicacion.html"><i class="fas fa-map-marker-alt fa-fw"></i> Ubicacion</a></li>
+                </ul>
+            </nav>
+            <div class="download-app">
+                <a href="#"><i class="fas fa-download fa-fw"></i> Download app</a>
+            </div>
+        </aside>
+
+  <!-- Contenido principal -->
+  <main class="content">
+
+    <!-- Hero -->
+    <section class="hero">
+      <img src="img/Confraternidad20deMayo2025.png" alt="Portada">
+      <h1>Confraternidades Zona 31  Movimiento Misionero Mundial </h1>
+      <p>Edifícate con las transmisiones más recientes</p>
+    </section>
+
+<!-- Sección de videos de Facebook -->
+<section class="predicas-section">
+  <h2>Última Confraternidad - 20/21 de Mayo 2025| Remedios.</h2>
+  <div class="video-grid">
+    
+    <!-- Video 1 -->
+    <div class="video-card">
+      <div class="fb-video">
+        <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FMMMzona31%2Fvideos%2F1347417889884626%2F"
+                allowfullscreen
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+      </div>
+      <p class="video-title">Confraternidad Zona 31 Primer servicio</p>
+    </div>
+
+    <!-- Video 2 -->
+    <div class="video-card">
+      <div class="fb-video">
+        <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FMMMzona31%2Fvideos%2F688582133932058%2F"
+                allowfullscreen
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+      </div>
+      <p class="video-title">Confraternidad Zona 31 Segundo servicio</p>
+    </div>
+
+    <!-- Video 3 -->
+    <div class="video-card">
+      <div class="fb-video">
+        <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FMMMzona31%2Fvideos%2F1375100817157827%2F"
+                allowfullscreen
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+      </div>
+      <p class="video-title">Confraternidad Zona 31 Segundo servicio</p>
+    </div>
+
+  </div>
+</section>
+
+  </main>
+</div>
+
+</body>
+</html>

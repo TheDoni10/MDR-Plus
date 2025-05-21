@@ -7,165 +7,164 @@
     <link rel="icon" type="image/png" href="Icon/favicon.ico">
 
     <!-- Font Awesome para íconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Icono de pestaña -->
+  <link rel="icon" type="image/png" href="Icon/favicon.png">
+
+  <!-- Tu CSS -->
+  <link rel="stylesheet" href="estilos.css">
 
     <style>
         /* Reset básico */
-        * {
-          box-sizing: border-box;
-          margin: 0;
-          padding: 0;
-        }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-        body {
-          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-          background-color: #121212;
-          color: #e0e0e0;
-          line-height: 1.5;
-        }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #121212;
+  color: #e0e0e0;
+  line-height: 1.5;
+}
 
-        .container {
-          display: grid;
-          grid-template-columns: 200px 1fr;
-          min-height: 100vh;
-        }
+.container {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  min-height: 100vh;
+}
 
-        /* Sidebar */
-        aside.sidebar {
-          background-color: #1e1e1e;
-          padding: 20px;
-          display: flex;
-          flex-direction: column;
-        }
+/* Sidebar */
+aside.sidebar {
+  background-color: #1e1e1e;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
 
-        .logo img {
-          max-width: 150px;
-          margin-bottom: 30px;
-        }
+.logo img {
+  max-width: 150px;
+  margin-bottom: 30px;
+}
 
-        nav ul {
-          list-style: none;
-          padding: 0;
-        }
+.menu-toggle {
+  display: none;
+  font-size: 30px;
+  color: #e0e0e0;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
 
-        nav li + li {
-          margin-top: 15px;
-        }
+nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
 
-        nav a {
-          display: block;
-          padding: 8px 12px;
-          border-radius: 5px;
-          text-decoration: none;
-          font-weight: 600;
-          color: #e0e0e0;
-          transition: .3s;
-        }
+nav li + li {
+  margin-top: 15px;
+}
 
-        nav a:hover {
-          background: #333;
-          color: #3f51b5;
-          transform: translateX(5px);
-        }
+nav a {
+  display: block;
+  padding: 8px 12px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 600;
+  color: #e0e0e0;
+  transition: .3s;
+}
 
-        .download-app {
-          margin-top: auto;
-        }
+nav a:hover {
+  background: #333;
+  color: #3f51b5;
+  transform: translateX(5px);
+}
 
-        .download-app a {
-          display: block;
-          text-align: center;
-          padding: 12px;
-          border-radius: 5px;
-          background: #3f51b5;
-          color: #fff;
-          text-decoration: none;
-          transition: .3s;
-        }
+.download-app {
+  margin-top: auto;
+}
 
-        .download-app a:hover {
-          background: #303f9f;
-          transform: scale(1.05);
-        }
+.download-app a {
+  display: block;
+  text-align: center;
+  padding: 12px;
+  border-radius: 5px;
+  background: #3f51b5;
+  color: #fff;
+  text-decoration: none;
+  transition: .3s;
+}
 
-        /* Contenido principal */
-        main.content {
-          padding: 20px;
-          display: grid;
-          grid-template-rows: auto auto 1fr auto;
-          gap: 20px;
-        }
+.download-app a:hover {
+  background: #303f9f;
+  transform: scale(1.05);
+}
 
-        /* Hero */
-        .hero img {
-          width: 100%;
-          max-height: 300px;
-          object-fit: cover;
-          border-radius: 8px;
-        }
+/* Contenido principal */
+main.content {
+  padding: 20px;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 20px;
+}
 
-        .hero h1 {
-          margin-top: 10px;
-          font-size: 2rem;
-          color: #fff;
-        }
+/* Hero */
+.hero img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+}
 
-        /* Estilo para la imagen de portada */
-        .hero-img {
-          width: 100%;
-          max-height: 400px; /* Ajusta la altura máxima si lo necesitas */
-          object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
-          border-radius: 8px; /* Bordes redondeados */
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Sombra para darle un efecto de profundidad */
-          margin-bottom: 20px; /* Espacio debajo de la imagen */
-        }
+.hero h1 {
+  margin-top: 10px;
+  font-size: 2rem;
+  color: #fff;
+}
 
-        /* Responsive */
-        @media (max-width: 768px) {
-          .container {
-            grid-template-columns: 1fr;
-          }
-          aside.sidebar {
-            flex-direction: column;
-            align-items: flex-start;
-          }
+/* Estilo para imagen de portada */
+.hero-img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  margin-bottom: 20px;
+}
 
-          nav ul {
-            display: none;
-            flex-direction: column;
-            width: 100%;
-          }
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
 
-          nav ul li {
-            width: 100%;
-            text-align: center;
-          }
+  .menu-toggle {
+    display: block;
+  }
 
-          nav .menu-toggle {
-            display: block;
-            font-size: 30px;
-            cursor: pointer;
-            color: #e0e0e0;
-            margin-left: auto;
-            padding: 10px;
-          }
+  nav ul {
+    display: none;
+  }
 
-          .download-app {
-            margin-top: 0;
-            margin-left: auto;
-          }
+  nav ul.active {
+    display: flex;
+  }
 
-          .hero img {
-            max-height: 250px;
-          }
-        }
+  nav ul li {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 10px;
+  }
 
-        /* Mostrar el menú al hacer clic */
-        @media (max-width: 768px) {
-          nav ul.active {
-            display: flex;
-          }
-        }
+  .download-app {
+    margin-top: 20px;
+  }
+}
 
     </style>
 </head>
@@ -180,17 +179,22 @@
             <nav>
                 <div class="menu-toggle">
                     <i class="fas fa-bars"></i>
-                </div>
+              </div>
+            <nav>
                 <ul>
-                    <li><a href="index.html"><i class="fas fa-home fa-fw"></i> Inicio</a></li>
-                    <li><a href="Religion.html"><i class="fas fa-church fa-fw"></i> Religión</a></li>
-                    <li><a href="Musica.html"><i class="fas fa-music fa-fw"></i> Música</a></li>
+                       <li><a href="index.html"><i class="fas fa-home fa-fw"></i> Inicio</a></li>
+                   <li><a href="Confraternidades.html"><i class="fas fa-calendar-check fa-fw"></i>Conf-Zona31</a></li>
+                    <li><a href="Religion.html"><i class="fas fa-church fa-fw"></i> Religion</a></li>
+                    <li><a href="Musica.html"><i class="fas fa-music fa-fw"></i> Musica</a></li>
                     <li><a href="news.html"><i class="fas fa-newspaper fa-fw"></i> News</a></li>
                     <li><a href="podcasts.html"><i class="fas fa-podcast fa-fw"></i> Podcasts</a></li>
                     <li><a href="Biblia.html"><i class="fas fa-bible fa-fw"></i> Biblia</a></li>
-                    <li><a href="Ubicacion.html"><i class="fas fa-map-marker-alt fa-fw"></i> Ubicación</a></li>
+                    <li><a href="Ubicacion.html"><i class="fas fa-map-marker-alt fa-fw"></i> Ubicacion</a></li>
                 </ul>
             </nav>
+            <div class="download-app">
+                <a href="#"><i class="fas fa-download fa-fw"></i> Download app</a>
+            </div>
         </aside>
 
         <main class="content">
