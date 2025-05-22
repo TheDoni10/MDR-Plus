@@ -426,74 +426,155 @@ a {
 </script>
 <section class="live-stream-container">
   <header>
-    <h1>📺 Señal En Vivo (betheltv.tv)</h1>
-  </header>
-  <div class="video-container">
-    <video id="alfaPlayer" controls autoplay muted title="Transmisión en Vivo Bethel TV"></video>
-  </div>
-</section>
-
-
-        </main>
-    </div>
-
-    <!-- CDN de Hls.js -->
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-
-<script>
-  const video = document.getElementById('alfaPlayer');
-  const m3u8Url = 'https://alfa.betheltv.tv/srt/3_abr/playlist.m3u8';
-
-  // Crear elementos de ajustes
-  const settingsToggle = document.createElement('button');
-  settingsToggle.textContent = '⚙️';
-  settingsToggle.className = 'settings-icon';
-  video.parentNode.appendChild(settingsToggle);
-
-  const settingsMenu = document.createElement('div');
-  settingsMenu.className = 'settings-menu';
-  settingsMenu.style.display = 'none';
-  video.parentNode.appendChild(settingsMenu);
-
-  let hls;
-
-  if (Hls.isSupported()) {
-    hls = new Hls();
-    hls.loadSource(m3u8Url);
-    hls.attachMedia(video);
-
-    hls.on(Hls.Events.MANIFEST_PARSED, function () {
-      // Cargar calidad más alta por defecto
-      hls.currentLevel = hls.levels.length - 1;
-
-      // Crear botones para cada calidad
-      hls.levels.forEach((level, i) => {
-        const btn = document.createElement('button');
-        btn.textContent = `${level.height}p`;
-        btn.dataset.level = i;
-        btn.onclick = () => {
-          hls.currentLevel = parseInt(btn.dataset.level);
-          settingsMenu.style.display = 'none';
-        };
-        settingsMenu.appendChild(btn);
-      });
-    });
-  } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-    video.src = m3u8Url;
-  }
-
-  // Mostrar/ocultar menú
-  settingsToggle.addEventListener('click', () => {
-    settingsMenu.style.display = settingsMenu.style.display === 'flex' ? 'none' : 'flex';
-  });
-
-  // Ocultar menú si se hace clic afuera
-  document.addEventListener('click', (e) => {
-    if (!settingsMenu.contains(e.target) && !settingsToggle.contains(e.target)) {
-      settingsMenu.style.display = 'none';
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Transmisión en Vivo Bethel</title>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <style>
+    body {
+      background: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
     }
-  });
-</script>
+
+    .live-stream-container {
+      max-width: 800px;
+      margin: 30px auto;
+      background: #222;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #000;
+      position: relative;
+    }
+
+    .live-stream-container header h1 {
+      text-align: center;
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+    }
+
+    .video-container {
+      position: relative;
+    }
+
+    video {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    .settings-menu {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.8);
+      padding: 5px;
+      border-radius: 5px;
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .settings-menu button {
+      background: #333;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      border-radius: 5px;
+    }
+
+    .settings-icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.5);
+      border: none;
+      border-radius: 50%;
+      font-size: 20px;
+      width: 35px;
+      height: 35px;
+      color: white;
+      cursor: pointer;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+
+  <section class="live-stream-container">
+    <header>
+      <h1>📺 Señal En Vivo (betheltv.tv)</h1>
+    </header>
+    <div class="video-container">
+      <video id="alfaPlayer" controls autoplay muted title="Transmisión en Vivo Bethel TV"></video>
+      <button class="settings-icon" id="settingsToggle">⚙️</button>
+      <div class="settings-menu" id="settingsMenu">
+        <button data-quality="1080">HD (Alta)</button>
+        <button data-quality="720">Media</button>
+        <button data-quality="480">Baja</button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const video = document.getElementById('alfaPlayer');
+    const settingsToggle = document.getElementById('settingsToggle');
+    const settingsMenu = document.getElementById('settingsMenu');
+
+    const m3u8Url = 'https://alfa.betheltv.tv/srt/3_abr/playlist.m3u8'; // Reemplaza con tu mejor URL
+
+    let hls;
+
+    if (Hls.isSupported()) {
+      hls = new Hls();
+      hls.loadSource(m3u8Url);
+      hls.attachMedia(video);
+
+      hls.on(Hls.Events.MANIFEST_PARSED, function () {
+        // Forzar calidad más alta al inicio
+        hls.currentLevel = hls.levels.length - 1;
+      });
+
+      // Cambiar calidad al seleccionar una opción
+      settingsMenu.addEventListener('click', function (e) {
+        if (e.target.tagName === 'BUTTON') {
+          const res = parseInt(e.target.getAttribute('data-quality'));
+          const levelIndex = hls.levels.findIndex(lvl => lvl.height === res);
+          if (levelIndex !== -1) {
+            hls.currentLevel = levelIndex;
+          } else {
+            alert('Resolución no disponible para este stream.');
+          }
+          settingsMenu.style.display = 'none';
+        }
+      });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = m3u8Url;
+    }
+
+    // Mostrar/Ocultar menú de calidad
+    settingsToggle.addEventListener('click', () => {
+      settingsMenu.style.display = settingsMenu.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    // Ocultar menú al hacer clic fuera
+    document.addEventListener('click', (e) => {
+      if (!settingsMenu.contains(e.target) && !settingsToggle.contains(e.target)) {
+        settingsMenu.style.display = 'none';
+      }
+    });
+  </script>
+
+</body>
+</html>
+
 
 </body>
 </html>
