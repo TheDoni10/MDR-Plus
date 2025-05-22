@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+ <link rel="icon" type="image/png" href="Icon/favicon.ico">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
   <title>Confraternidades Zona 31 </title>
   <style>
-  /* RESET Y ESTILO GENERAL */
+ /* RESET Y ESTILO GENERAL */
 * {
   margin: 0;
   padding: 0;
@@ -116,7 +118,7 @@ a {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 20px;
-  justify-items: center; /* centrado horizontal */
+  justify-items: center;
 }
 
 /* TARJETA DE VIDEO */
@@ -132,7 +134,7 @@ a {
 .fb-video {
   position: relative;
   width: 100%;
-  padding-bottom: 56.25%; /* Relación 16:9 */
+  padding-bottom: 56.25%;
   height: 0;
   border-radius: 12px;
   overflow: hidden;
@@ -159,7 +161,7 @@ a {
   line-height: 1.4;
 }
 
-/* ESTILOS RESPONSIVOS */
+/* ESTILOS RESPONSIVOS PARA MÓVIL */
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
@@ -202,19 +204,20 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 2rem;
   }
 
   .video-card {
-    width: 95%;
-    max-width: 100%;
-    margin: 0 auto;
+    width: 100%;
+    max-width: 95%;
+    transform: scale(1.2); /* aumenta el tamaño un 20% */
+    transition: transform 0.3s ease;
   }
 
   .video-title {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
   }
 }
-
 
   </style>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
