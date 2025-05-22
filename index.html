@@ -377,19 +377,36 @@ a {
 <iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FIglesiaelCinco%2Fvideos%2F1427619355087086%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe></section>
 
 
-
-          <section class="live-stream-container">
+<section class="live-stream-container">
   <header>
     <h1>📡 Transmisión en Vivo Bethel Colombia (YouTube)</h1>
   </header>
-  <div class="video-container">
-    <iframe 
-      src="https://www.youtube.com/embed/live_stream?channel=UCOoepFJWo0r2Y1AbrhuFuig" 
-      allowfullscreen 
+  <div class="video-container" id="videoContainer">
+    <iframe
+      id="youtubeLive"
+      src="https://www.youtube.com/embed/live_stream?channel=UCOoepFJWo0r2Y1AbrhuFuig"
+      allowfullscreen
       allow="autoplay; encrypted-media; picture-in-picture"
       title="Transmisión en Vivo YouTube">
     </iframe>
   </div>
+</section>
+
+<script>
+  // Intenta cargar el live, si no está en vivo, cambia al último video subido
+  fetch("https://www.youtube.com/channel/UCOoepFJWo0r2Y1AbrhuFuig/live")
+    .then(response => {
+      if (!response.url.includes("/watch")) {
+        // Si no redirige a un video (no hay transmisión en vivo)
+        document.getElementById("youtubeLive").src =
+          "https://www.youtube.com/embed?list=UULOoepFJWo0r2Y1AbrhuFuig";
+      }
+    })
+    .catch(error => {
+      console.error("No se pudo verificar el estado del en vivo:", error);
+    });
+</script>
+
 
   <section class="live-stream-container">
   <header>
