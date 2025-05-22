@@ -5,102 +5,131 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Confraternidades Zona 31 </title>
   <style>
-    /* RESET Y ESTILO GENERAL */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #111;
-      color: #fff;
-    }
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+   /* RESET Y ESTILO GENERAL */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    .container {
-      display: flex;
-      min-height: 100vh;
-      flex-direction: row;
-    }
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #111;
+  color: #fff;
+}
 
-    .sidebar {
-      background-color: #000;
-      width: 250px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .sidebar .logo img {
-      width: 100%;
-    }
-    .sidebar nav ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    .sidebar nav ul li a {
-      display: flex;
-      gap: 10px;
-      padding: 10px;
-      border-radius: 8px;
-      transition: background 0.3s;
-    }
-    .sidebar nav ul li a:hover {
-      background-color: #333;
-    }
-    .download-app {
-      margin-top: auto;
-    }
+a {
+  color: inherit;
+  text-decoration: none;
+}
 
-    .content {
-      flex: 1;
-      padding: 30px;
-      overflow-x: hidden;
-    }
+/* CONTENEDORES PRINCIPALES */
+.container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: row;
+}
 
-    .hero {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-    .hero img {
-      width: 100%;
-      height: 400px;
-      object-fit: cover;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
-    }
-    .hero p {
-      font-size: 1.3rem;
-      color: #ccc;
-    }
+.sidebar {
+  background-color: #000;
+  width: 250px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
-    .predicas-section {
-      margin-top: 2rem;
-    }
+.sidebar .logo img {
+  width: 100%;
+}
 
-    .predicas-section h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
+.sidebar nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
 
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 20px;
-    }
+.sidebar nav ul li a {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
 
-    .fb-video {
+.sidebar nav ul li a:hover {
+  background-color: #333;
+}
+
+.download-app {
+  margin-top: auto;
+}
+
+.content {
+  flex: 1;
+  padding: 30px;
+  overflow-x: hidden;
+}
+
+/* SECCIÓN HERO */
+.hero {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.hero img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 1.3rem;
+  color: #ccc;
+}
+
+/* SECCIÓN PREDICAS */
+.predicas-section {
+  margin-top: 2rem;
+  padding: 2rem;
+  background-color: #111;
+  color: #fff;
+}
+
+.predicas-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #fff;
+}
+
+/* GRID DE VIDEOS */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  justify-items: center;
+}
+
+/* TARJETA DE VIDEO */
+.video-card {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* VIDEO EMBEBIDO (Facebook o YouTube) */
+.fb-video {
   position: relative;
   width: 100%;
   padding-bottom: 56.25%; /* Relación 16:9 */
@@ -120,83 +149,7 @@
   border: none;
 }
 
-
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-      .sidebar {
-        width: 100%;
-        flex-direction: row;
-        padding: 10px;
-        overflow-x: auto;
-      }
-      .sidebar nav ul {
-        flex-direction: row;
-        gap: 10px;
-      }
-      .sidebar nav ul li a {
-        font-size: 0.9rem;
-        padding: 5px;
-      }
-      .download-app {
-        display: none;
-      }
-      .hero h1 {
-        font-size: 1.5rem;
-      }
-      .hero p {
-        font-size: 1rem;
-      }
-      .predicas-section {
-  padding: 2rem;
-  background-color: #111;
-  color: #fff;
-}
-
-.predicas-section h2 {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  text-align: center;
-  color: #fff;
-}
-
-/* Grid de videos */
-.video-grid {
-  display: grid;
-  gap: 2rem;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-}
-
-/* Tarjeta individual */
-.video-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Contenedor del video Facebook estilo 16:9 */
-.fb-video {
-  position: relative;
-  width: 100%;
-  padding-bottom: 56.25%; /* 16:9 */
-  height: 0;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  background-color: #000;
-}
-
-.fb-video iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-/* Título debajo del video */
+/* TÍTULO DE VIDEO */
 .video-title {
   margin-top: 0.8rem;
   font-size: 1rem;
@@ -206,7 +159,55 @@
   line-height: 1.4;
 }
 
-    }
+/* ESTILOS RESPONSIVOS */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    padding: 10px;
+    overflow-x: auto;
+  }
+
+  .sidebar nav ul {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .sidebar nav ul li a {
+    font-size: 0.9rem;
+    padding: 5px;
+  }
+
+  .download-app {
+    display: none;
+  }
+
+  .hero h1 {
+    font-size: 1.5rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .content {
+    padding: 20px;
+  }
+
+  .video-card {
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  .video-title {
+    font-size: 0.95rem;
+  }
+}
+
   </style>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
