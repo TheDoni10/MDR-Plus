@@ -368,8 +368,7 @@ a {
     <h1>🔴 Señal en Vivo - Ministerio de Restauración .</h1>
   </header>
   <div class="video-container">
-<iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FIglesiaelCinco%2Fvideos%2F1427619355087086%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe></section>
-
+<iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FIglesiaelCinco%2Fvideos%2F2045118675976243%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
 
 <section class="live-stream-container">
   <header>
@@ -391,48 +390,50 @@ a {
     <h1>📡 Transmisión en Vivo Bethel Colombia (YouTube)</h1>
   </header>
   <div class="video-container" id="videoContainer">
-    <iframe
-      id="youtubeEmbed"
-      width="100%"
-      height="500"
-      frameborder="0"
-      allowfullscreen
-      allow="autoplay; encrypted-media; picture-in-picture"
-      title="Transmisión en Vivo YouTube">
-    </iframe>
+    <!-- El iframe se creará desde JavaScript -->
   </div>
 </section>
 
 <script>
   const API_KEY = "AIzaSyCggtzAkFEE7l2BU7_-W5uyG3Ag9fq4N1M";
   const CHANNEL_ID = "UCOoepFJWo0r2Y1AbrhuFuig";
+  const videoContainer = document.getElementById("videoContainer");
 
-  // Paso 1: Verifica si hay transmisión en vivo
+  function setVideo(videoId) {
+    videoContainer.innerHTML = `
+      <iframe
+        width="100%"
+        height="500"
+        src="https://www.youtube.com/embed/${videoId}"
+        frameborder="0"
+        allowfullscreen
+        allow="autoplay; encrypted-media; picture-in-picture"
+        title="Video YouTube">
+      </iframe>`;
+  }
+
+  // Verifica si hay transmisión en vivo
   fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&type=video&key=${API_KEY}`)
     .then(response => response.json())
     .then(data => {
-      const iframe = document.getElementById("youtubeEmbed");
-
       if (data.items && data.items.length > 0) {
         // Hay en vivo
         const liveVideoId = data.items[0].id.videoId;
-        iframe.src = `https://www.youtube.com/embed/${liveVideoId}`;
+        setVideo(liveVideoId);
       } else {
-        // No hay en vivo, mostrar el último video subido
+        // No hay en vivo, buscar el último video subido
         fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&maxResults=1&order=date&type=video&key=${API_KEY}`)
           .then(response => response.json())
           .then(data => {
             if (data.items && data.items.length > 0) {
               const lastVideoId = data.items[0].id.videoId;
-              iframe.src = `https://www.youtube.com/embed/${lastVideoId}`;
+              setVideo(lastVideoId);
             } else {
-              // No hay videos
-              document.getElementById("videoContainer").innerHTML =
-                "<p>No se encontraron videos en el canal.</p>";
+              videoContainer.innerHTML = "<p>No se encontraron videos en el canal.</p>";
             }
           })
           .catch(err => {
-            console.error("Error al obtener último video:", err);
+            console.error("Error al obtener el último video:", err);
           });
       }
     })
@@ -440,6 +441,7 @@ a {
       console.error("Error al verificar en vivo:", err);
     });
 </script>
+
 
 
   <section class="live-stream-container">
