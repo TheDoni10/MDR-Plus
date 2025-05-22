@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Confraternidades Zona 31 </title>
   <style>
-   /* RESET Y ESTILO GENERAL */
+  /* RESET Y ESTILO GENERAL */
 * {
   margin: 0;
   padding: 0;
@@ -116,7 +116,7 @@ a {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 20px;
-  justify-items: center;
+  justify-items: center; /* centrado horizontal */
 }
 
 /* TARJETA DE VIDEO */
@@ -198,8 +198,15 @@ a {
     padding: 20px;
   }
 
+  .video-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .video-card {
     width: 95%;
+    max-width: 100%;
     margin: 0 auto;
   }
 
@@ -207,6 +214,7 @@ a {
     font-size: 0.95rem;
   }
 }
+
 
   </style>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
