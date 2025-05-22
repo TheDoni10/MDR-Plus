@@ -163,6 +163,43 @@ a {
 
 /* ESTILOS RESPONSIVOS PARA MÓVIL */
 @media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    padding: 10px;
+    overflow-x: auto;
+  }
+
+  .sidebar nav ul {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .sidebar nav ul li a {
+    font-size: 0.9rem;
+    padding: 5px;
+  }
+
+  .download-app {
+    display: none;
+  }
+
+  .hero h1 {
+    font-size: 1.5rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .predicas-section {
+    padding: 1rem;
+  }
+
   .video-grid {
     display: flex;
     flex-direction: column;
@@ -173,19 +210,38 @@ a {
   .video-card {
     width: 100%;
     max-width: 95%;
-    /* Quitamos transform para no afectar controles del iframe */
-    /* transform: scale(1.2); */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .fb-video {
-    width: 120%; /* 20% más grande de forma segura */
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
+    position: relative;
+    padding-bottom: 67.5%; /* Aumenta el alto (16:9 + 20%) */
+    height: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    background-color: #000;
+  }
+
+  .fb-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
   }
 
   .video-title {
+    margin-top: 0.8rem;
     font-size: 1.1rem;
+    color: #ccc;
+    text-align: center;
+    max-width: 100%;
+    line-height: 1.4;
   }
 }
 
