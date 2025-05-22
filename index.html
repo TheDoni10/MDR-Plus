@@ -437,30 +437,63 @@ a {
         </main>
     </div>
 
-    <script>
-        const playButtonPlayer = document.getElementById('playButtonPlayer');
-        const audioPlayer = document.getElementById('audioPlayer');
+    <!-- CDN de Hls.js -->
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
-        playButtonPlayer.addEventListener('click', () => {
-            if (audioPlayer.paused) {
-                audioPlayer.play();
-                playButtonPlayer.src = 'Icon/boton-de-pausa.png';
-            } else {
-                audioPlayer.pause();
-                playButtonPlayer.src = 'Icon/Play.png';
-            }
-        });
+<script>
+  const video = document.getElementById('alfaPlayer');
+  const m3u8Url = 'https://alfa.betheltv.tv/srt/3_abr/playlist.m3u8';
 
-        const video = document.getElementById('alfaPlayer');
-        const m3u8Url = 'https://alfa.betheltv.tv/srt/3_abr/playlist.m3u8'; // Asegúrate de que esta URL sea correcta
+  // Crear elementos de ajustes
+  const settingsToggle = document.createElement('button');
+  settingsToggle.textContent = '⚙️';
+  settingsToggle.className = 'settings-icon';
+  video.parentNode.appendChild(settingsToggle);
 
-        if (Hls.isSupported()) {
-            const hls = new Hls();
-            hls.loadSource(m3u8Url);
-            hls.attachMedia(video);
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = m3u8Url;
-        }
-    </script>
+  const settingsMenu = document.createElement('div');
+  settingsMenu.className = 'settings-menu';
+  settingsMenu.style.display = 'none';
+  video.parentNode.appendChild(settingsMenu);
+
+  let hls;
+
+  if (Hls.isSupported()) {
+    hls = new Hls();
+    hls.loadSource(m3u8Url);
+    hls.attachMedia(video);
+
+    hls.on(Hls.Events.MANIFEST_PARSED, function () {
+      // Cargar calidad más alta por defecto
+      hls.currentLevel = hls.levels.length - 1;
+
+      // Crear botones para cada calidad
+      hls.levels.forEach((level, i) => {
+        const btn = document.createElement('button');
+        btn.textContent = `${level.height}p`;
+        btn.dataset.level = i;
+        btn.onclick = () => {
+          hls.currentLevel = parseInt(btn.dataset.level);
+          settingsMenu.style.display = 'none';
+        };
+        settingsMenu.appendChild(btn);
+      });
+    });
+  } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+    video.src = m3u8Url;
+  }
+
+  // Mostrar/ocultar menú
+  settingsToggle.addEventListener('click', () => {
+    settingsMenu.style.display = settingsMenu.style.display === 'flex' ? 'none' : 'flex';
+  });
+
+  // Ocultar menú si se hace clic afuera
+  document.addEventListener('click', (e) => {
+    if (!settingsMenu.contains(e.target) && !settingsToggle.contains(e.target)) {
+      settingsMenu.style.display = 'none';
+    }
+  });
+</script>
+
 </body>
 </html>
