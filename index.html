@@ -362,7 +362,13 @@ a {
                     <a href="https://www.youtube.com/@ministerioderestauracionmmm" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
-
+<section class="live-stream-container">
+  <header>
+    <h1>🔴 Confraternidad Zona 31 - Mayo 2025 | Movimiento Misionero Mundial | Remedios.</h1>
+  </header>
+  <div class="video-container">
+      <iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FMMMzona31%2Fvideos%2F1375100817157827%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
+</section>
 
             <section class="live-stream-container">
   <header>
@@ -373,36 +379,19 @@ a {
 
 
 
-         <section class="live-stream-container">
-        <header><h1>📡 Transmisión en Vivo Bethel Colombia</h1></header>
-        <div class="video-container" id="videoContainer"><p>Cargando...</p></div>
-      </section>
-    </main>
+          <section class="live-stream-container">
+  <header>
+    <h1>📡 Transmisión en Vivo Bethel Colombia (YouTube)</h1>
+  </header>
+  <div class="video-container">
+    <iframe 
+      src="https://www.youtube.com/embed/live_stream?channel=UCOoepFJWo0r2Y1AbrhuFuig" 
+      allowfullscreen 
+      allow="autoplay; encrypted-media; picture-in-picture"
+      title="Transmisión en Vivo YouTube">
+    </iframe>
   </div>
 
-  <script>
-    const API_KEY = 'AIzaSyBhP5vdWh2rOfmil6aMSeGIs_XY866h8Gs';
-    const CHANNEL_ID = 'UCOoepFJWo0r2Y1AbrhuFuig';
-    const videoContainer = document.getElementById('videoContainer');
-
-    function setVideo(id,label=''){
-      videoContainer.innerHTML = `<p>${label}</p><iframe src="https://www.youtube.com/embed/${id}?rel=0" allowfullscreen></iframe>`;
-    }
-    function showError(msg){ videoContainer.innerHTML = `<p style="color:red">${msg}</p>`; }
-
-    async function loadVideo(){
-      try{
-        let res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&type=video&key=${API_KEY}`);
-        let data = await res.json();
-        if(data.items.length) return setVideo(data.items[0].id.videoId,'🔴 EN VIVO');
-        res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&maxResults=1&order=date&type=video&key=${API_KEY}`);
-        data = await res.json();
-        if(data.items.length) return setVideo(data.items[0].id.videoId,'📺 Último video');
-        showError('No hay videos.');
-      } catch(e){ showError('Error cargando video.'); }
-    }
-    loadVideo();
-  </script>
   <section class="live-stream-container">
   <header>
     <h1>📺 Señal En Vivo (betheltv.tv)</h1>
