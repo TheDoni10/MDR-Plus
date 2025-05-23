@@ -485,402 +485,144 @@
   }
 
   loadVideo();
-</script>
+
 
 
 
 
   
-</head>
-<body>
+// Element references
+const videoPlayer = document.getElementById('videoPlayer');
+const mainVideo = document.getElementById('mainVideo');
+const playOverlay = document.getElementById('playOverlay');
+const initialPlayButton = document.getElementById('initialPlayButton');
+const videoControls = document.getElementById('videoControls');
+const playPauseToggle = document.getElementById('playPauseToggle');
+const volumeToggle = document.getElementById('volumeToggle');
+const volumeSlider = document.getElementById('volumeSlider');
+const timeDisplay = document.getElementById('timeDisplay');
+const progressBarContainer = document.getElementById('progressBarContainer');
+const progressBarFill = document.getElementById('progressBarFill');
+const settingsToggle = document.getElementById('settingsToggle');
+const settingsMenu = document.getElementById('settingsMenu');
+const fullscreenToggle = document.getElementById('fullscreenToggle');
+const liveIndicator = document.getElementById('liveIndicator');
+const goLiveButton = document.getElementById('goLiveButton');
 
-<section class="custom-player" id="videoPlayer">
-    <video id="mainVideo" playsinline preload="auto"></video>
+// HLS source URL
+const hlsUrl = 'https://alfa.betheltv.tv/srt/3_abr/playlist.m3u8';
 
-    <div class="play-overlay" id="playOverlay">
-        <button id="initialPlayButton"><i class="fas fa-play"></i></button>
-    </div>
+let hls;
+let controlsTimeout;
+let userInteracted = false;
 
-    <div class="custom-controls" id="videoControls">
-        <div class="progress-bar-container" id="progressBarContainer">
-            <div class="progress-bar-fill" id="progressBarFill">
-                <div class="seek-handle"></div>
-            </div>
-        </div>
+// Time formatting helper
+function formatTime(sec) {
+  const m = Math.floor(sec / 60), s = Math.floor(sec % 60);
+  return `${m<10?'0':''}${m}:${s<10?'0':''}${s}`;
+}
 
-        <div class="controls-top-row">
-            <span class="live-indicator" id="liveIndicator">● EN VIVO</span>
-            <button class="go-live-button" id="goLiveButton" style="display: none;"></button>
+// Initialize HLS.js or native playback
+function initHls() {
+  if (Hls.isSupported()) {
+    hls = new Hls();
+    hls.loadSource(hlsUrl);
+    hls.attachMedia(mainVideo);
+  } else {
+    mainVideo.src = hlsUrl;
+  }
+  mainVideo.play();
+  hideOverlay();
+}
 
-            <div class="settings-menu" id="settingsMenu">
-                <button data-quality="auto">Automático</button>
-                <button data-quality="1080">1080p</button>
-                <button data-quality="720">720p</button>
-                <button data-quality="480">480p</button>
-                <button data-quality="360">360p</button>
-            </div>
-        </div>
+// Hide initial overlay and update play icon
+function hideOverlay() {
+  playOverlay.classList.add('hidden');
+  playPauseToggle.innerHTML = '<i class="fas fa-pause"></i>';
+}
 
-        <div class="controls-bottom-row">
-            <div class="controls-left">
-                <button id="playPauseToggle"><i class="fas fa-play"></i></button>
-                <div class="volume-container">
-                    <button id="volumeToggle"><i class="fas fa-volume-up"></i></button>
-                    <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.05" value="1">
-                </div>
-                <span class="time-display" id="timeDisplay">00:00 / 00:00</span>
-            </div>
-            <div class="controls-right">
-                <button class="settings-icon" id="settingsToggle"><i class="fas fa-cog"></i></button>
-                <button id="fullscreenToggle"><i class="fas fa-expand"></i></button>
-            </div>
-        </div>
-    </div>
-</section>
+// Toggle play/pause
+function togglePlay() {
+  if (mainVideo.paused) mainVideo.play();
+  else mainVideo.pause();
+  playPauseToggle.innerHTML = mainVideo.paused
+    ? '<i class="fas fa-play"></i>'
+    : '<i class="fas fa-pause"></i>';
+}
 
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-<script>
-    const videoPlayer = document.getElementById('videoPlayer');
-    const mainVideo = document.getElementById('mainVideo');
-    const playOverlay = document.getElementById('playOverlay');
-    const initialPlayButton = document.getElementById('initialPlayButton');
-    const videoControls = document.getElementById('videoControls');
-    const playPauseToggle = document.getElementById('playPauseToggle');
-    const volumeToggle = document.getElementById('volumeToggle');
-    const volumeSlider = document.getElementById('volumeSlider');
-    const timeDisplay = document.getElementById('timeDisplay');
-    const progressBarContainer = document.getElementById('progressBarContainer');
-    const progressBarFill = document.getElementById('progressBarFill');
-    const settingsToggle = document.getElementById('settingsToggle');
-    const settingsMenu = document.getElementById('settingsMenu');
-    const fullscreenToggle = document.getElementById('fullscreenToggle');
-    const liveIndicator = document.getElementById('liveIndicator');
-    const goLiveButton = document.getElementById('goLiveButton');
+// Update progress bar and time display
+mainVideo.addEventListener('timeupdate', () => {
+  if (!isNaN(mainVideo.duration)) {
+    const pct = (mainVideo.currentTime / mainVideo.duration) * 100;
+    progressBarFill.style.width = pct + '%';
+    timeDisplay.textContent = formatTime(mainVideo.currentTime);
+  }
+});
 
-    const m3u8Url = 'https://alfa.betheltv.tv/srt/3_abr/playlist.m3u8'; // Tu URL HLS
+// Seek on progress bar click
+progressBarContainer.addEventListener('click', e => {
+  if (!isNaN(mainVideo.duration)) {
+    const rect = progressBarContainer.getBoundingClientRect();
+    const clickPct = (e.clientX - rect.left) / rect.width;
+    mainVideo.currentTime = clickPct * mainVideo.duration;
+  }
+});
 
-    let hls;
-    let controlsTimeout;
-    let isLive = true; // Asumimos que es en vivo por defecto
-    let userInteracted = false; // Bandera para saber si el usuario ha interactuado con el video
+// Fullscreen toggle
+fullscreenToggle.addEventListener('click', () => {
+  if (document.fullscreenElement) document.exitFullscreen();
+  else videoPlayer.requestFullscreen();
+});
 
-    // Función para formatear el tiempo
-    function formatTime(seconds) {
-        const h = Math.floor(seconds / 3600);
-        const m = Math.floor((seconds % 3600) / 60);
-        const s = Math.floor(seconds % 60);
-        const format = (val) => 0${val}.slice(-2);
-        if (h > 0) {
-            return ${h}:${format(m)}:${format(s)};
-        }
-        return ${format(m)}:${format(s)};
-    }
+// Volume toggle/mute
+volumeToggle.addEventListener('click', () => {
+  mainVideo.muted = !mainVideo.muted;
+  volumeToggle.innerHTML = mainVideo.muted
+    ? '<i class="fas fa-volume-mute"></i>'
+    : '<i class="fas fa-volume-up"></i>';
+});
+volumeSlider.addEventListener('input', () => {
+  mainVideo.volume = volumeSlider.value;
+});
 
-    // Inicializar HLS.js
-    function initializeHls() {
-        if (Hls.isSupported()) {
-            hls = new Hls();
-            hls.loadSource(m3u8Url);
-            hls.attachMedia(mainVideo);
+// Settings menu toggle
+settingsToggle.addEventListener('click', e => {
+  e.stopPropagation();
+  settingsMenu.style.display =
+    settingsMenu.style.display === 'flex' ? 'none' : 'flex';
+});
 
-            hls.on(Hls.Events.MANIFEST_PARSED, function () {
-                // Obtener las resoluciones disponibles para el menú de calidad
-                settingsMenu.innerHTML = '<button data-quality="auto">Automático</button>'; // Añadir automático
-                hls.levels.sort((a, b) => b.height - a.height).forEach(level => {
-                    const button = document.createElement('button');
-                    button.textContent = ${level.height}p;
-                    button.setAttribute('data-quality', level.height);
-                    settingsMenu.appendChild(button);
-                });
+// Initial play button
+initialPlayButton.addEventListener('click', () => {
+  userInteracted = true;
+  initHls();
+});
 
-                // Seleccionar la calidad más alta por defecto para empezar, o 'auto'
-                hls.currentLevel = -1; // -1 para automático
-                mainVideo.play();
-                hidePlayOverlay(); // Ocultar overlay después de iniciar
-            });
+// Play/pause control
+playPauseToggle.addEventListener('click', () => {
+  togglePlay();
+  hideOverlay();
+});
 
-            hls.on(Hls.Events.LEVEL_SWITCHED, function (event, data) {
-                // Actualizar el botón seleccionado en el menú de calidad si es necesario
-                Array.from(settingsMenu.children).forEach(button => {
-                    if (button.getAttribute('data-quality') === 'auto' && hls.currentLevel === -1) {
-                        button.classList.add('active-quality');
-                    } else if (parseInt(button.getAttribute('data-quality')) === hls.levels[data.level].height) {
-                        button.classList.add('active-quality');
-                    } else {
-                        button.classList.remove('active-quality');
-                    }
-                });
-            });
+// Hide controls after inactivity
+function hideControls() {
+  videoControls.classList.add('hide-controls');
+}
+videoPlayer.addEventListener('mousemove', () => {
+  videoControls.classList.remove('hide-controls');
+  clearTimeout(controlsTimeout);
+  controlsTimeout = setTimeout(hideControls, 3000);
+});
 
-            // Manejar errores de HLS (por ejemplo, si la transmisión se cae)
-            hls.on(Hls.Events.ERROR, function (event, data) {
-                if (data.fatal) {
-                    switch (data.type) {
-                        case Hls.ErrorTypes.NETWORK_ERROR:
-                            console.error('Fatal network error encountered, trying to recover', data);
-                            hls.recoverMediaError();
-                            break;
-                        case Hls.ErrorTypes.MEDIA_ERROR:
-                            console.error('Fatal media error encountered, trying to recover', data);
-                            hls.recoverMediaError();
-                            break;
-                        default:
-                            console.error('Fatal HLS error:', data);
-                            hls.destroy();
-                            // Puedes mostrar un mensaje de error al usuario
-                            break;
-                    }
-                }
-            });
-
-        } else if (mainVideo.canPlayType('application/vnd.apple.mpegurl')) {
-            // Soporte nativo para iOS y Safari
-            mainVideo.src = m3u8Url;
-            mainVideo.addEventListener('loadedmetadata', () => {
-                mainVideo.play();
-                hidePlayOverlay();
-            });
-        } else {
-            alert('Tu navegador no soporta la reproducción de este video.');
-        }
-    }
-
-    // Ocultar overlay de play y reproducir video
-    function hidePlayOverlay() {
-        playOverlay.classList.add('hidden');
-        mainVideo.play();
-        playPauseToggle.innerHTML = '<i class="fas fa-pause"></i>';
-    }
-
-    // Event listeners
-    initialPlayButton.addEventListener('click', () => {
-        userInteracted = true;
-        initializeHls();
-    });
-
-    playPauseToggle.addEventListener('click', () => {
-        if (mainVideo.paused) {
-            mainVideo.play();
-            playPauseToggle.innerHTML = '<i class="fas fa-pause"></i>';
-            hidePlayOverlay();
-        } else {
-            mainVideo.pause();
-            playPauseToggle.innerHTML = '<i class="fas fa-play"></i>';
-        }
-    });
-
-    volumeToggle.addEventListener('click', () => {
-        mainVideo.muted = !mainVideo.muted;
-        volumeSlider.value = mainVideo.muted ? 0 : mainVideo.volume;
-        volumeToggle.innerHTML = mainVideo.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
-    });
-
-    volumeSlider.addEventListener('input', () => {
-        mainVideo.volume = volumeSlider.value;
-        mainVideo.muted = volumeSlider.value === '0';
-        volumeToggle.innerHTML = mainVideo.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
-    });
-
-    // Actualizar barra de progreso y tiempo
-    mainVideo.addEventListener('timeupdate', () => {
-        if (mainVideo.duration) {
-            const progress = (mainVideo.currentTime / mainVideo.duration) * 100;
-            progressBarFill.style.width = ${progress}%;
-            timeDisplay.textContent = ${formatTime(mainVideo.currentTime)} / ${formatTime(mainVideo.duration)};
-
-            // Lógica para el botón "Ir a En Vivo"
-            const bufferEnd = mainVideo.buffered.length > 0 ? mainVideo.buffered.end(mainVideo.buffered.length - 1) : 0;
-            const diff = mainVideo.duration - mainVideo.currentTime;
-            const bufferDiff = mainVideo.duration - bufferEnd;
-
-            // Si la diferencia con el final es mayor a 5 segundos (no está 'en vivo' con un pequeño buffer)
-            if (diff > 5 && isLive) {
-                goLiveButton.style.display = 'block';
-                liveIndicator.style.display = 'none';
-            } else {
-                goLiveButton.style.display = 'none';
-                liveIndicator.style.display = 'flex';
-            }
-        } else {
-            // Para transmisiones en vivo sin duración conocida
-            progressBarFill.style.width = '100%'; // Siempre lleno
-            timeDisplay.textContent = 'En Vivo';
-            goLiveButton.style.display = 'none';
-            liveIndicator.style.display = 'flex';
-        }
-    });
-
-    // Clic en la barra de progreso
-    progressBarContainer.addEventListener('click', (e) => {
-        if (mainVideo.duration) { // Solo si tiene duración (no es live stream puro sin duración)
-            const rect = progressBarContainer.getBoundingClientRect();
-            const clickX = e.clientX - rect.left;
-            const percentage = clickX / rect.width;
-            mainVideo.currentTime = percentage * mainVideo.duration;
-        } else {
-            // Si es un live stream, al hacer clic, saltar al final
-            if (hls && hls.media) {
-                hls.media.currentTime = hls.media.duration;
-            } else {
-                mainVideo.currentTime = mainVideo.duration; // Fallback
-            }
-        }
-    });
-
-    // Controlar el seek handle en la barra de progreso
-    progressBarContainer.addEventListener('mousemove', (e) => {
-        const rect = progressBarContainer.getBoundingClientRect();
-        const mouseX = e.clientX - rect.left;
-        const percentage = mouseX / rect.width;
-        const seekHandle = progressBarContainer.querySelector('.seek-handle');
-        seekHandle.style.left = ${percentage * 100}%;
-    });
-
-    // Toggle del menú de ajustes
-    settingsToggle.addEventListener('click', (e) => {
-        e.stopPropagation(); // Evita que el clic se propague al documento y cierre el menú
-        settingsMenu.style.display = settingsMenu.style.display === 'flex' ? 'none' : 'flex';
-        videoControls.classList.add('active'); // Mantiene controles activos mientras el menú está abierto
-        clearTimeout(controlsTimeout); // Evita que se oculten los controles
-    });
-
-    // Selección de calidad en el menú de ajustes
-    settingsMenu.addEventListener('click', function (e) {
-        if (e.target.tagName === 'BUTTON') {
-            const quality = e.target.getAttribute('data-quality');
-            if (hls) {
-                if (quality === 'auto') {
-                    hls.currentLevel = -1; // Configura a automático
-                } else {
-                    const res = parseInt(quality);
-                    const levelIndex = hls.levels.findIndex(lvl => lvl.height === res);
-                    if (levelIndex !== -1) {
-                        hls.currentLevel = levelIndex;
-                    } else {
-                        alert(Resolución ${quality} no disponible.);
-                    }
-                }
-            }
-            settingsMenu.style.display = 'none';
-            resetControlsTimeout(); // Reiniciar el timeout de ocultar controles
-        }
-    });
-
-    // Cierra el menú de ajustes al hacer clic fuera
-    document.addEventListener('click', (e) => {
-        if (!settingsMenu.contains(e.target) && !settingsToggle.contains(e.target)) {
-            settingsMenu.style.display = 'none';
-        }
-    });
-
-    // Pantalla completa
-    fullscreenToggle.addEventListener('click', () => {
-        if (!document.fullscreenElement) {
-            if (videoPlayer.requestFullscreen) {
-                videoPlayer.requestFullscreen();
-            } else if (videoPlayer.mozRequestFullScreen) { /* Firefox */
-                videoPlayer.mozRequestFullScreen();
-            } else if (videoPlayer.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-                videoPlayer.webkitRequestFullscreen();
-            } else if (videoPlayer.msRequestFullscreen) { /* IE/Edge */
-                videoPlayer.msRequestFullscreen();
-            }
-            fullscreenToggle.innerHTML = '<i class="fas fa-compress"></i>';
-        } else {
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            } else if (document.mozCancelFullScreen) { /* Firefox */
-                document.mozCancelFullScreen();
-            } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
-                document.webkitExitFullscreen();
-            } else if (document.msExitFullscreen) { /* IE/Edge */
-                document.msExitFullscreen();
-            }
-            fullscreenToggle.innerHTML = '<i class="fas fa-expand"></i>';
-        }
-    });
-
-    // Botón "Ir a En Vivo"
-    goLiveButton.addEventListener('click', () => {
-        if (hls && hls.media) {
-            hls.media.currentTime = hls.media.duration;
-        } else {
-            mainVideo.currentTime = mainVideo.duration; // Fallback
-        }
-    });
-
-    // Ocultar/mostrar controles al mover el mouse
-    function hideControls() {
-        videoPlayer.classList.add('hide-controls');
-        videoControls.classList.remove('active');
-    }
-
-    function showControls() {
-        videoPlayer.classList.remove('hide-controls');
-        videoControls.classList.add('active'); // Mantiene activos mientras el mouse está sobre el reproductor
-        resetControlsTimeout();
-    }
-
-    function resetControlsTimeout() {
-        clearTimeout(controlsTimeout);
-        controlsTimeout = setTimeout(hideControls, 3000); // Ocultar después de 3 segundos de inactividad
-    }
-
-    videoPlayer.addEventListener('mousemove', showControls);
-    videoControls.addEventListener('mousemove', showControls); // Si el mouse está sobre los controles, no ocultarlos
-
-    // Inicializar controles visibles al cargar
-    resetControlsTimeout();
-
-    // Comprobar si el video está pausado para mostrar siempre los controles
-    mainVideo.addEventListener('play', () => {
-        resetControlsTimeout();
-    });
-
-    mainVideo.addEventListener('pause', () => {
-        clearTimeout(controlsTimeout);
-        videoPlayer.classList.remove('hide-controls'); // Mostrar siempre los controles cuando está pausado
-        videoControls.classList.add('active');
-    });
-
-    // Manejar el mute inicial si el video está autoplayed y muted
-    mainVideo.addEventListener('loadedmetadata', () => {
-        volumeSlider.value = mainVideo.volume;
-        volumeToggle.innerHTML = mainVideo.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
-
-        if (mainVideo.autoplay && mainVideo.muted && !userInteracted) {
-            // Si es autoplay y muted, y el usuario no ha interactuado, no mostrar el overlay de play
-            hidePlayOverlay();
-            initializeHls(); // Inicializar HLS si no se ha hecho
-        } else if (!userInteracted) {
-             // Si no es autoplay o no está muted, mostrar el overlay de play
-            playOverlay.classList.remove('hidden');
-        }
-    });
-
-    // Asegurarse de que el video siempre tenga algún volumen si no está silenciado
-    if (mainVideo.volume === 0 && !mainVideo.muted) {
-        mainVideo.volume = 1; // Establecer volumen por defecto si es 0 y no está silenciado
-        volumeSlider.value = 1;
-    }
-
-    // Inicializar HLS solo si el video no tiene autoplay y no está silenciado, o si el usuario interactúa
-    if (mainVideo.autoplay && mainVideo.muted) {
-        // En navegadores modernos, autoplay con sonido está bloqueado.
-        // Si el video está en autoplay y muted, intentamos reproducirlo y lo consideramos como "interacción"
-        // para inicializar HLS directamente.
-        initializeHls();
-        hidePlayOverlay();
-    } else {
-        // Si no es autoplay o no está muted, el usuario debe interactuar
-        playOverlay.classList.remove('hidden');
-    }
-
+// Initialize autoplay if possible
+if (mainVideo.autoplay && mainVideo.muted) {
+  initHls();
+  hideOverlay();
+} else {
+  playOverlay.classList.remove('hidden');
+}
 
 </script>
-
-</body>
-</html>
 
     
 </body>
