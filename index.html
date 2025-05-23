@@ -125,9 +125,419 @@
       } catch(e){ showError('Error cargando video.'); }
     }
     loadVideo();
-  </script>
+ <section class="live-stream-container">
+  <header>
+    <h1>📡 Transmisión en Vivo Bethel Colombia (YouTube)</h1>
+  </header>
+  <div class="video-container" id="videoContainer">
+    <p>Cargando video...</p>
+  </div>
+</section>
 
-    <section class="custom-player" id="videoPlayer">
+<script>
+  const API_KEY = "AIzaSyBhP5vdWh2rOfmil6aMSeGIs_XY866h8Gs";
+  const CHANNEL_ID = "UCOoepFJWo0r2Y1AbrhuFuig";
+  const videoContainer = document.getElementById("videoContainer");
+
+  function setVideo(videoId, label = "") {
+    videoContainer.innerHTML = 
+      <p>${label}</p>
+      <iframe
+        width="200%"
+        height="500"
+        src="https://www.youtube.com/embed/${videoId}"
+        frameborder="0"
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowfullscreen
+        title="Video YouTube">
+      </iframe>;
+  }
+
+  function showError(message) {
+    videoContainer.innerHTML = <p style="color:red;">${message}</p>;
+  }
+
+  async function loadVideo() {
+    try {
+      // Primero buscamos videos en vivo
+      const liveUrl = https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&type=video&key=${API_KEY};
+      const liveResponse = await fetch(liveUrl);
+      const liveData = await liveResponse.json();
+
+      if (liveData.items && liveData.items.length > 0) {
+        const liveVideoId = liveData.items[0].id.videoId;
+        setVideo(liveVideoId, "🔴 EN VIVO");
+      } else {
+        // Si no hay en vivo, buscamos el último video
+        const lastUrl = https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&maxResults=1&order=date&type=video&key=${API_KEY};
+        const lastResponse = await fetch(lastUrl);
+        const lastData = await lastResponse.json();
+
+        if (lastData.items && lastData.items.length > 0) {
+          const lastVideoId = lastData.items[0].id.videoId;
+          setVideo(lastVideoId, "📺 Último video subido");
+        } else {
+          showError("No se encontraron videos en el canal.");
+        }
+      }
+    } catch (error) {
+      console.error("Error al cargar el video:", error);
+      showError("Error al cargar el video.");
+    }
+  }
+
+  loadVideo();
+</script>
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reproductor de Video Personalizado</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        /* Variables CSS para colores */
+        :root {
+            --primary-red: #ff0000;
+            --control-bg: rgba(0, 0, 0, 0.7);
+            --control-hover: rgba(255, 255, 255, 0.2);
+            --progress-bar-bg: #555;
+            --progress-bar-fill: var(--primary-red);
+            --text-color: #fff;
+            --settings-menu-bg: #222;
+            --settings-menu-border: #555;
+            --settings-menu-hover: #444;
+        }
+
+        /* Reproductor personalizado */
+        .custom-player {
+            position: relative;
+            max-width: 900px; /* Ancho máximo para el reproductor */
+            margin: 20px auto;
+            background: #000;
+            font-family: 'Roboto', Arial, sans-serif; /* Fuente más moderna */
+            overflow: hidden;
+            border-radius: 8px; /* Bordes redondeados */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Sombra para profundidad */
+        }
+
+        .custom-player video {
+            width: 100%;
+            height: auto;
+            display: block; /* Evita espacios debajo del video */
+            background: #000;
+        }
+
+        .custom-controls {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: linear-gradient(to top, var(--control-bg) 0%, rgba(0, 0, 0, 0) 100%); /* Gradiente sutil */
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            padding: 10px 20px;
+            box-sizing: border-box;
+            transition: opacity 0.3s ease-in-out; /* Suavizar aparición/desaparición */
+            opacity: 1;
+            pointer-events: auto; /* Permite interacción con los controles */
+        }
+
+        .custom-player:hover .custom-controls,
+        .custom-controls.active { /* Mantiene los controles visibles cuando se interactúa */
+            opacity: 1;
+        }
+
+        .custom-player.hide-controls .custom-controls {
+            opacity: 0;
+            pointer-events: none; /* Deshabilita interacción cuando están ocultos */
+        }
+
+        .controls-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .controls-bottom-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .live-indicator {
+            background: var(--primary-red);
+            color: white;
+            padding: 4px 8px;
+            font-size: 13px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .live-indicator::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .settings-menu {
+            display: none; /* Oculto por defecto, se muestra con JS */
+            position: absolute;
+            bottom: 70px; /* Espacio sobre los controles */
+            right: 20px;
+            background: var(--settings-menu-bg);
+            border: 1px solid var(--settings-menu-border);
+            border-radius: 6px;
+            flex-direction: column;
+            z-index: 10;
+            min-width: 120px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .settings-menu button {
+            background: none;
+            color: var(--text-color);
+            padding: 10px 15px;
+            border: none;
+            text-align: left;
+            width: 100%;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s ease;
+        }
+
+        .settings-menu button:hover {
+            background-color: var(--settings-menu-hover);
+        }
+
+        .progress-bar-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px; /* Altura de la barra de progreso */
+            background: var(--progress-bar-bg);
+            cursor: pointer;
+            z-index: 11; /* Asegura que esté encima de los controles */
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--progress-bar-fill);
+            border-radius: 3px;
+            transition: width 0.1s linear; /* Transición más suave */
+        }
+
+        .seek-handle {
+            position: absolute;
+            height: 12px;
+            width: 12px;
+            background: var(--progress-bar-fill);
+            border-radius: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display: none; /* Oculto por defecto, se muestra al pasar el mouse */
+        }
+
+        .progress-bar-container:hover .seek-handle {
+            display: block;
+        }
+
+        /* Controles individuales */
+        .custom-player button {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 22px; /* Iconos más grandes */
+            cursor: pointer;
+            padding: 5px 8px; /* Espaciado interno */
+            border-radius: 4px;
+            transition: background-color 0.2s ease;
+        }
+
+        .custom-player button:hover {
+            background-color: var(--control-hover);
+        }
+
+        /* Grupo de controles izquierdos/derechos */
+        .controls-left,
+        .controls-right {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        /* Barra de volumen */
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .volume-slider {
+            width: 80px;
+            height: 4px;
+            background: var(--progress-bar-bg);
+            -webkit-appearance: none; /* Eliminar estilos por defecto */
+            appearance: none;
+            border-radius: 2px;
+            cursor: grab;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            background: var(--text-color);
+            border-radius: 50%;
+            cursor: grab;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .volume-slider::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            background: var(--text-color);
+            border-radius: 50%;
+            cursor: grab;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Estilo para el botón de ir a en vivo */
+        .go-live-button {
+            background: var(--primary-red);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            display: none; /* Oculto por defecto, se muestra cuando no está en vivo */
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .go-live-button:hover {
+            background: #cc0000;
+        }
+
+        /* Tiempo y duración */
+        .time-display {
+            font-size: 14px;
+            min-width: 90px; /* Asegura espacio para el tiempo */
+            text-align: right;
+        }
+
+        /* Centrar ícono de play inicial */
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            z-index: 12;
+            transition: opacity 0.3s ease;
+        }
+
+        .play-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .play-overlay button {
+            font-size: 80px; /* Botón de play grande */
+            color: rgba(255, 255, 255, 0.8);
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .play-overlay button:hover {
+            color: rgba(255, 255, 255, 1);
+            background: none;
+        }
+
+        /* Responsividad */
+        @media (max-width: 768px) {
+            .custom-player {
+                border-radius: 0; /* Quita bordes redondeados en móviles */
+            }
+
+            .custom-controls {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+
+            .custom-player button {
+                font-size: 20px;
+                padding: 4px 6px;
+            }
+
+            .live-indicator {
+                font-size: 11px;
+                padding: 3px 6px;
+            }
+
+            .time-display {
+                font-size: 12px;
+                min-width: 70px;
+            }
+
+            .volume-slider {
+                width: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .custom-controls {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .controls-bottom-row {
+                flex-wrap: wrap; /* Permite que los elementos se envuelvan */
+                justify-content: center;
+                gap: 5px;
+            }
+
+            .controls-left,
+            .controls-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .settings-menu {
+                bottom: 120px; /* Ajuste para el menú de ajustes en móvil */
+                right: 50%;
+                transform: translateX(50%);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<section class="custom-player" id="videoPlayer">
     <video id="mainVideo" playsinline preload="auto"></video>
 
     <div class="play-overlay" id="playOverlay">
@@ -511,6 +921,10 @@
 
 
 </script>
+
+</body>
+</html>
+
     
 </body>
 </html>
