@@ -1,789 +1,133 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radio Cristiana</title>
-    <link rel="icon" type="image/png" href="Icon/favicon.ico">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <style>
-      /* Reset básico */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #111;
-    color: #fff;
-}
-a {
-    color: inherit;
-    text-decoration: none;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radio Cristiana</title>
+  <link rel="icon" href="Icon/favicon.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <style>
+    /* Reset */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Segoe UI',sans-serif; background:#111; color:#fff; }
+    a { color:inherit; text-decoration:none; }
 
-/* Layout principal */
-.container {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: row;
-}
+    /* Layout */
+    .container { display:flex; flex-wrap:wrap; min-height:100vh; }
+    .sidebar { background:#000; width:250px; padding:20px; display:flex; flex-direction:column; }
+    .sidebar .logo img { width:100%; margin-bottom:20px; }
+    .sidebar nav ul { list-style:none; display:flex; flex-direction:column; gap:15px; }
+    .sidebar nav a { display:flex; align-items:center; gap:10px; padding:10px; border-radius:8px; transition:0.3s; }
+    .sidebar nav a:hover { background:#333; }
+    .download-app { margin-top:auto; }
 
-/* Sidebar estilo Netflix */
-.sidebar {
-    background-color: #000;
-    width: 250px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-.sidebar .logo img {
-    width: 100%;
-    margin-bottom: 20px;
-}
-.sidebar nav ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-.sidebar nav ul li a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px;
-    border-radius: 8px;
-    transition: background 0.3s;
-}
-.sidebar nav ul li a:hover {
-    background-color: #333;
-}
-.download-app {
-    margin-top: auto;
-}
+    .content { flex:1; padding:1rem; }
 
-/* Contenido */
-.content {
-    flex: 1;
-    padding: 30px;
-    overflow-x: hidden;
-}
+    /* Hero */
+    .hero { text-align:center; margin-bottom:2rem; }
+    .hero img { width:100%; max-height:300px; object-fit:cover; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
+    .hero h1 { font-size:2rem; margin-top:1rem; }
+    .hero p { font-size:1rem; color:#ccc; }
 
-/* Hero */
-.hero {
-    text-align: center;
-    margin-bottom: 40px;
-}
-.hero img {
-    width: 100%;
-    height: 400px; /* Altura fija para hacer la imagen más alargada */
-    object-fit: cover; /* Asegura que la imagen cubra el espacio sin distorsión */
-    border-radius: 10px; /* Bordes suaves pero menos curvados que en Facebook */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera para darle profundidad */
-    margin-bottom: 20px; /* Espacio debajo de la imagen */
-}
+    /* Channel info */
+    .channel-info { background:#1c1c1c; padding:1rem; border-radius:12px; text-align:center; margin-bottom:2rem; }
+    .channel-avatar img { width:80px; border-radius:50%; margin-bottom:0.5rem; }
+    .player-container img { width:32px; cursor:pointer; }
 
-.hero h1 {
-    font-size: 3rem;
-    margin: 20px 0 10px;
-}
-.hero p {
-    font-size: 1.3rem;
-    color: #ccc;
-}
+    /* Video containers unified */
+    .live-stream-container { margin-bottom:2rem; }
+    .live-stream-container header h1 { font-size:1.2rem; margin-bottom:0.5rem; text-align:center; }
+    .video-container { position:relative; width:100%; max-width:800px; margin:0 auto; aspect-ratio:16/9; border-radius:8px; overflow:hidden; box-shadow:0 4px 8px rgba(0,0,0,0.5); }
+    .video-container iframe, .video-container video { width:100%; height:100%; border:none; display:block; }
 
-/* Información del canal */
-.channel-info {
-    background: #1c1c1c;
-    padding: 25px;
-    border-radius: 20px;
-    margin-bottom: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.channel-avatar img {
-    width: 110px;
-    border-radius: 50%;
-    margin-bottom: 15px;
-}
-.channel-details {
-    text-align: center;
-}
-.player-container {
-    margin: 15px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-.player-container img {
-    width: 40px;
-    cursor: pointer;
-}
-.timeline {
-    background: #333;
-    height: 5px;
-    width: 100%;
-    max-width: 300px;
-    border-radius: 10px;
-}
-
-.timeline-handle {
-    width: 15px;
-    height: 15px;
-    background: white;
-    border-radius: 50%;
-    position: absolute;
-    top: -5px;
-    right: 0;
-}
-
-/* Redes sociales */
-.social-links {
-    display: flex;
-    gap: 15px;
-    margin-top: 15px;
-}
-.social-links a {
-    font-size: 1.5rem;
-    color: #fff;
-    transition: transform 0.3s;
-}
-.social-links a:hover {
-    transform: scale(1.2);
-}
-
-/* CONTENEDOR GENERAL */
-.live-stream-container {
-  padding: 1rem;
-  background-color: #000;
-  color: #fff;
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-/* TÍTULOS */
-.live-stream-container header h1 {
-  font-size: 1.5rem;
-  margin-bottom: 0.75rem;
-}
-
-/* CONTENEDOR DE VIDEO 16:9 (RESPONSIVE) */
-.video-container {
-  position: relative;
-  width: 100%;
-  max-width: 100%;
-  aspect-ratio: 16 / 9;
-  overflow: visible;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  margin: 0 auto;
-}
-
-/* APLICADO A TODOS LOS VIDEOS */
-.video-container iframe,
-.video-container video {
-  width: 100%;
-  height: 100%;
-  border: none;
-  border-radius: 12px;
-  display: block;
-  object-fit: cover;
-}
-
-/* AJUSTE EN PC: REDUCIR TAMAÑO GENERAL */
-@media (min-width: 768px) {
-  .video-container {
-    max-width: 700px;
-  }
-
-  .live-stream-container header h1 {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-  }
-}
-
-
-
-
-/* Responsivo */
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column;
+    /* Responsive */
+    @media(max-width:768px) {
+      .container { flex-direction:column; }
+      .sidebar { width:100%; flex-direction:row; overflow-x:auto; padding:10px; }
+      .sidebar nav ul { flex-direction:row; gap:10px; }
+      .sidebar nav a { padding:5px; font-size:0.9rem; }
+      .hero img { max-height:200px; }
+      .hero h1 { font-size:1.5rem; }
+      .hero p { font-size:0.9rem; }
+      .live-stream-container header h1 { font-size:1rem; }
     }
-    .sidebar {
-        width: 100%;
-        flex-direction: row;
-        overflow-x: auto;
-        padding: 10px;
-        justify-content: space-between;
-    }
-    .sidebar nav ul {
-        flex-direction: row;
-        gap: 10px;
-    }
-    .sidebar nav ul li a {
-        font-size: 0.9rem;
-        padding: 5px;
-    }
-    .download-app {
-        display: none;
-    }
-    .hero h1 {
-        font-size: 2rem;
-    }
-   .hero {
-  text-align: center;
-  background-color: #111;
-  padding: 1rem;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.hero img {
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  display: block;
-  object-fit: cover;
-}
-
-/* Texto encima o debajo de la imagen */
-.hero h1 {
-  font-size: 2rem;
-  color: #fff;
-  margin-top: 1rem;
-}
-
-.hero p {
-  font-size: 1rem;
-  color: #ccc;
-  margin-bottom: 1rem;
-}
-
-/* ✅ Estilo portada para móviles */
-@media screen and (max-width: 768px) {
-  .hero {
-    padding: 0;
-  }
-
-  .hero img {
-    aspect-ratio: 3 / 1; /* Estilo portada: ancho 3 veces la altura */
-    height: auto;
-    object-fit: cover;
-  }
-
-  .hero h1 {
-    font-size: 1.4rem;
-    margin-top: 0.5rem;
-  }
-
-  .hero p {
-    font-size: 0.95rem;
-    margin-bottom: 1rem;
-  }
-}
-
-    .channel-info {
-        padding: 15px;
-    }
-    .live-stream-container header h1 {
-        font-size: 1.2rem;
-    }
-
-}
-
-    </style>
+  </style>
 </head>
 <body>
-    <div class="container">
-        <aside class="sidebar">
-            <div class="logo">
-                <img src="img/logo.png" alt="Logo de la Radio">
-                <link rel="icon" type="image/png" href="Icon/favicon.png">
+  <div class="container">
+    <aside class="sidebar">
+      <div class="logo"><img src="img/logo.png" alt="Logo"></div>
+      <nav><ul>
+        <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+        <li><a href="Religion.html"><i class="fas fa-church"></i> Religión</a></li>
+        <li><a href="Musica.html"><i class="fas fa-music"></i> Música</a></li>
+        <li><a href="news.html"><i class="fas fa-newspaper"></i> Noticias</a></li>
+        <li><a href="podcasts.html"><i class="fas fa-podcast"></i> Podcasts</a></li>
+        <li><a href="Biblia.html"><i class="fas fa-bible"></i> Biblia</a></li>
+        <li><a href="Ubicacion.html"><i class="fas fa-map-marker-alt"></i> Ubicación</a></li>
+      </ul></nav>
+      <div class="download-app"><a href="#"><i class="fas fa-download"></i> App</a></div>
+    </aside>
 
+    <main class="content">
+      <section class="hero">
+        <img src="img/GENERACIONES 2k.png" alt="Hero">
+        <h1>Armonía</h1>
+        <p>Nos lleva a grandes victorias</p>
+      </section>
 
-                
+      <section class="channel-info">
+        <div class="channel-avatar"><img src="https://i.ibb.co/p6TgwrW4/logo.png" alt="Avatar"></div>
+        <h2>Movimiento Misionero Mundial El Cinco</h2>
+        <p>Escucha nuestra emisora en vivo</p>
+        <div class="player-container">
+          <img src="https://i.ibb.co/R4Hdnx1Y/Atras.png" alt="Atrás">
+          <img id="playButtonPlayer" src="https://i.ibb.co/KjM64x6K/Play.png" alt="Play">
+          <img src="https://i.ibb.co/hxQ04hzP/siguiente.png" alt="Siguiente">
+        </div>
+        <audio id="audioPlayer" src="https://stream.zeno.fm/wkqjqojf49wtv"></audio>
+      </section>
 
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="index.html"><i class="fas fa-home fa-fw"></i> Inicio</a></li>
-                    <li><a href="Confraternidades.html"><i class="fas fa-calendar-check fa-fw"></i>Conf-Zona31</a></li>
-                    <li><a href="Religion.html"><i class="fas fa-church fa-fw"></i> Religion</a></li>
-                    <li><a href="Musica.html"><i class="fas fa-music fa-fw"></i> Musica</a></li>
-                    <li><a href="news.html"><i class="fas fa-newspaper fa-fw"></i> News</a></li>
-                    <li><a href="podcasts.html"><i class="fas fa-podcast fa-fw"></i> Podcasts</a></li>
-                    <li><a href="Biblia.html"><i class="fas fa-bible fa-fw"></i> Biblia</a></li>
-                    <li><a href="Ubicacion.html"><i class="fas fa-map-marker-alt fa-fw"></i> Ubicacion</a></li>
-                </ul>
-            </nav>
-            <div class="download-app">
-                <a href="#"><i class="fas fa-download fa-fw"></i> Download app</a>
-            </div>
-        </aside>
+      <section class="live-stream-container">
+        <header><h1>🔴 Señal en Vivo - Ministerio de Restauración</h1></header>
+        <div class="video-container">
+          <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FIglesiaelCinco%2Fvideos%2F2045118675976243%2F&show_text=false" allowfullscreen></iframe>
+        </div>
+      </section>
 
-        <main class="content">
-            <div class="hero">
-                <img src="img/GENERACIONES 2k.png" alt="Imagen del Hero">
-                <h1>Armonia</h1>
-                <p>NOS LLEVA A GRANDES VICTORIAS</p>
-            </div>
-
-            <div class="channel-info">
-                <div class="channel-avatar">
-                    <img src="https://i.ibb.co/p6TgwrW4/logo.png" alt="Avatar del Canal">
-                </div>
-                <div class="channel-details">
-                    <h2>Movimiento Misionero Mundial El Cinco</h2>
-                    <p>Escucha Nuestra Emisora En Vivo</p>
-                    <div class="player-container"> 
-                        <img src="https://i.ibb.co/R4Hdnx1Y/Atras.png" alt="Retroceder">
-                        <img src="https://i.ibb.co/KjM64x6K/Play.png" alt="Reproducir" id="playButtonPlayer">
-                        <img src="https://i.ibb.co/hxQ04hzP/siguiente.png" alt="Adelantar">
-                     
-                    
-                        <div class="timeline">
-                            <div class="timeline-progress">
-                                <div class="timeline-handle"></div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <audio id="audioPlayer" src="https://stream.zeno.fm/wkqjqojf49wtv"></audio>
-                </div>
-                <div class="social-links">
-                    <a href="https://www.facebook.com/IglesiaelCinco" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/iglesiaelcinco" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.youtube.com/@ministerioderestauracionmmm" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-
-<section class="live-stream-container">
-  <header>
-    <h1>🔴 Señal en Vivo - Ministerio de Restauración .</h1>
-  </header>
-  <div class="video-container">
-<iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FIglesiaelCinco%2Fvideos%2F2045118675976243%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
-
-<section class="live-stream-container">
-  <header>
-    <h1>📡 Transmisión en Vivo Bethel Colombia (YouTube)</h1>
-  </header>
-  <div class="video-container" id="videoContainer">
-    <p>Cargando video...</p>
+      <section class="live-stream-container">
+        <header><h1>📡 Transmisión en Vivo Bethel Colombia</h1></header>
+        <div class="video-container" id="videoContainer"><p>Cargando...</p></div>
+      </section>
+    </main>
   </div>
-</section>
 
-<script>
-  const API_KEY = "AIzaSyBhP5vdWh2rOfmil6aMSeGIs_XY866h8Gs";
-  const CHANNEL_ID = "UCOoepFJWo0r2Y1AbrhuFuig";
-  const videoContainer = document.getElementById("videoContainer");
+  <script>
+    const API_KEY = 'AIzaSyBhP5vdWh2rOfmil6aMSeGIs_XY866h8Gs';
+    const CHANNEL_ID = 'UCOoepFJWo0r2Y1AbrhuFuig';
+    const videoContainer = document.getElementById('videoContainer');
 
-  function setVideo(videoId, label = "") {
-    videoContainer.innerHTML = `
-      <p>${label}</p>
-      <iframe
-        width="200%"
-        height="500"
-        src="https://www.youtube.com/embed/${videoId}"
-        frameborder="0"
-        allow="autoplay; encrypted-media; picture-in-picture"
-        allowfullscreen
-        title="Video YouTube">
-      </iframe>`;
-  }
-
-  function showError(message) {
-    videoContainer.innerHTML = `<p style="color:red;">${message}</p>`;
-  }
-
-  async function loadVideo() {
-    try {
-      // Primero buscamos videos en vivo
-      const liveUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&type=video&key=${API_KEY}`;
-      const liveResponse = await fetch(liveUrl);
-      const liveData = await liveResponse.json();
-
-      if (liveData.items && liveData.items.length > 0) {
-        const liveVideoId = liveData.items[0].id.videoId;
-        setVideo(liveVideoId, "🔴 EN VIVO");
-      } else {
-        // Si no hay en vivo, buscamos el último video
-        const lastUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&maxResults=1&order=date&type=video&key=${API_KEY}`;
-        const lastResponse = await fetch(lastUrl);
-        const lastData = await lastResponse.json();
-
-        if (lastData.items && lastData.items.length > 0) {
-          const lastVideoId = lastData.items[0].id.videoId;
-          setVideo(lastVideoId, "📺 Último video subido");
-        } else {
-          showError("No se encontraron videos en el canal.");
-        }
-      }
-    } catch (error) {
-      console.error("Error al cargar el video:", error);
-      showError("Error al cargar el video.");
+    function setVideo(id,label=''){
+      videoContainer.innerHTML = `<p>${label}</p><iframe src="https://www.youtube.com/embed/${id}?rel=0" allowfullscreen></iframe>`;
     }
-  }
+    function showError(msg){ videoContainer.innerHTML = `<p style="color:red">${msg}</p>`; }
 
-  loadVideo();
-</script>
+    async function loadVideo(){
+      try{
+        let res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&type=video&key=${API_KEY}`);
+        let data = await res.json();
+        if(data.items.length) return setVideo(data.items[0].id.videoId,'🔴 EN VIVO');
+        res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&maxResults=1&order=date&type=video&key=${API_KEY}`);
+        data = await res.json();
+        if(data.items.length) return setVideo(data.items[0].id.videoId,'📺 Último video');
+        showError('No hay videos.');
+      } catch(e){ showError('Error cargando video.'); }
+    }
+    loadVideo();
+  </script>
 
-
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reproductor de Video Personalizado</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <style>
-        /* Variables CSS para colores */
-        :root {
-            --primary-red: #ff0000;
-            --control-bg: rgba(0, 0, 0, 0.7);
-            --control-hover: rgba(255, 255, 255, 0.2);
-            --progress-bar-bg: #555;
-            --progress-bar-fill: var(--primary-red);
-            --text-color: #fff;
-            --settings-menu-bg: #222;
-            --settings-menu-border: #555;
-            --settings-menu-hover: #444;
-        }
-
-        /* Reproductor personalizado */
-        .custom-player {
-            position: relative;
-            max-width: 900px; /* Ancho máximo para el reproductor */
-            margin: 20px auto;
-            background: #000;
-            font-family: 'Roboto', Arial, sans-serif; /* Fuente más moderna */
-            overflow: hidden;
-            border-radius: 8px; /* Bordes redondeados */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Sombra para profundidad */
-        }
-
-        .custom-player video {
-            width: 100%;
-            height: auto;
-            display: block; /* Evita espacios debajo del video */
-            background: #000;
-        }
-
-        .custom-controls {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            background: linear-gradient(to top, var(--control-bg) 0%, rgba(0, 0, 0, 0) 100%); /* Gradiente sutil */
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            padding: 10px 20px;
-            box-sizing: border-box;
-            transition: opacity 0.3s ease-in-out; /* Suavizar aparición/desaparición */
-            opacity: 1;
-            pointer-events: auto; /* Permite interacción con los controles */
-        }
-
-        .custom-player:hover .custom-controls,
-        .custom-controls.active { /* Mantiene los controles visibles cuando se interactúa */
-            opacity: 1;
-        }
-
-        .custom-player.hide-controls .custom-controls {
-            opacity: 0;
-            pointer-events: none; /* Deshabilita interacción cuando están ocultos */
-        }
-
-        .controls-top-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .controls-bottom-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .live-indicator {
-            background: var(--primary-red);
-            color: white;
-            padding: 4px 8px;
-            font-size: 13px;
-            border-radius: 4px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .live-indicator::before {
-            content: '';
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: white;
-            border-radius: 50%;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        .settings-menu {
-            display: none; /* Oculto por defecto, se muestra con JS */
-            position: absolute;
-            bottom: 70px; /* Espacio sobre los controles */
-            right: 20px;
-            background: var(--settings-menu-bg);
-            border: 1px solid var(--settings-menu-border);
-            border-radius: 6px;
-            flex-direction: column;
-            z-index: 10;
-            min-width: 120px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
-        }
-
-        .settings-menu button {
-            background: none;
-            color: var(--text-color);
-            padding: 10px 15px;
-            border: none;
-            text-align: left;
-            width: 100%;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.2s ease;
-        }
-
-        .settings-menu button:hover {
-            background-color: var(--settings-menu-hover);
-        }
-
-        .progress-bar-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px; /* Altura de la barra de progreso */
-            background: var(--progress-bar-bg);
-            cursor: pointer;
-            z-index: 11; /* Asegura que esté encima de los controles */
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            width: 0%;
-            background: var(--progress-bar-fill);
-            border-radius: 3px;
-            transition: width 0.1s linear; /* Transición más suave */
-        }
-
-        .seek-handle {
-            position: absolute;
-            height: 12px;
-            width: 12px;
-            background: var(--progress-bar-fill);
-            border-radius: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            display: none; /* Oculto por defecto, se muestra al pasar el mouse */
-        }
-
-        .progress-bar-container:hover .seek-handle {
-            display: block;
-        }
-
-        /* Controles individuales */
-        .custom-player button {
-            background: none;
-            border: none;
-            color: var(--text-color);
-            font-size: 22px; /* Iconos más grandes */
-            cursor: pointer;
-            padding: 5px 8px; /* Espaciado interno */
-            border-radius: 4px;
-            transition: background-color 0.2s ease;
-        }
-
-        .custom-player button:hover {
-            background-color: var(--control-hover);
-        }
-
-        /* Grupo de controles izquierdos/derechos */
-        .controls-left,
-        .controls-right {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        /* Barra de volumen */
-        .volume-container {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .volume-slider {
-            width: 80px;
-            height: 4px;
-            background: var(--progress-bar-bg);
-            -webkit-appearance: none; /* Eliminar estilos por defecto */
-            appearance: none;
-            border-radius: 2px;
-            cursor: grab;
-        }
-
-        .volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 12px;
-            height: 12px;
-            background: var(--text-color);
-            border-radius: 50%;
-            cursor: grab;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-        }
-
-        .volume-slider::-moz-range-thumb {
-            width: 12px;
-            height: 12px;
-            background: var(--text-color);
-            border-radius: 50%;
-            cursor: grab;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Estilo para el botón de ir a en vivo */
-        .go-live-button {
-            background: var(--primary-red);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: bold;
-            display: none; /* Oculto por defecto, se muestra cuando no está en vivo */
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
-
-        .go-live-button:hover {
-            background: #cc0000;
-        }
-
-        /* Tiempo y duración */
-        .time-display {
-            font-size: 14px;
-            min-width: 90px; /* Asegura espacio para el tiempo */
-            text-align: right;
-        }
-
-        /* Centrar ícono de play inicial */
-        .play-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(0, 0, 0, 0.3);
-            cursor: pointer;
-            z-index: 12;
-            transition: opacity 0.3s ease;
-        }
-
-        .play-overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .play-overlay button {
-            font-size: 80px; /* Botón de play grande */
-            color: rgba(255, 255, 255, 0.8);
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .play-overlay button:hover {
-            color: rgba(255, 255, 255, 1);
-            background: none;
-        }
-
-        /* Responsividad */
-        @media (max-width: 768px) {
-            .custom-player {
-                border-radius: 0; /* Quita bordes redondeados en móviles */
-            }
-
-            .custom-controls {
-                padding: 8px 15px;
-                font-size: 14px;
-            }
-
-            .custom-player button {
-                font-size: 20px;
-                padding: 4px 6px;
-            }
-
-            .live-indicator {
-                font-size: 11px;
-                padding: 3px 6px;
-            }
-
-            .time-display {
-                font-size: 12px;
-                min-width: 70px;
-            }
-
-            .volume-slider {
-                width: 60px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .custom-controls {
-                flex-direction: column;
-                gap: 5px;
-            }
-
-            .controls-bottom-row {
-                flex-wrap: wrap; /* Permite que los elementos se envuelvan */
-                justify-content: center;
-                gap: 5px;
-            }
-
-            .controls-left,
-            .controls-right {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .settings-menu {
-                bottom: 120px; /* Ajuste para el menú de ajustes en móvil */
-                right: 50%;
-                transform: translateX(50%);
-            }
-        }
-    </style>
-</head>
-<body>
-
-<section class="custom-player" id="videoPlayer">
+    <section class="custom-player" id="videoPlayer">
     <video id="mainVideo" playsinline preload="auto"></video>
 
     <div class="play-overlay" id="playOverlay">
@@ -858,11 +202,11 @@ a {
         const h = Math.floor(seconds / 3600);
         const m = Math.floor((seconds % 3600) / 60);
         const s = Math.floor(seconds % 60);
-        const format = (val) => `0${val}`.slice(-2);
+        const format = (val) => 0${val}.slice(-2);
         if (h > 0) {
-            return `${h}:${format(m)}:${format(s)}`;
+            return ${h}:${format(m)}:${format(s)};
         }
-        return `${format(m)}:${format(s)}`;
+        return ${format(m)}:${format(s)};
     }
 
     // Inicializar HLS.js
@@ -877,7 +221,7 @@ a {
                 settingsMenu.innerHTML = '<button data-quality="auto">Automático</button>'; // Añadir automático
                 hls.levels.sort((a, b) => b.height - a.height).forEach(level => {
                     const button = document.createElement('button');
-                    button.textContent = `${level.height}p`;
+                    button.textContent = ${level.height}p;
                     button.setAttribute('data-quality', level.height);
                     settingsMenu.appendChild(button);
                 });
@@ -974,8 +318,8 @@ a {
     mainVideo.addEventListener('timeupdate', () => {
         if (mainVideo.duration) {
             const progress = (mainVideo.currentTime / mainVideo.duration) * 100;
-            progressBarFill.style.width = `${progress}%`;
-            timeDisplay.textContent = `${formatTime(mainVideo.currentTime)} / ${formatTime(mainVideo.duration)}`;
+            progressBarFill.style.width = ${progress}%;
+            timeDisplay.textContent = ${formatTime(mainVideo.currentTime)} / ${formatTime(mainVideo.duration)};
 
             // Lógica para el botón "Ir a En Vivo"
             const bufferEnd = mainVideo.buffered.length > 0 ? mainVideo.buffered.end(mainVideo.buffered.length - 1) : 0;
@@ -1022,7 +366,7 @@ a {
         const mouseX = e.clientX - rect.left;
         const percentage = mouseX / rect.width;
         const seekHandle = progressBarContainer.querySelector('.seek-handle');
-        seekHandle.style.left = `${percentage * 100}%`;
+        seekHandle.style.left = ${percentage * 100}%;
     });
 
     // Toggle del menú de ajustes
@@ -1046,7 +390,7 @@ a {
                     if (levelIndex !== -1) {
                         hls.currentLevel = levelIndex;
                     } else {
-                        alert(`Resolución ${quality} no disponible.`);
+                        alert(Resolución ${quality} no disponible.);
                     }
                 }
             }
@@ -1167,13 +511,6 @@ a {
 
 
 </script>
-
-</body>
-</html>
-
-
-
-
-
+    
 </body>
 </html>
