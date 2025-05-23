@@ -51,6 +51,304 @@
       .hero h1 { font-size:1.5rem; }
       .hero p { font-size:0.9rem; }
       .live-stream-container header h1 { font-size:1rem; }
+
+      
+  /* ==== Variables de Tema ==== */
+  :root {
+    --primary-red: #ff0000;
+    --control-bg: rgba(0, 0, 0, 0.7);
+    --control-hover: rgba(255, 255, 255, 0.2);
+    --progress-bar-bg: #555;
+    --progress-bar-fill: var(--primary-red);
+    --text-color: #fff;
+    --settings-menu-bg: #222;
+    --settings-menu-border: #555;
+    --settings-menu-hover: #444;
+  }
+
+  /* ==== Contenedor Principal ==== */
+  .custom-player {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+    background: #000;
+    font-family: 'Roboto', Arial, sans-serif;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .custom-player video {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #000;
+  }
+
+  /* ==== Controles ==== */
+  .custom-controls {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(to top, var(--control-bg) 0%, transparent 100%);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px;
+    transition: opacity 0.3s ease;
+  }
+
+  .custom-player.hide-controls .custom-controls {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .controls-top-row,
+  .controls-bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .controls-top-row {
+    margin-bottom: 8px;
+  }
+
+  .controls-left,
+  .controls-right {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .custom-player button {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 22px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background 0.2s ease;
+  }
+
+  .custom-player button:hover {
+    background: var(--control-hover);
+  }
+
+  /* ==== Live Indicator ==== */
+  .live-indicator {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--primary-red);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: bold;
+  }
+
+  .live-indicator::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { transform: scale(1); opacity: 1; }
+    50%      { transform: scale(1.1); opacity: 0.8; }
+  }
+
+  /* ==== Progress Bar ==== */
+  .progress-bar-container {
+    position: relative;
+    height: 5px;
+    background: var(--progress-bar-bg);
+    cursor: pointer;
+    margin-bottom: 8px;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    width: 0;
+    background: var(--progress-bar-fill);
+    transition: width 0.1s linear;
+  }
+
+  /* ==== Volume Slider ==== */
+  .volume-container { display: flex; align-items: center; gap: 8px; }
+  .volume-slider {
+    width: 80px;
+    height: 4px;
+    background: var(--progress-bar-bg);
+    appearance: none;
+    border-radius: 2px;
+    cursor: grab;
+  }
+  .volume-slider::-webkit-slider-thumb,
+  .volume-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: var(--text-color);
+    border-radius: 50%;
+    cursor: grab;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    appearance: none;
+  }
+
+  /* ==== Settings Menu ==== */
+  .settings-menu {
+    position: absolute;
+    bottom: 70px;
+    right: 20px;
+    display: none;
+    flex-direction: column;
+    background: var(--settings-menu-bg);
+    border: 1px solid var(--settings-menu-border);
+    border-radius: 6px;
+    overflow: hidden;
+    z-index: 10;
+  }
+  .settings-menu button {
+    padding: 10px 15px;
+    text-align: left;
+    font-size: 14px;
+    color: var(--text-color);
+    background: none;
+    border: none;
+    transition: background 0.2s ease;
+    cursor: pointer;
+  }
+  .settings-menu button:hover {
+    background: var(--settings-menu-hover);
+  }
+
+  /* ==== Go Live Button ==== */
+  .go-live-button {
+    background: var(--primary-red);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    display: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .go-live-button:hover {
+    background: #cc0000;
+  }
+
+  /* ==== Time Display ==== */
+  .time-display {
+    font-size: 14px;
+    min-width: 90px;
+    text-align: right;
+  }
+
+  /* ==== Play Overlay ==== */
+  .play-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.3);
+    cursor: pointer;
+    z-index: 12;
+    transition: opacity 0.3s ease;
+  }
+  .play-overlay.hidden { opacity: 0; pointer-events: none; }
+  .play-overlay button {
+    font-size: 80px;
+    color: rgba(255,255,255,0.8);
+    background: none;
+    border: none;
+  }
+
+  /* ==== Media Queries (Móviles) ==== */
+  @media (max-width: 768px) {
+    .custom-player {
+      margin: 10px auto;
+      border-radius: 0;
+    }
+    .custom-controls {
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .controls-top-row,
+    .controls-bottom-row {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 6px;
+    }
+    .live-indicator {
+      font-size: 0.85rem;
+      padding: 3px 6px;
+    }
+    .go-live-button {
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-size: 0.85rem;
+      padding: 4px 0;
+    }
+    .controls-left,
+    .controls-right {
+      justify-content: space-around;
+    }
+    .custom-player button {
+      font-size: 1.1rem;
+      padding: 6px;
+    }
+    .volume-slider {
+      width: 4rem;
+    }
+    .time-display {
+      font-size: 0.8rem;
+    }
+    .progress-bar-container {
+      height: 6px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .custom-controls {
+      padding: 4px 8px;
+      gap: 4px;
+    }
+    .controls-left,
+    .controls-right {
+      gap: 8px;
+    }
+    .live-indicator {
+      font-size: 0.75rem;
+      padding: 2px 4px;
+    }
+    .go-live-button {
+      font-size: 0.75rem;
+      padding: 3px 0;
+    }
+    .custom-player button {
+      font-size: 1.4rem;
+      padding: 8px;
+    }
+    .volume-slider {
+      width: 3rem;
+    }
+    .time-display {
+      font-size: 0.75rem;
+    }
+    .play-overlay button {
+      font-size: 5rem;
+    }
+  
     }
   </style>
 </head>
@@ -191,349 +489,8 @@
 
 
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reproductor de Video Personalizado</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <style>
-        /* Variables CSS para colores */
-        :root {
-            --primary-red: #ff0000;
-            --control-bg: rgba(0, 0, 0, 0.7);
-            --control-hover: rgba(255, 255, 255, 0.2);
-            --progress-bar-bg: #555;
-            --progress-bar-fill: var(--primary-red);
-            --text-color: #fff;
-            --settings-menu-bg: #222;
-            --settings-menu-border: #555;
-            --settings-menu-hover: #444;
-        }
 
-        /* Reproductor personalizado */
-        .custom-player {
-            position: relative;
-            max-width: 900px; /* Ancho máximo para el reproductor */
-            margin: 20px auto;
-            background: #000;
-            font-family: 'Roboto', Arial, sans-serif; /* Fuente más moderna */
-            overflow: hidden;
-            border-radius: 8px; /* Bordes redondeados */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Sombra para profundidad */
-        }
-
-        .custom-player video {
-            width: 100%;
-            height: auto;
-            display: block; /* Evita espacios debajo del video */
-            background: #000;
-        }
-
-        .custom-controls {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            background: linear-gradient(to top, var(--control-bg) 0%, rgba(0, 0, 0, 0) 100%); /* Gradiente sutil */
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            padding: 10px 20px;
-            box-sizing: border-box;
-            transition: opacity 0.3s ease-in-out; /* Suavizar aparición/desaparición */
-            opacity: 1;
-            pointer-events: auto; /* Permite interacción con los controles */
-        }
-
-        .custom-player:hover .custom-controls,
-        .custom-controls.active { /* Mantiene los controles visibles cuando se interactúa */
-            opacity: 1;
-        }
-
-        .custom-player.hide-controls .custom-controls {
-            opacity: 0;
-            pointer-events: none; /* Deshabilita interacción cuando están ocultos */
-        }
-
-        .controls-top-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .controls-bottom-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .live-indicator {
-            background: var(--primary-red);
-            color: white;
-            padding: 4px 8px;
-            font-size: 13px;
-            border-radius: 4px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .live-indicator::before {
-            content: '';
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: white;
-            border-radius: 50%;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        .settings-menu {
-            display: none; /* Oculto por defecto, se muestra con JS */
-            position: absolute;
-            bottom: 70px; /* Espacio sobre los controles */
-            right: 20px;
-            background: var(--settings-menu-bg);
-            border: 1px solid var(--settings-menu-border);
-            border-radius: 6px;
-            flex-direction: column;
-            z-index: 10;
-            min-width: 120px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
-        }
-
-        .settings-menu button {
-            background: none;
-            color: var(--text-color);
-            padding: 10px 15px;
-            border: none;
-            text-align: left;
-            width: 100%;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.2s ease;
-        }
-
-        .settings-menu button:hover {
-            background-color: var(--settings-menu-hover);
-        }
-
-        .progress-bar-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px; /* Altura de la barra de progreso */
-            background: var(--progress-bar-bg);
-            cursor: pointer;
-            z-index: 11; /* Asegura que esté encima de los controles */
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            width: 0%;
-            background: var(--progress-bar-fill);
-            border-radius: 3px;
-            transition: width 0.1s linear; /* Transición más suave */
-        }
-
-        .seek-handle {
-            position: absolute;
-            height: 12px;
-            width: 12px;
-            background: var(--progress-bar-fill);
-            border-radius: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            display: none; /* Oculto por defecto, se muestra al pasar el mouse */
-        }
-
-        .progress-bar-container:hover .seek-handle {
-            display: block;
-        }
-
-        /* Controles individuales */
-        .custom-player button {
-            background: none;
-            border: none;
-            color: var(--text-color);
-            font-size: 22px; /* Iconos más grandes */
-            cursor: pointer;
-            padding: 5px 8px; /* Espaciado interno */
-            border-radius: 4px;
-            transition: background-color 0.2s ease;
-        }
-
-        .custom-player button:hover {
-            background-color: var(--control-hover);
-        }
-
-        /* Grupo de controles izquierdos/derechos */
-        .controls-left,
-        .controls-right {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        /* Barra de volumen */
-        .volume-container {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .volume-slider {
-            width: 80px;
-            height: 4px;
-            background: var(--progress-bar-bg);
-            -webkit-appearance: none; /* Eliminar estilos por defecto */
-            appearance: none;
-            border-radius: 2px;
-            cursor: grab;
-        }
-
-        .volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 12px;
-            height: 12px;
-            background: var(--text-color);
-            border-radius: 50%;
-            cursor: grab;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-        }
-
-        .volume-slider::-moz-range-thumb {
-            width: 12px;
-            height: 12px;
-            background: var(--text-color);
-            border-radius: 50%;
-            cursor: grab;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Estilo para el botón de ir a en vivo */
-        .go-live-button {
-            background: var(--primary-red);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: bold;
-            display: none; /* Oculto por defecto, se muestra cuando no está en vivo */
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
-
-        .go-live-button:hover {
-            background: #cc0000;
-        }
-
-        /* Tiempo y duración */
-        .time-display {
-            font-size: 14px;
-            min-width: 90px; /* Asegura espacio para el tiempo */
-            text-align: right;
-        }
-
-        /* Centrar ícono de play inicial */
-        .play-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(0, 0, 0, 0.3);
-            cursor: pointer;
-            z-index: 12;
-            transition: opacity 0.3s ease;
-        }
-
-        .play-overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .play-overlay button {
-            font-size: 80px; /* Botón de play grande */
-            color: rgba(255, 255, 255, 0.8);
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .play-overlay button:hover {
-            color: rgba(255, 255, 255, 1);
-            background: none;
-        }
-
-        /* Responsividad */
-        @media (max-width: 768px) {
-            .custom-player {
-                border-radius: 0; /* Quita bordes redondeados en móviles */
-            }
-
-            .custom-controls {
-                padding: 8px 15px;
-                font-size: 14px;
-            }
-
-            .custom-player button {
-                font-size: 20px;
-                padding: 4px 6px;
-            }
-
-            .live-indicator {
-                font-size: 11px;
-                padding: 3px 6px;
-            }
-
-            .time-display {
-                font-size: 12px;
-                min-width: 70px;
-            }
-
-            .volume-slider {
-                width: 60px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .custom-controls {
-                flex-direction: column;
-                gap: 5px;
-            }
-
-            .controls-bottom-row {
-                flex-wrap: wrap; /* Permite que los elementos se envuelvan */
-                justify-content: center;
-                gap: 5px;
-            }
-
-            .controls-left,
-            .controls-right {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .settings-menu {
-                bottom: 120px; /* Ajuste para el menú de ajustes en móvil */
-                right: 50%;
-                transform: translateX(50%);
-            }
-        }
-    </style>
+  
 </head>
 <body>
 
