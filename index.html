@@ -372,108 +372,67 @@ a {
 <iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FIglesiaelCinco%2Fvideos%2F2045118675976243%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
 
 <section class="live-stream-container">
-    <header>
-        <h1>📡 Transmisión en Vivo Bethel Colombia (YouTube)</h1>
-    </header>
-    <div class="video-container">
-        <p id="loadingMessage">Cargando video...</p>
-    </div>
+  <header>
+    <h1>📡 Transmisión en Vivo Bethel Colombia (YouTube)</h1>
+  </header>
+  <div class="video-container" id="videoContainer">
+    <p>Cargando video...</p>
+  </div>
 </section>
 
 <script>
-    const API_KEY = "AIzaSyBhP5vdWh2rOfmil6aMSeGIs_XY866h8Gs"; // ¡Tu API Key proporcionada!
-    const CHANNEL_ID = "UCOoepFJWo0r2Y1AbrhuFuig"; // ID del canal de Bethel Colombia
-    const videoContainer = document.querySelector(".video-container");
-    const loadingMessage = document.getElementById("loadingMessage");
+  const API_KEY = "AIzaSyBhP5vdWh2rOfmil6aMSeGIs_XY866h8Gs";
+  const CHANNEL_ID = "UCOoepFJWo0r2Y1AbrhuFuig";
+  const videoContainer = document.getElementById("videoContainer");
 
-    function setVideo(videoId, labelText = "") {
-        // La URL de YouTube para incrustar videos es: https://www.youtube.com/embed/VIDEO_ID
-        // Los parámetros se añaden con ?param=value&param2=value2
-        // autoplay=1 para que se reproduzca automáticamente (puede ser bloqueado por navegadores)
-        // rel=0 para no mostrar videos relacionados de otros canales
-        // modestbranding=1 para un reproductor de YouTube más minimalista
-        const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+  function setVideo(videoId, label = "") {
+    videoContainer.innerHTML = `
+      <p>${label}</p>
+      <iframe
+        width="100%"
+        height="500"
+        src="https://www.youtube.com/embed/${videoId}"
+        frameborder="0"
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowfullscreen
+        title="Video YouTube">
+      </iframe>`;
+  }
 
-        videoContainer.innerHTML = `
-            ${labelText ? `<span class="video-label ${labelText.includes('EN VIVO') ? 'live-label' : 'last-video-label'}">${labelText}</span>` : ''}
-            <iframe
-                src="${embedUrl}"
-                allow="autoplay; encrypted-media; picture-in-picture"
-                allowfullscreen
-                title="Video de YouTube">
-            </iframe>`;
-    }
+  function showError(message) {
+    videoContainer.innerHTML = `<p style="color:red;">${message}</p>`;
+  }
 
-    function showError(message) {
-        videoContainer.innerHTML = `<p class="error-message">${message}</p>`;
-    }
+  async function loadVideo() {
+    try {
+      // Primero buscamos videos en vivo
+      const liveUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&type=video&key=${API_KEY}`;
+      const liveResponse = await fetch(liveUrl);
+      const liveData = await liveResponse.json();
 
-    async function loadVideo() {
-        // Mostrar mensaje de carga inicial
-        loadingMessage.textContent = "Buscando transmisión en vivo...";
+      if (liveData.items && liveData.items.length > 0) {
+        const liveVideoId = liveData.items[0].id.videoId;
+        setVideo(liveVideoId, "🔴 EN VIVO");
+      } else {
+        // Si no hay en vivo, buscamos el último video
+        const lastUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&maxResults=1&order=date&type=video&key=${API_KEY}`;
+        const lastResponse = await fetch(lastUrl);
+        const lastData = await lastResponse.json();
 
-        if (API_KEY.trim() === "" || API_KEY === "TU_API_KEY_DE_YOUTUBE") {
-            showError("Error: Por favor, reemplaza 'TU_API_KEY_DE_YOUTUBE' con tu clave de API de YouTube real o verifica que la clave no esté vacía.");
-            console.error("API Key no configurada o inválida.");
-            return;
+        if (lastData.items && lastData.items.length > 0) {
+          const lastVideoId = lastData.items[0].id.videoId;
+          setVideo(lastVideoId, "📺 Último video subido");
+        } else {
+          showError("No se encontraron videos en el canal.");
         }
-
-        try {
-            // 1. Intentar encontrar una transmisión en vivo activa
-            const liveUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&type=video&key=${API_KEY}`;
-            const liveResponse = await fetch(liveUrl);
-
-            if (!liveResponse.ok) {
-                const errorData = await liveResponse.json();
-                console.error("Error al obtener la transmisión en vivo:", liveResponse.status, errorData);
-                // Si la API Key es inválida o no está habilitada, el error suele ser 400 o 403
-                if (liveResponse.status === 400 || liveResponse.status === 403) {
-                    throw new Error(`Problema con la API Key o cuota. Mensaje: ${errorData.error ? errorData.error.message : liveResponse.statusText}`);
-                } else {
-                    throw new Error(`Error de red o servidor: ${liveResponse.statusText}`);
-                }
-            }
-
-            const liveData = await liveResponse.json();
-
-            if (liveData.items && liveData.items.length > 0) {
-                const liveVideoId = liveData.items[0].id.videoId;
-                setVideo(liveVideoId, "🔴 EN VIVO AHORA");
-                return; // Si encontramos un video en vivo, salimos de la función
-            }
-
-            // 2. Si no hay en vivo, buscar el último video subido
-            loadingMessage.textContent = "No hay transmisión en vivo. Buscando el último video subido...";
-            const lastVideoUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&maxResults=1&order=date&type=video&key=${API_KEY}`;
-            const lastResponse = await fetch(lastVideoUrl);
-
-            if (!lastResponse.ok) {
-                const errorData = await lastResponse.json();
-                console.error("Error al obtener el último video:", lastResponse.status, errorData);
-                if (lastResponse.status === 400 || lastResponse.status === 403) {
-                    throw new Error(`Problema con la API Key o cuota. Mensaje: ${errorData.error ? errorData.error.message : lastResponse.statusText}`);
-                } else {
-                    throw new Error(`Error de red o servidor: ${lastResponse.statusText}`);
-                }
-            }
-
-            const lastData = await lastResponse.json();
-
-            if (lastData.items && lastData.items.length > 0) {
-                const lastVideoId = lastData.items[0].id.videoId;
-                setVideo(lastVideoId, "📺 Último video del canal");
-            } else {
-                showError("No se encontraron videos en este canal de YouTube. Podría ser que el canal no tenga videos públicos o que la API no los devuelva en este momento.");
-            }
-
-        } catch (error) {
-            console.error("Error al cargar el video de YouTube:", error);
-            showError(`No se pudo cargar el video: ${error.message}. Asegúrate de que la API Key sea válida, que el canal tenga contenido público y que no se haya excedido la cuota de la API.`);
-        }
+      }
+    } catch (error) {
+      console.error("Error al cargar el video:", error);
+      showError("Error al cargar el video.");
     }
+  }
 
-    // Cargar el video al cargar la página
-    loadVideo();
+  loadVideo();
 </script>
 
 
