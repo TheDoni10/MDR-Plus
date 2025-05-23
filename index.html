@@ -381,16 +381,17 @@ a {
 </section>
 
 <script>
-  const API_KEY = "AIzaSyCggtzAkFEE7l2BU7_-W5uyG3Ag9fq4N1M";
+  const API_KEY = "AIzaSyCggtzAkFEE7l2BU7_-W5uyG3Ag9fq4N1M"; // Asegúrate de que sigue activa
   const CHANNEL_ID = "UCOoepFJWo0r2Y1AbrhuFuig";
   const videoContainer = document.getElementById("videoContainer");
 
-  function setVideo(videoId) {
+  function setVideo(videoId, label = "") {
     videoContainer.innerHTML = `
+      <p>${label}</p>
       <iframe
         width="100%"
         height="500"
-        src="https://www.youtube.com/embed/${videoId}?autoplay=1"
+        src="https://www.youtube.com/embed/${videoId}?autoplay=0"
         frameborder="0"
         allow="autoplay; encrypted-media; picture-in-picture"
         allowfullscreen
@@ -399,266 +400,770 @@ a {
   }
 
   function showError(message) {
-    videoContainer.innerHTML = `<p style="color: red;">${message}</p>`;
+    videoContainer.innerHTML = `<p style="color:red;">${message}</p>`;
   }
 
-  async function loadYouTubeVideo() {
+  async function loadVideo() {
     try {
-      const liveRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&type=video&key=${API_KEY}`);
-      const liveData = await liveRes.json();
+      const liveUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&type=video&key=${API_KEY}`;
+      const liveResponse = await fetch(liveUrl);
+      const liveData = await liveResponse.json();
 
       if (liveData.items && liveData.items.length > 0) {
         const liveVideoId = liveData.items[0].id.videoId;
-        setVideo(liveVideoId);
+        setVideo(liveVideoId, "🔴 EN VIVO");
       } else {
-        const latestRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&maxResults=1&order=date&type=video&key=${API_KEY}`);
-        const latestData = await latestRes.json();
+        // No hay en vivo, muestra el último video
+        const lastUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&maxResults=1&order=date&type=video&key=${API_KEY}`;
+        const lastResponse = await fetch(lastUrl);
+        const lastData = await lastResponse.json();
 
-        if (latestData.items && latestData.items.length > 0) {
-          const lastVideoId = latestData.items[0].id.videoId;
-          setVideo(lastVideoId);
+        if (lastData.items && lastData.items.length > 0) {
+          const lastVideoId = lastData.items[0].id.videoId;
+          setVideo(lastVideoId, "📺 Último video subido");
         } else {
-          showError("No se encontraron videos en el canal.");
+          showError("No se encontraron videos en este canal.");
         }
       }
-    } catch (err) {
-      console.error("Error al cargar videos de YouTube:", err);
-      showError("Hubo un problema al cargar el video.");
+    } catch (error) {
+      console.error("Error al cargar el video:", error);
+      showError("No se pudo cargar el video. Revisa la consola para más detalles.");
     }
   }
 
-  loadYouTubeVideo();
+  loadVideo();
 </script>
 
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Reproductor En Vivo</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <style>
-    /* Reproductor Bethel personalizado */
-    .bethel-player {
-      position: relative;
-      max-width: 800px;
-      margin: 20px auto;
-      background: #000;
-      font-family: Arial, sans-serif;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reproductor de Video Personalizado</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        /* Variables CSS para colores */
+        :root {
+            --primary-red: #ff0000;
+            --control-bg: rgba(0, 0, 0, 0.7);
+            --control-hover: rgba(255, 255, 255, 0.2);
+            --progress-bar-bg: #555;
+            --progress-bar-fill: var(--primary-red);
+            --text-color: #fff;
+            --settings-menu-bg: #222;
+            --settings-menu-border: #555;
+            --settings-menu-hover: #444;
+        }
 
-    .bethel-player video {
-      width: 100%;
-      height: auto;
-      background: #000;
-    }
+        /* Reproductor personalizado */
+        .custom-player {
+            position: relative;
+            max-width: 900px; /* Ancho máximo para el reproductor */
+            margin: 20px auto;
+            background: #000;
+            font-family: 'Roboto', Arial, sans-serif; /* Fuente más moderna */
+            overflow: hidden;
+            border-radius: 8px; /* Bordes redondeados */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Sombra para profundidad */
+        }
 
-    .bethel-controls {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      padding: 10px;
-      box-sizing: border-box;
-    }
+        .custom-player video {
+            width: 100%;
+            height: auto;
+            display: block; /* Evita espacios debajo del video */
+            background: #000;
+        }
 
-    .controls-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+        .custom-controls {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: linear-gradient(to top, var(--control-bg) 0%, rgba(0, 0, 0, 0) 100%); /* Gradiente sutil */
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            padding: 10px 20px;
+            box-sizing: border-box;
+            transition: opacity 0.3s ease-in-out; /* Suavizar aparición/desaparición */
+            opacity: 1;
+            pointer-events: auto; /* Permite interacción con los controles */
+        }
 
-    .live-indicator {
-      background: red;
-      color: white;
-      padding: 2px 6px;
-      font-size: 12px;
-      border-radius: 4px;
-    }
+        .custom-player:hover .custom-controls,
+        .custom-controls.active { /* Mantiene los controles visibles cuando se interactúa */
+            opacity: 1;
+        }
 
-    .controls-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 8px;
-    }
+        .custom-player.hide-controls .custom-controls {
+            opacity: 0;
+            pointer-events: none; /* Deshabilita interacción cuando están ocultos */
+        }
 
-    .controls-left,
-    .controls-right {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
+        .controls-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
 
-    .settings-menu {
-      display: none;
-      position: absolute;
-      bottom: 60px;
-      right: 10px;
-      background: #222;
-      border: 1px solid #555;
-      border-radius: 6px;
-      flex-direction: column;
-      z-index: 10;
-    }
+        .controls-bottom-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .settings-menu button {
-      background: none;
-      color: white;
-      padding: 8px 12px;
-      border: none;
-      text-align: left;
-      width: 100%;
-      cursor: pointer;
-    }
+        .live-indicator {
+            background: var(--primary-red);
+            color: white;
+            padding: 4px 8px;
+            font-size: 13px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
 
-    .settings-menu button:hover {
-      background-color: #444;
-    }
+        .live-indicator::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
 
-    .progress-bar {
-      width: 100%;
-      height: 6px;
-      background: #444;
-      border-radius: 3px;
-      overflow: hidden;
-      margin-bottom: 5px;
-      cursor: pointer;
-    }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
 
-    .progress-filled {
-      height: 100%;
-      width: 100%;
-      background: red;
-      transition: width 0.2s;
-    }
+        .settings-menu {
+            display: none; /* Oculto por defecto, se muestra con JS */
+            position: absolute;
+            bottom: 70px; /* Espacio sobre los controles */
+            right: 20px;
+            background: var(--settings-menu-bg);
+            border: 1px solid var(--settings-menu-border);
+            border-radius: 6px;
+            flex-direction: column;
+            z-index: 10;
+            min-width: 120px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+        }
 
-    .bethel-player button {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 18px;
-      cursor: pointer;
-    }
+        .settings-menu button {
+            background: none;
+            color: var(--text-color);
+            padding: 10px 15px;
+            border: none;
+            text-align: left;
+            width: 100%;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s ease;
+        }
 
-    @media (max-width: 600px) {
-      .bethel-controls {
-        font-size: 14px;
-        padding: 8px;
-      }
+        .settings-menu button:hover {
+            background-color: var(--settings-menu-hover);
+        }
 
-      .bethel-player button {
-        font-size: 16px;
-      }
-    }
-  </style>
+        .progress-bar-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px; /* Altura de la barra de progreso */
+            background: var(--progress-bar-bg);
+            cursor: pointer;
+            z-index: 11; /* Asegura que esté encima de los controles */
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--progress-bar-fill);
+            border-radius: 3px;
+            transition: width 0.1s linear; /* Transición más suave */
+        }
+
+        .seek-handle {
+            position: absolute;
+            height: 12px;
+            width: 12px;
+            background: var(--progress-bar-fill);
+            border-radius: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display: none; /* Oculto por defecto, se muestra al pasar el mouse */
+        }
+
+        .progress-bar-container:hover .seek-handle {
+            display: block;
+        }
+
+        /* Controles individuales */
+        .custom-player button {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 22px; /* Iconos más grandes */
+            cursor: pointer;
+            padding: 5px 8px; /* Espaciado interno */
+            border-radius: 4px;
+            transition: background-color 0.2s ease;
+        }
+
+        .custom-player button:hover {
+            background-color: var(--control-hover);
+        }
+
+        /* Grupo de controles izquierdos/derechos */
+        .controls-left,
+        .controls-right {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        /* Barra de volumen */
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .volume-slider {
+            width: 80px;
+            height: 4px;
+            background: var(--progress-bar-bg);
+            -webkit-appearance: none; /* Eliminar estilos por defecto */
+            appearance: none;
+            border-radius: 2px;
+            cursor: grab;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            background: var(--text-color);
+            border-radius: 50%;
+            cursor: grab;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .volume-slider::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            background: var(--text-color);
+            border-radius: 50%;
+            cursor: grab;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Estilo para el botón de ir a en vivo */
+        .go-live-button {
+            background: var(--primary-red);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            display: none; /* Oculto por defecto, se muestra cuando no está en vivo */
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .go-live-button:hover {
+            background: #cc0000;
+        }
+
+        /* Tiempo y duración */
+        .time-display {
+            font-size: 14px;
+            min-width: 90px; /* Asegura espacio para el tiempo */
+            text-align: right;
+        }
+
+        /* Centrar ícono de play inicial */
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            z-index: 12;
+            transition: opacity 0.3s ease;
+        }
+
+        .play-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .play-overlay button {
+            font-size: 80px; /* Botón de play grande */
+            color: rgba(255, 255, 255, 0.8);
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .play-overlay button:hover {
+            color: rgba(255, 255, 255, 1);
+            background: none;
+        }
+
+        /* Responsividad */
+        @media (max-width: 768px) {
+            .custom-player {
+                border-radius: 0; /* Quita bordes redondeados en móviles */
+            }
+
+            .custom-controls {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+
+            .custom-player button {
+                font-size: 20px;
+                padding: 4px 6px;
+            }
+
+            .live-indicator {
+                font-size: 11px;
+                padding: 3px 6px;
+            }
+
+            .time-display {
+                font-size: 12px;
+                min-width: 70px;
+            }
+
+            .volume-slider {
+                width: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .custom-controls {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .controls-bottom-row {
+                flex-wrap: wrap; /* Permite que los elementos se envuelvan */
+                justify-content: center;
+                gap: 5px;
+            }
+
+            .controls-left,
+            .controls-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .settings-menu {
+                bottom: 120px; /* Ajuste para el menú de ajustes en móvil */
+                right: 50%;
+                transform: translateX(50%);
+            }
+        }
+    </style>
 </head>
 <body>
 
-<section class="bethel-player">
-  <video id="alfaPlayer" autoplay muted playsinline></video>
+<section class="custom-player" id="videoPlayer">
+    <video id="mainVideo" playsinline preload="auto"></video>
 
-  <div class="bethel-controls">
-    <div class="progress-bar">
-      <div class="progress-filled"></div>
+    <div class="play-overlay" id="playOverlay">
+        <button id="initialPlayButton"><i class="fas fa-play"></i></button>
     </div>
 
-    <div class="controls-top">
-      <span class="live-indicator">● EN VIVO</span>
-      <div class="settings-menu" id="settingsMenu">
-        <button data-quality="1080">HD (Alta)</button>
-        <button data-quality="720">Media</button>
-        <button data-quality="480">Baja</button>
-      </div>
-    </div>
+    <div class="custom-controls" id="videoControls">
+        <div class="progress-bar-container" id="progressBarContainer">
+            <div class="progress-bar-fill" id="progressBarFill">
+                <div class="seek-handle"></div>
+            </div>
+        </div>
 
-    <div class="controls-bottom">
-      <div class="controls-left">
-        <button id="volumeToggle"><i class="fas fa-volume-up"></i></button>
-      </div>
-      <div class="controls-right">
-        <button class="settings-icon" id="settingsToggle"><i class="fas fa-cog"></i></button>
-        <button id="fullscreenToggle"><i class="fas fa-expand"></i></button>
-      </div>
+        <div class="controls-top-row">
+            <span class="live-indicator" id="liveIndicator">● EN VIVO</span>
+            <button class="go-live-button" id="goLiveButton" style="display: none;">Ir a En Vivo</button>
+
+            <div class="settings-menu" id="settingsMenu">
+                <button data-quality="auto">Automático</button>
+                <button data-quality="1080">1080p</button>
+                <button data-quality="720">720p</button>
+                <button data-quality="480">480p</button>
+                <button data-quality="360">360p</button>
+            </div>
+        </div>
+
+        <div class="controls-bottom-row">
+            <div class="controls-left">
+                <button id="playPauseToggle"><i class="fas fa-play"></i></button>
+                <div class="volume-container">
+                    <button id="volumeToggle"><i class="fas fa-volume-up"></i></button>
+                    <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.05" value="1">
+                </div>
+                <span class="time-display" id="timeDisplay">00:00 / 00:00</span>
+            </div>
+            <div class="controls-right">
+                <button class="settings-icon" id="settingsToggle"><i class="fas fa-cog"></i></button>
+                <button id="fullscreenToggle"><i class="fas fa-expand"></i></button>
+            </div>
+        </div>
     </div>
-  </div>
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script>
-  const video = document.getElementById('alfaPlayer');
-  const settingsToggle = document.getElementById('settingsToggle');
-  const settingsMenu = document.getElementById('settingsMenu');
-  const volumeToggle = document.getElementById('volumeToggle');
-  const fullscreenToggle = document.getElementById('fullscreenToggle');
-  const progressFilled = document.querySelector('.progress-filled');
+    const videoPlayer = document.getElementById('videoPlayer');
+    const mainVideo = document.getElementById('mainVideo');
+    const playOverlay = document.getElementById('playOverlay');
+    const initialPlayButton = document.getElementById('initialPlayButton');
+    const videoControls = document.getElementById('videoControls');
+    const playPauseToggle = document.getElementById('playPauseToggle');
+    const volumeToggle = document.getElementById('volumeToggle');
+    const volumeSlider = document.getElementById('volumeSlider');
+    const timeDisplay = document.getElementById('timeDisplay');
+    const progressBarContainer = document.getElementById('progressBarContainer');
+    const progressBarFill = document.getElementById('progressBarFill');
+    const settingsToggle = document.getElementById('settingsToggle');
+    const settingsMenu = document.getElementById('settingsMenu');
+    const fullscreenToggle = document.getElementById('fullscreenToggle');
+    const liveIndicator = document.getElementById('liveIndicator');
+    const goLiveButton = document.getElementById('goLiveButton');
 
-  const m3u8Url = 'https://alfa.betheltv.tv/srt/3_abr/playlist.m3u8'; // URL HLS
+    const m3u8Url = 'https://alfa.betheltv.tv/srt/3_abr/playlist.m3u8'; // Tu URL HLS
 
-  let hls;
+    let hls;
+    let controlsTimeout;
+    let isLive = true; // Asumimos que es en vivo por defecto
+    let userInteracted = false; // Bandera para saber si el usuario ha interactuado con el video
 
-  if (Hls.isSupported()) {
-    hls = new Hls();
-    hls.loadSource(m3u8Url);
-    hls.attachMedia(video);
-
-    hls.on(Hls.Events.MANIFEST_PARSED, function () {
-      hls.currentLevel = hls.levels.length - 1; // Calidad más alta por defecto
-    });
-
-    settingsMenu.addEventListener('click', function (e) {
-      if (e.target.tagName === 'BUTTON') {
-        const res = parseInt(e.target.getAttribute('data-quality'));
-        const levelIndex = hls.levels.findIndex(lvl => lvl.height === res);
-        if (levelIndex !== -1) {
-          hls.currentLevel = levelIndex;
-        } else {
-          alert('Resolución no disponible.');
+    // Función para formatear el tiempo
+    function formatTime(seconds) {
+        const h = Math.floor(seconds / 3600);
+        const m = Math.floor((seconds % 3600) / 60);
+        const s = Math.floor(seconds % 60);
+        const format = (val) => `0${val}`.slice(-2);
+        if (h > 0) {
+            return `${h}:${format(m)}:${format(s)}`;
         }
-        settingsMenu.style.display = 'none';
-      }
+        return `${format(m)}:${format(s)}`;
+    }
+
+    // Inicializar HLS.js
+    function initializeHls() {
+        if (Hls.isSupported()) {
+            hls = new Hls();
+            hls.loadSource(m3u8Url);
+            hls.attachMedia(mainVideo);
+
+            hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                // Obtener las resoluciones disponibles para el menú de calidad
+                settingsMenu.innerHTML = '<button data-quality="auto">Automático</button>'; // Añadir automático
+                hls.levels.sort((a, b) => b.height - a.height).forEach(level => {
+                    const button = document.createElement('button');
+                    button.textContent = `${level.height}p`;
+                    button.setAttribute('data-quality', level.height);
+                    settingsMenu.appendChild(button);
+                });
+
+                // Seleccionar la calidad más alta por defecto para empezar, o 'auto'
+                hls.currentLevel = -1; // -1 para automático
+                mainVideo.play();
+                hidePlayOverlay(); // Ocultar overlay después de iniciar
+            });
+
+            hls.on(Hls.Events.LEVEL_SWITCHED, function (event, data) {
+                // Actualizar el botón seleccionado en el menú de calidad si es necesario
+                Array.from(settingsMenu.children).forEach(button => {
+                    if (button.getAttribute('data-quality') === 'auto' && hls.currentLevel === -1) {
+                        button.classList.add('active-quality');
+                    } else if (parseInt(button.getAttribute('data-quality')) === hls.levels[data.level].height) {
+                        button.classList.add('active-quality');
+                    } else {
+                        button.classList.remove('active-quality');
+                    }
+                });
+            });
+
+            // Manejar errores de HLS (por ejemplo, si la transmisión se cae)
+            hls.on(Hls.Events.ERROR, function (event, data) {
+                if (data.fatal) {
+                    switch (data.type) {
+                        case Hls.ErrorTypes.NETWORK_ERROR:
+                            console.error('Fatal network error encountered, trying to recover', data);
+                            hls.recoverMediaError();
+                            break;
+                        case Hls.ErrorTypes.MEDIA_ERROR:
+                            console.error('Fatal media error encountered, trying to recover', data);
+                            hls.recoverMediaError();
+                            break;
+                        default:
+                            console.error('Fatal HLS error:', data);
+                            hls.destroy();
+                            // Puedes mostrar un mensaje de error al usuario
+                            break;
+                    }
+                }
+            });
+
+        } else if (mainVideo.canPlayType('application/vnd.apple.mpegurl')) {
+            // Soporte nativo para iOS y Safari
+            mainVideo.src = m3u8Url;
+            mainVideo.addEventListener('loadedmetadata', () => {
+                mainVideo.play();
+                hidePlayOverlay();
+            });
+        } else {
+            alert('Tu navegador no soporta la reproducción de este video.');
+        }
+    }
+
+    // Ocultar overlay de play y reproducir video
+    function hidePlayOverlay() {
+        playOverlay.classList.add('hidden');
+        mainVideo.play();
+        playPauseToggle.innerHTML = '<i class="fas fa-pause"></i>';
+    }
+
+    // Event listeners
+    initialPlayButton.addEventListener('click', () => {
+        userInteracted = true;
+        initializeHls();
     });
-  } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-    video.src = m3u8Url;
-  }
 
-  settingsToggle.addEventListener('click', () => {
-    settingsMenu.style.display = settingsMenu.style.display === 'flex' ? 'none' : 'flex';
-  });
+    playPauseToggle.addEventListener('click', () => {
+        if (mainVideo.paused) {
+            mainVideo.play();
+            playPauseToggle.innerHTML = '<i class="fas fa-pause"></i>';
+            hidePlayOverlay();
+        } else {
+            mainVideo.pause();
+            playPauseToggle.innerHTML = '<i class="fas fa-play"></i>';
+        }
+    });
 
-  document.addEventListener('click', (e) => {
-    if (!settingsMenu.contains(e.target) && !settingsToggle.contains(e.target)) {
-      settingsMenu.style.display = 'none';
+    volumeToggle.addEventListener('click', () => {
+        mainVideo.muted = !mainVideo.muted;
+        volumeSlider.value = mainVideo.muted ? 0 : mainVideo.volume;
+        volumeToggle.innerHTML = mainVideo.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+    });
+
+    volumeSlider.addEventListener('input', () => {
+        mainVideo.volume = volumeSlider.value;
+        mainVideo.muted = volumeSlider.value === '0';
+        volumeToggle.innerHTML = mainVideo.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+    });
+
+    // Actualizar barra de progreso y tiempo
+    mainVideo.addEventListener('timeupdate', () => {
+        if (mainVideo.duration) {
+            const progress = (mainVideo.currentTime / mainVideo.duration) * 100;
+            progressBarFill.style.width = `${progress}%`;
+            timeDisplay.textContent = `${formatTime(mainVideo.currentTime)} / ${formatTime(mainVideo.duration)}`;
+
+            // Lógica para el botón "Ir a En Vivo"
+            const bufferEnd = mainVideo.buffered.length > 0 ? mainVideo.buffered.end(mainVideo.buffered.length - 1) : 0;
+            const diff = mainVideo.duration - mainVideo.currentTime;
+            const bufferDiff = mainVideo.duration - bufferEnd;
+
+            // Si la diferencia con el final es mayor a 5 segundos (no está 'en vivo' con un pequeño buffer)
+            if (diff > 5 && isLive) {
+                goLiveButton.style.display = 'block';
+                liveIndicator.style.display = 'none';
+            } else {
+                goLiveButton.style.display = 'none';
+                liveIndicator.style.display = 'flex';
+            }
+        } else {
+            // Para transmisiones en vivo sin duración conocida
+            progressBarFill.style.width = '100%'; // Siempre lleno
+            timeDisplay.textContent = 'En Vivo';
+            goLiveButton.style.display = 'none';
+            liveIndicator.style.display = 'flex';
+        }
+    });
+
+    // Clic en la barra de progreso
+    progressBarContainer.addEventListener('click', (e) => {
+        if (mainVideo.duration) { // Solo si tiene duración (no es live stream puro sin duración)
+            const rect = progressBarContainer.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const percentage = clickX / rect.width;
+            mainVideo.currentTime = percentage * mainVideo.duration;
+        } else {
+            // Si es un live stream, al hacer clic, saltar al final
+            if (hls && hls.media) {
+                hls.media.currentTime = hls.media.duration;
+            } else {
+                mainVideo.currentTime = mainVideo.duration; // Fallback
+            }
+        }
+    });
+
+    // Controlar el seek handle en la barra de progreso
+    progressBarContainer.addEventListener('mousemove', (e) => {
+        const rect = progressBarContainer.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const percentage = mouseX / rect.width;
+        const seekHandle = progressBarContainer.querySelector('.seek-handle');
+        seekHandle.style.left = `${percentage * 100}%`;
+    });
+
+    // Toggle del menú de ajustes
+    settingsToggle.addEventListener('click', (e) => {
+        e.stopPropagation(); // Evita que el clic se propague al documento y cierre el menú
+        settingsMenu.style.display = settingsMenu.style.display === 'flex' ? 'none' : 'flex';
+        videoControls.classList.add('active'); // Mantiene controles activos mientras el menú está abierto
+        clearTimeout(controlsTimeout); // Evita que se oculten los controles
+    });
+
+    // Selección de calidad en el menú de ajustes
+    settingsMenu.addEventListener('click', function (e) {
+        if (e.target.tagName === 'BUTTON') {
+            const quality = e.target.getAttribute('data-quality');
+            if (hls) {
+                if (quality === 'auto') {
+                    hls.currentLevel = -1; // Configura a automático
+                } else {
+                    const res = parseInt(quality);
+                    const levelIndex = hls.levels.findIndex(lvl => lvl.height === res);
+                    if (levelIndex !== -1) {
+                        hls.currentLevel = levelIndex;
+                    } else {
+                        alert(`Resolución ${quality} no disponible.`);
+                    }
+                }
+            }
+            settingsMenu.style.display = 'none';
+            resetControlsTimeout(); // Reiniciar el timeout de ocultar controles
+        }
+    });
+
+    // Cierra el menú de ajustes al hacer clic fuera
+    document.addEventListener('click', (e) => {
+        if (!settingsMenu.contains(e.target) && !settingsToggle.contains(e.target)) {
+            settingsMenu.style.display = 'none';
+        }
+    });
+
+    // Pantalla completa
+    fullscreenToggle.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+            if (videoPlayer.requestFullscreen) {
+                videoPlayer.requestFullscreen();
+            } else if (videoPlayer.mozRequestFullScreen) { /* Firefox */
+                videoPlayer.mozRequestFullScreen();
+            } else if (videoPlayer.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+                videoPlayer.webkitRequestFullscreen();
+            } else if (videoPlayer.msRequestFullscreen) { /* IE/Edge */
+                videoPlayer.msRequestFullscreen();
+            }
+            fullscreenToggle.innerHTML = '<i class="fas fa-compress"></i>';
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) { /* Firefox */
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { /* IE/Edge */
+                document.msExitFullscreen();
+            }
+            fullscreenToggle.innerHTML = '<i class="fas fa-expand"></i>';
+        }
+    });
+
+    // Botón "Ir a En Vivo"
+    goLiveButton.addEventListener('click', () => {
+        if (hls && hls.media) {
+            hls.media.currentTime = hls.media.duration;
+        } else {
+            mainVideo.currentTime = mainVideo.duration; // Fallback
+        }
+    });
+
+    // Ocultar/mostrar controles al mover el mouse
+    function hideControls() {
+        videoPlayer.classList.add('hide-controls');
+        videoControls.classList.remove('active');
     }
-  });
 
-  // Volumen toggle
-  volumeToggle.addEventListener('click', () => {
-    video.muted = !video.muted;
-    volumeToggle.innerHTML = video.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
-  });
+    function showControls() {
+        videoPlayer.classList.remove('hide-controls');
+        videoControls.classList.add('active'); // Mantiene activos mientras el mouse está sobre el reproductor
+        resetControlsTimeout();
+    }
 
-  // Pantalla completa
-  fullscreenToggle.addEventListener('click', () => {
-    const player = document.querySelector('.bethel-player');
-    if (!document.fullscreenElement) {
-      player.requestFullscreen();
-      fullscreenToggle.innerHTML = '<i class="fas fa-compress"></i>';
+    function resetControlsTimeout() {
+        clearTimeout(controlsTimeout);
+        controlsTimeout = setTimeout(hideControls, 3000); // Ocultar después de 3 segundos de inactividad
+    }
+
+    videoPlayer.addEventListener('mousemove', showControls);
+    videoControls.addEventListener('mousemove', showControls); // Si el mouse está sobre los controles, no ocultarlos
+
+    // Inicializar controles visibles al cargar
+    resetControlsTimeout();
+
+    // Comprobar si el video está pausado para mostrar siempre los controles
+    mainVideo.addEventListener('play', () => {
+        resetControlsTimeout();
+    });
+
+    mainVideo.addEventListener('pause', () => {
+        clearTimeout(controlsTimeout);
+        videoPlayer.classList.remove('hide-controls'); // Mostrar siempre los controles cuando está pausado
+        videoControls.classList.add('active');
+    });
+
+    // Manejar el mute inicial si el video está autoplayed y muted
+    mainVideo.addEventListener('loadedmetadata', () => {
+        volumeSlider.value = mainVideo.volume;
+        volumeToggle.innerHTML = mainVideo.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+
+        if (mainVideo.autoplay && mainVideo.muted && !userInteracted) {
+            // Si es autoplay y muted, y el usuario no ha interactuado, no mostrar el overlay de play
+            hidePlayOverlay();
+            initializeHls(); // Inicializar HLS si no se ha hecho
+        } else if (!userInteracted) {
+             // Si no es autoplay o no está muted, mostrar el overlay de play
+            playOverlay.classList.remove('hidden');
+        }
+    });
+
+    // Asegurarse de que el video siempre tenga algún volumen si no está silenciado
+    if (mainVideo.volume === 0 && !mainVideo.muted) {
+        mainVideo.volume = 1; // Establecer volumen por defecto si es 0 y no está silenciado
+        volumeSlider.value = 1;
+    }
+
+    // Inicializar HLS solo si el video no tiene autoplay y no está silenciado, o si el usuario interactúa
+    if (mainVideo.autoplay && mainVideo.muted) {
+        // En navegadores modernos, autoplay con sonido está bloqueado.
+        // Si el video está en autoplay y muted, intentamos reproducirlo y lo consideramos como "interacción"
+        // para inicializar HLS directamente.
+        initializeHls();
+        hidePlayOverlay();
     } else {
-      document.exitFullscreen();
-      fullscreenToggle.innerHTML = '<i class="fas fa-expand"></i>';
+        // Si no es autoplay o no está muted, el usuario debe interactuar
+        playOverlay.classList.remove('hidden');
     }
-  });
 
-  // Actualizar barra de progreso simulada
-  video.addEventListener('timeupdate', () => {
-    const progress = (video.currentTime / video.duration) * 100;
-    progressFilled.style.width = isNaN(progress) ? '100%' : `${progress}%`;
-  });
+
 </script>
 
 </body>
