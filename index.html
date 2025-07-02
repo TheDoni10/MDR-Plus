@@ -6,309 +6,16 @@
     <title>Radio Cristiana</title>
     <link rel="icon" type="image/png" href="Icon/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
-      /* Reset básico */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #111;
-    color: #fff;
-}
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-/* Layout principal */
-.container {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: row;
-}
-
-/* Sidebar estilo Netflix */
-.sidebar {
-    background-color: #000;
-    width: 250px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-.sidebar .logo img {
-    width: 100%;
-    margin-bottom: 20px;
-}
-.sidebar nav ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-.sidebar nav ul li a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px;
-    border-radius: 8px;
-    transition: background 0.3s;
-}
-.sidebar nav ul li a:hover {
-    background-color: #333;
-}
-.download-app {
-    margin-top: auto;
-}
-
-/* Contenido */
-.content {
-    flex: 1;
-    padding: 30px;
-    overflow-x: hidden;
-}
-
-/* Hero */
-.hero {
-    text-align: center;
-    margin-bottom: 40px;
-}
-.hero img {
-    width: 100%;
-    height: 400px; /* Altura fija para hacer la imagen más alargada */
-    object-fit: cover; /* Asegura que la imagen cubra el espacio sin distorsión */
-    border-radius: 10px; /* Bordes suaves pero menos curvados que en Facebook */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera para darle profundidad */
-    margin-bottom: 20px; /* Espacio debajo de la imagen */
-}
-
-.hero h1 {
-    font-size: 3rem;
-    margin: 20px 0 10px;
-}
-.hero p {
-    font-size: 1.3rem;
-    color: #ccc;
-}
-
-/* Información del canal */
-.channel-info {
-    background: #1c1c1c;
-    padding: 25px;
-    border-radius: 20px;
-    margin-bottom: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.channel-avatar img {
-    width: 110px;
-    border-radius: 50%;
-    margin-bottom: 15px;
-}
-.channel-details {
-    text-align: center;
-}
-.player-container {
-    margin: 15px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-.player-container img {
-    width: 40px;
-    cursor: pointer;
-}
-.timeline {
-    background: #333;
-    height: 5px;
-    width: 100%;
-    max-width: 300px;
-    border-radius: 10px;
-}
-
-.timeline-handle {
-    width: 15px;
-    height: 15px;
-    background: white;
-    border-radius: 50%;
-    position: absolute;
-    top: -5px;
-    right: 0;
-}
-
-/* Redes sociales */
-.social-links {
-    display: flex;
-    gap: 15px;
-    margin-top: 15px;
-}
-.social-links a {
-    font-size: 1.5rem;
-    color: #fff;
-    transition: transform 0.3s;
-}
-.social-links a:hover {
-    transform: scale(1.2);
-}
-
-/* CONTENEDOR GENERAL */
-.live-stream-container {
-  padding: 1rem;
-  background-color: #000;
-  color: #fff;
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-/* TÍTULOS */
-.live-stream-container header h1 {
-  font-size: 1.5rem;
-  margin-bottom: 0.75rem;
-}
-
-/* CONTENEDOR DE VIDEO 16:9 (RESPONSIVE) */
-.video-container {
-  position: relative;
-  width: 100%;
-  max-width: 100%;
-  aspect-ratio: 16 / 9;
-  overflow: visible;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  margin: 0 auto;
-}
-
-/* APLICADO A TODOS LOS VIDEOS */
-.video-container iframe,
-.video-container video {
-  width: 100%;
-  height: 100%;
-  border: none;
-  border-radius: 12px;
-  display: block;
-  object-fit: cover;
-}
-
-/* AJUSTE EN PC: REDUCIR TAMAÑO GENERAL */
-@media (min-width: 768px) {
-  .video-container {
-    max-width: 700px;
-  }
-
-  .live-stream-container header h1 {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-  }
-}
-
-
-
-
-/* Responsivo */
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-    }
-    .sidebar {
-        width: 100%;
-        flex-direction: row;
-        overflow-x: auto;
-        padding: 10px;
-        justify-content: space-between;
-    }
-    .sidebar nav ul {
-        flex-direction: row;
-        gap: 10px;
-    }
-    .sidebar nav ul li a {
-        font-size: 0.9rem;
-        padding: 5px;
-    }
-    .download-app {
-        display: none;
-    }
-    .hero h1 {
-        font-size: 2rem;
-    }
-   .hero {
-  text-align: center;
-  background-color: #111;
-  padding: 1rem;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.hero img {
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  display: block;
-  object-fit: cover;
-}
-
-/* Texto encima o debajo de la imagen */
-.hero h1 {
-  font-size: 2rem;
-  color: #fff;
-  margin-top: 1rem;
-}
-
-.hero p {
-  font-size: 1rem;
-  color: #ccc;
-  margin-bottom: 1rem;
-}
-
-/* ✅ Estilo portada para móviles */
-@media screen and (max-width: 768px) {
-  .hero {
-    padding: 0;
-  }
-
-  .hero img {
-    aspect-ratio: 3 / 1; /* Estilo portada: ancho 3 veces la altura */
-    height: auto;
-    object-fit: cover;
-  }
-
-  .hero h1 {
-    font-size: 1.4rem;
-    margin-top: 0.5rem;
-  }
-
-  .hero p {
-    font-size: 0.95rem;
-    margin-bottom: 1rem;
-  }
-}
-
-    .channel-info {
-        padding: 15px;
-    }
-    .live-stream-container header h1 {
-        font-size: 1.2rem;
-    }
-}
-
+        *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',sans-serif;background-color:#111;color:#fff}a{color:inherit;text-decoration:none}.container{display:flex;min-height:100vh;flex-direction:column}.sidebar{background-color:#000;padding:10px;display:flex;overflow-x:auto;justify-content:space-between}.sidebar nav ul{list-style:none;display:flex;gap:10px}.sidebar nav ul li a{display:flex;align-items:center;gap:5px;padding:5px;border-radius:8px;transition:background 0.3s;font-size:.9rem}.sidebar nav ul li a:hover{background-color:#333}.download-app{display:none}.content{flex:1;padding:15px}.hero{text-align:center;background-color:#111;padding:1rem;border-radius:12px;overflow:hidden}.hero img{width:100%;height:auto;border-radius:12px;display:block;object-fit:cover;aspect-ratio:3/1}.hero h1{font-size:1.4rem;color:#fff;margin-top:.5rem}.hero p{font-size:.95rem;color:#ccc;margin-bottom:1rem}.channel-info{background:#1c1c1c;padding:15px;border-radius:20px;margin-bottom:20px;display:flex;flex-direction:column;align-items:center}.channel-avatar img{width:110px;border-radius:50%;margin-bottom:15px}.channel-details{text-align:center}.player-container{margin:15px 0;display:flex;align-items:center;justify-content:center;gap:15px;flex-wrap:wrap}.player-container img{width:40px;cursor:pointer}.timeline{background:#333;height:5px;width:100%;max-width:300px;border-radius:10px;position:relative}.timeline-handle{width:15px;height:15px;background:#fff;border-radius:50%;position:absolute;top:-5px;right:0}.social-links{display:flex;gap:15px;margin-top:15px}.social-links a{font-size:1.5rem;color:#fff;transition:transform .3s}.social-links a:hover{transform:scale(1.2)}.live-stream-container{padding:1rem;background-color:#000;color:#fff;text-align:center;margin-bottom:1.5rem}.live-stream-container header h1{font-size:1.2rem;margin-bottom:.75rem}.video-container{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:12px;box-shadow:0 4px 8px rgba(0,0,0,.5);margin:0 auto}.video-container iframe,.video-container video{width:100%;height:100%;border:none;border-radius:12px;display:block;object-fit:cover}@media (min-width:768px){.container{flex-direction:row}.sidebar{width:250px;flex-direction:column;overflow-x:visible;padding:20px;justify-content:flex-start;gap:20px}.sidebar nav ul{flex-direction:column;gap:15px}.sidebar nav ul li a{font-size:1rem;padding:10px;gap:10px}.download-app{display:block;margin-top:auto}.content{padding:30px}.hero img{aspect-ratio:16/9;height:400px}.hero h1{font-size:2rem;margin:20px 0 10px}.hero p{font-size:1.3rem}.live-stream-container header h1{font-size:1.8rem}.video-container{max-width:700px}}
     </style>
 </head>
 <body>
     <div class="container">
         <aside class="sidebar">
             <div class="logo">
-                <img src="img/logo.png" alt="Logo de la Radio">
+                <img src="img/logo.png" alt="Logo de la Radio" loading="lazy">
                 <link rel="icon" type="image/png" href="Icon/favicon.png">
-
-
-                
-
             </div>
             <nav>
                 <ul>
@@ -329,49 +36,30 @@ a {
 
         <main class="content">
             <div class="hero">
-                <img src="img/GENERACIONES 2k.png" alt="Imagen del Hero">
+                <img src="img/GENERACIONES 2k.png" alt="Imagen del Hero" loading="lazy">
                 <h1>Armonia</h1>
                 <p>NOS LLEVA A GRANDES VICTORIAS</p>
             </div>
 
             <div class="channel-info">
-  <div class="channel-avatar">
-    <img src="https://i.ibb.co/p6TgwrW4/logo.png" alt="Avatar del Canal">
-  </div>
-  <div class="channel-details">
-    <h2>Movimiento Misionero Mundial El Cinco</h2>
-    <p>Escucha Nuestra Emisora En Vivo</p>
-    <div class="player-container"> 
-      <img src="https://i.ibb.co/R4Hdnx1Y/Atras.png" alt="Retroceder">
-      <img src="https://i.ibb.co/KjM64x6K/Play.png" alt="Reproducir" id="playButtonPlayer">
-      <img src="https://i.ibb.co/hxQ04hzP/siguiente.png" alt="Adelantar">
-
-      <div class="timeline">
-        <div class="timeline-progress">
-          <div class="timeline-handle"></div>
-        </div>
-      </div>
-    </div>
-
-    <audio id="audioPlayer" src="https://stream.zeno.fm/wkqjqojf49wtv"></audio>
-  </div>
-</div>
-
-<script>
-  const playButton = document.getElementById('playButtonPlayer');
-  const audio = document.getElementById('audioPlayer');
-
-  playButton.addEventListener('click', () => {
-    if (audio.paused) {
-      audio.play();
-      playButton.src = "https://i.ibb.co/5x3hYJS/Pause.png"; // cambia al ícono de pausa
-    } else {
-      audio.pause();
-      playButton.src = "https://i.ibb.co/KjM64x6K/Play.png"; // vuelve al ícono de play
-    }
-  });
-</script>
-
+                <div class="channel-avatar">
+                    <img src="https://i.ibb.co/p6TgwrW4/logo.png" alt="Avatar del Canal" loading="lazy">
+                </div>
+                <div class="channel-details">
+                    <h2>Movimiento Misionero Mundial El Cinco</h2>
+                    <p>Escucha Nuestra Emisora En Vivo</p>
+                    <div class="player-container"> 
+                        <img src="https://i.ibb.co/R4Hdnx1Y/Atras.png" alt="Retroceder" loading="lazy">
+                        <img src="https://i.ibb.co/KjM64x6K/Play.png" alt="Reproducir" id="playButtonPlayer" loading="lazy">
+                        <img src="https://i.ibb.co/hxQ04hzP/siguiente.png" alt="Adelantar" loading="lazy">
+                        <div class="timeline">
+                            <div class="timeline-progress">
+                                <div class="timeline-handle"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <audio id="audioPlayer" src="https://stream.zeno.fm/wkqjqojf49wtv" preload="none"></audio>
+                </div>
                 <div class="social-links">
                     <a href="https://www.facebook.com/IglesiaelCinco" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="https://www.instagram.com/iglesiaelcinco" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
@@ -379,132 +67,82 @@ a {
                 </div>
             </div>
 
-
             <section class="live-stream-container">
-  <header>
-    <h1>🔴 Señal en Vivo - Ministerio de Restauración .</h1>
-  </header>
-  <div class="video-container">
-<iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FIglesiaelCinco%2Fvideos%2F1061091769330149%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
+                <header>
+                    <h1>🔴 Señal en Vivo - Ministerio de Restauración</h1>
+                </header>
+                <div class="video-container">
+                    <iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FIglesiaelCinco%2Fvideos%2F1061091769330149%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" loading="lazy"></iframe>
+                </div>
+            </section>
 
-  <section class="live-stream-container">
+          <section class="live-stream-container">
   <header>
     <h1>📡 Transmisión en Vivo Bethel Colombia (YouTube)</h1>
-    <p id="live-status" style="font-weight:bold; margin-top:5px;"></p>
+    <p id="live-status" style="font-weight:bold; margin-top:5px; color:#e53935;">🔴 Cargando transmisión...</p>
   </header>
-  <div class="video-container" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
+  <div class="video-container">
     <iframe 
       id="youtube-iframe"
-      style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
-      allowfullscreen 
-      allow="autoplay; encrypted-media; picture-in-picture"
-      title="Transmisión en Vivo YouTube">
+      src="about:blank" 
+      frameborder="0" 
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+      allowfullscreen
+      loading="lazy">
     </iframe>
   </div>
 </section>
 
 <script>
-  const API_KEY = 'AIzaSyBhP5vdWh2rOfmil6aMSeGIs_XY866h8Gs';
-  const CHANNEL_ID = 'UCOoepFJWo0r2Y1AbrhuFuig';
+// Reemplaza con tu API Key real (esta es de ejemplo)
+const YOUTUBE_API_KEY = 'AIzaSyBhP5vdWh2rOfmil6aMSeGIs_XY866h8Gs';
+const YOUTUBE_CHANNEL_ID = 'UCOoepFJWo0r2Y1AbrhuFuig'; // ID de Bethel Colombia
+
+async function loadYouTubeLive() {
   const iframe = document.getElementById('youtube-iframe');
-  const statusText = document.getElementById('live-status');
-
-  async function checkLiveStatus() {
-    try {
-      const liveRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&type=video&key=${API_KEY}`);
-      const liveData = await liveRes.json();
-
-      if (liveData.items && liveData.items.length > 0) {
-        const liveVideoId = liveData.items[0].id.videoId;
-        iframe.src = `https://www.youtube.com/embed/${liveVideoId}?autoplay=1`;
-        statusText.textContent = "🔴 En Vivo";
-        statusText.style.color = "#e53935";
+  const statusElement = document.getElementById('live-status');
+  
+  try {
+    // 1. Verificar si hay transmisión en vivo
+    const liveResponse = await fetch(
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${YOUTUBE_CHANNEL_ID}&eventType=live&type=video&key=${YOUTUBE_API_KEY}`
+    );
+    
+    const liveData = await liveResponse.json();
+    
+    if (liveData.items && liveData.items.length > 0) {
+      // 2. Si está en vivo, cargar el video
+      const videoId = liveData.items[0].id.videoId;
+      iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0`;
+      statusElement.textContent = "🔴 TRANSMISIÓN EN VIVO";
+      statusElement.style.color = "#e53935";
+    } else {
+      // 3. Si no hay en vivo, cargar el último video
+      const lastVideoResponse = await fetch(
+        `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${YOUTUBE_CHANNEL_ID}&maxResults=1&order=date&type=video&key=${YOUTUBE_API_KEY}`
+      );
+      
+      const lastVideoData = await lastVideoResponse.json();
+      
+      if (lastVideoData.items && lastVideoData.items.length > 0) {
+        const videoId = lastVideoData.items[0].id.videoId;
+        iframe.src = `https://www.youtube.com/embed/${videoId}`;
+        statusElement.textContent = "📼 Último video disponible";
+        statusElement.style.color = "#ff9800";
       } else {
-        const lastVideoRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&maxResults=1&order=date&type=video&key=${API_KEY}`);
-        const lastVideoData = await lastVideoRes.json();
-
-        if (lastVideoData.items && lastVideoData.items.length > 0) {
-          const lastVideoId = lastVideoData.items[0].id.videoId;
-          iframe.src = `https://www.youtube.com/embed/${lastVideoId}`;
-          statusText.textContent = "📼 Último video en vivo";
-          statusText.style.color = "#ccc";
-        } else {
-          statusText.textContent = "⚠️ No se encontraron videos recientes.";
-          statusText.style.color = "#ccc";
-        }
+        throw new Error("No se encontraron videos");
       }
-    } catch (error) {
-      statusText.textContent = "⚠️ Error al cargar el video.";
-      statusText.style.color = "#ccc";
-      console.error("Error al verificar el estado en vivo:", error);
     }
+  } catch (error) {
+    console.error("Error al cargar YouTube:", error);
+    statusElement.textContent = "⚠️ Transmisión no disponible";
+    statusElement.style.color = "#9e9e9e";
+    iframe.src = "https://www.youtube.com/embed?listType=user_uploads&list=BethelTVColombia";
   }
+}
 
-  checkLiveStatus();
+// Cargar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', loadYouTubeLive);
 </script>
-
-
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-<script>
-  const video = document.getElementById('alfaPlayer');
-  const m3u8Url = 'https://alfa.betheltv.tv/srt/3_abr/playlist.m3u8';
-
-  if (Hls.isSupported()) {
-    const hls = new Hls({
-      capLevelToPlayerSize: true,
-      maxLoadingDelay: 4,
-      maxBufferLength: 30,
-      maxMaxBufferLength: 60,
-      enableWorker: true,
-      debug: false,
-    });
-
-    hls.loadSource(m3u8Url);
-    hls.attachMedia(video);
-
-    hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
-      console.log("Calidades disponibles:", data.levels);
-
-      // Crear selector de calidad
-      const controlBar = document.createElement('div');
-      controlBar.style.position = 'absolute';
-      controlBar.style.bottom = '10px';
-      controlBar.style.right = '10px';
-      controlBar.style.zIndex = '9999';
-
-      const qualitySelect = document.createElement('select');
-      qualitySelect.style.padding = '5px';
-      qualitySelect.style.borderRadius = '5px';
-
-      const autoOption = document.createElement('option');
-      autoOption.value = -1;
-      autoOption.text = 'Auto';
-      qualitySelect.appendChild(autoOption);
-
-      data.levels.forEach((level, i) => {
-        const option = document.createElement('option');
-        option.value = i;
-        option.text = `${level.height}p`;
-        qualitySelect.appendChild(option);
-      });
-
-      qualitySelect.addEventListener('change', () => {
-        const quality = parseInt(qualitySelect.value);
-        hls.currentLevel = quality;
-      });
-
-      controlBar.appendChild(qualitySelect);
-      video.parentElement.appendChild(controlBar);
-    });
-
-  } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-    // Para Safari y navegadores con soporte nativo HLS
-    video.src = m3u8Url;
-  }
-
-  // Volumen al 100% al cargar
-  video.volume = 1.0;
-</script>
-
 </body>
 </html>
