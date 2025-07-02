@@ -6,9 +6,305 @@
     <title>Radio Cristiana</title>
     <link rel="icon" type="image/png" href="Icon/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',sans-serif;background-color:#111;color:#fff}a{color:inherit;text-decoration:none}.container{display:flex;min-height:100vh;flex-direction:column}.sidebar{background-color:#000;padding:10px;display:flex;overflow-x:auto;justify-content:space-between}.sidebar nav ul{list-style:none;display:flex;gap:10px}.sidebar nav ul li a{display:flex;align-items:center;gap:5px;padding:5px;border-radius:8px;transition:background 0.3s;font-size:.9rem}.sidebar nav ul li a:hover{background-color:#333}.download-app{display:none}.content{flex:1;padding:15px}.hero{text-align:center;background-color:#111;padding:1rem;border-radius:12px;overflow:hidden}.hero img{width:100%;height:auto;border-radius:12px;display:block;object-fit:cover;aspect-ratio:3/1}.hero h1{font-size:1.4rem;color:#fff;margin-top:.5rem}.hero p{font-size:.95rem;color:#ccc;margin-bottom:1rem}.channel-info{background:#1c1c1c;padding:15px;border-radius:20px;margin-bottom:20px;display:flex;flex-direction:column;align-items:center}.channel-avatar img{width:110px;border-radius:50%;margin-bottom:15px}.channel-details{text-align:center}.player-container{margin:15px 0;display:flex;align-items:center;justify-content:center;gap:15px;flex-wrap:wrap}.player-container img{width:40px;cursor:pointer}.timeline{background:#333;height:5px;width:100%;max-width:300px;border-radius:10px;position:relative}.timeline-handle{width:15px;height:15px;background:#fff;border-radius:50%;position:absolute;top:-5px;right:0}.social-links{display:flex;gap:15px;margin-top:15px}.social-links a{font-size:1.5rem;color:#fff;transition:transform .3s}.social-links a:hover{transform:scale(1.2)}.live-stream-container{padding:1rem;background-color:#000;color:#fff;text-align:center;margin-bottom:1.5rem}.live-stream-container header h1{font-size:1.2rem;margin-bottom:.75rem}.video-container{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:12px;box-shadow:0 4px 8px rgba(0,0,0,.5);margin:0 auto}.video-container iframe,.video-container video{width:100%;height:100%;border:none;border-radius:12px;display:block;object-fit:cover}@media (min-width:768px){.container{flex-direction:row}.sidebar{width:250px;flex-direction:column;overflow-x:visible;padding:20px;justify-content:flex-start;gap:20px}.sidebar nav ul{flex-direction:column;gap:15px}.sidebar nav ul li a{font-size:1rem;padding:10px;gap:10px}.download-app{display:block;margin-top:auto}.content{padding:30px}.hero img{aspect-ratio:16/9;height:400px}.hero h1{font-size:2rem;margin:20px 0 10px}.hero p{font-size:1.3rem}.live-stream-container header h1{font-size:1.8rem}.video-container{max-width:700px}}
-    </style>
+  <style>
+/* ===== RESET Y BASE ===== */
+:root {
+  --color-primary: #111;
+  --color-secondary: #000;
+  --color-accent: #333;
+  --color-text: #fff;
+  --color-text-secondary: #ccc;
+  --border-radius: 12px;
+  --transition: all 0.3s ease;
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background-color: var(--color-primary);
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ===== LAYOUT PRINCIPAL ===== */
+.container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.sidebar {
+  background-color: var(--color-secondary);
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.sidebar .logo img {
+  max-height: 50px;
+  margin-bottom: 0;
+}
+
+.sidebar nav ul {
+  list-style: none;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.sidebar nav ul li a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  white-space: nowrap;
+  font-size: 0.9rem;
+}
+
+.sidebar nav ul li a:hover {
+  background-color: var(--color-accent);
+}
+
+.download-app {
+  display: none;
+}
+
+.content {
+  flex: 1;
+  padding: 1.5rem;
+}
+
+/* ===== COMPONENTES ===== */
+.hero {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  background-color: var(--color-primary);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.hero img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.25rem;
+}
+
+.hero h1 {
+  font-size: 2rem;
+  margin: 1.25rem 0 0.75rem;
+  color: var(--color-text);
+}
+
+.hero p {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 1rem;
+}
+
+.channel-info {
+  background: var(--color-accent);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.channel-avatar img {
+  width: 110px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+
+.channel-details {
+  text-align: center;
+}
+
+.player-container {
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.player-container img {
+  width: 40px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.player-container img:hover {
+  transform: scale(1.1);
+}
+
+.timeline {
+  background: var(--color-accent);
+  height: 5px;
+  width: 100%;
+  max-width: 300px;
+  border-radius: 10px;
+  position: relative;
+}
+
+.timeline-handle {
+  width: 15px;
+  height: 15px;
+  background: var(--color-text);
+  border-radius: 50%;
+  position: absolute;
+  top: -5px;
+  right: 0;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.social-links a {
+  font-size: 1.5rem;
+  color: var(--color-text);
+  transition: transform 0.2s;
+}
+
+.social-links a:hover {
+  transform: scale(1.2);
+}
+
+.live-stream-container {
+  padding: 1rem;
+  background-color: var(--color-secondary);
+  color: var(--color-text);
+  text-align: center;
+  margin-bottom: 1.5rem;
+  border-radius: var(--border-radius);
+}
+
+.live-stream-container header h1 {
+  font-size: 1.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  margin: 0 auto;
+  background-color: #000;
+}
+
+.video-container iframe,
+.video-container video {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: var(--border-radius);
+  display: block;
+  object-fit: cover;
+}
+
+/* ===== MEDIA QUERIES ===== */
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row;
+  }
+  
+  .sidebar {
+    width: 250px;
+    flex-direction: column;
+    overflow-x: visible;
+    padding: 1.25rem;
+    gap: 1.25rem;
+  }
+  
+  .sidebar nav ul {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .sidebar nav ul li a {
+    font-size: 1rem;
+    padding: 0.75rem;
+    gap: 0.75rem;
+  }
+  
+  .download-app {
+    display: block;
+    margin-top: auto;
+  }
+  
+  .content {
+    padding: 2rem;
+  }
+  
+  .hero img {
+    height: 400px;
+  }
+  
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+  
+  .hero p {
+    font-size: 1.25rem;
+  }
+  
+  .live-stream-container header h1 {
+    font-size: 1.7rem;
+  }
+  
+  .video-container {
+    max-width: 800px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero h1 {
+    font-size: 3rem;
+  }
+  
+  .video-container {
+    max-width: 900px;
+  }
+}
+</style>
 </head>
 <body>
     <div class="container">
