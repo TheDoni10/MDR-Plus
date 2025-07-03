@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    /* RESET GENERAL */
     * {
       margin: 0;
       padding: 0;
@@ -28,9 +27,9 @@
       text-decoration: none;
     }
 
-    /* LAYOUT */
     .container {
       display: flex;
+      flex-direction: row;
       min-height: 100vh;
     }
 
@@ -73,10 +72,8 @@
     .content {
       flex: 1;
       padding: 30px;
-      overflow-x: hidden;
     }
 
-    /* HERO */
     .hero {
       text-align: center;
       margin-bottom: 40px;
@@ -100,7 +97,6 @@
       color: #ccc;
     }
 
-    /* VIDEOS */
     .predicas-section h2 {
       text-align: center;
       margin-bottom: 20px;
@@ -154,37 +150,56 @@
       border-top: 1px solid #333;
     }
 
-    /* RESPONSIVE */
+    /* TABLET */
     @media (max-width: 1024px) {
       .video-grid {
         grid-template-columns: repeat(2, 1fr);
       }
     }
 
+    /* MÓVIL */
     @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+      }
+
+      .sidebar nav ul {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .sidebar .logo {
+        width: 100px;
+      }
+
+      .content {
+        padding: 20px;
+      }
+
       .video-grid {
         grid-template-columns: 1fr;
+        padding: 0;
       }
 
       .video-card {
-        max-width: 95%;
-        margin: auto;
-      }
-
-      .fb-video {
-        padding-bottom: 62%;
-      }
-
-      .video-title {
-        font-size: 1rem;
-        padding: 0.8rem;
+        max-width: 100%;
       }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- BARRA LATERAL -->
+    <!-- BARRA LATERAL / SUPERIOR EN MÓVIL -->
     <aside class="sidebar">
       <div class="logo">
         <img src="img/logo.png" alt="Logo de la Radio">
@@ -202,7 +217,7 @@
         </ul>
       </nav>
       <div class="download-app">
-        <a href="#"><i class="fas fa-download fa-fw"></i> Download app</a>
+        <a href="#"><i class="fas fa-download fa-fw"></i> App</a>
       </div>
     </aside>
 
@@ -217,40 +232,50 @@
       <section class="predicas-section">
         <h2>Último Retiro Espiritual - 2, 3 y 4 de Julio 2025 | El Cinco</h2>
         <div class="video-grid">
-          <!-- VIDEO 1 -->
+          <!-- Aquí van los videos -->
+          <!-- VIDEO 1 al 4 ya están -->
+          <!-- Agrega 5 más: -->
+
+          <!-- VIDEO 5 -->
           <div class="video-card">
             <div class="fb-video">
-              <iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FIglesiaelCinco%2Fvideos%2F1061091769330149%2F&show_text=false&width=560&t=0"
-                allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+              <iframe src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/IglesiaelCinco/videos/xxxxx1&show_text=false" allowfullscreen></iframe>
             </div>
-            <p class="video-title">Retiro Espiritual Día 1</p>
+            <p class="video-title">Retiro Día 2 - Noche</p>
           </div>
 
-          <!-- VIDEO 2 -->
+          <!-- VIDEO 6 -->
           <div class="video-card">
             <div class="fb-video">
-              <iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FIglesiaelCinco%2Fvideos%2F715897551227418%2F&show_text=false&width=560&t=0"
-                allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+              <iframe src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/IglesiaelCinco/videos/xxxxx2&show_text=false" allowfullscreen></iframe>
             </div>
-            <p class="video-title">Retiro Espiritual Día 1 - Noche</p>
+            <p class="video-title">Retiro Día 3 - Mañana</p>
           </div>
 
-          <!-- VIDEO 3 -->
+          <!-- VIDEO 7 -->
           <div class="video-card">
             <div class="fb-video">
-              <iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FIglesiaelCinco%2Fvideos%2F1637913600229265%2F&show_text=false&width=560&t=0"
-                allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+              <iframe src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/IglesiaelCinco/videos/xxxxx3&show_text=false" allowfullscreen></iframe>
             </div>
-            <p class="video-title">Retiro Espiritual Día 2</p>
+            <p class="video-title">Retiro Día 3 - Tarde</p>
           </div>
 
-          <!-- VIDEO 4 -->
+          <!-- VIDEO 8 -->
           <div class="video-card">
             <div class="fb-video">
-           <iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FMMMzona31%2Fvideos%2F591539113996238%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
+              <iframe src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/IglesiaelCinco/videos/xxxxx4&show_text=false" allowfullscreen></iframe>
             </div>
-            <p class="video-title">Retiro Espiritual Día 2- Tarde</p>
+            <p class="video-title">Retiro Día 3 - Clausura</p>
           </div>
+
+          <!-- VIDEO 9 -->
+          <div class="video-card">
+            <div class="fb-video">
+              <iframe src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/IglesiaelCinco/videos/xxxxx5&show_text=false" allowfullscreen></iframe>
+            </div>
+            <p class="video-title">Resumen Retiro Completo</p>
+          </div>
+
         </div>
       </section>
     </main>
