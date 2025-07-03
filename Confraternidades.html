@@ -77,23 +77,24 @@
     .hero {
       text-align: center;
       margin-bottom: 40px;
+      padding: 0 10px;
     }
 
     .hero img {
       width: 100%;
-      height: 400px;
+      max-height: 250px;
       object-fit: cover;
-      border-radius: 10px;
-      margin-bottom: 20px;
+      border-radius: 8px;
+      margin-bottom: 15px;
     }
 
     .hero h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
+      font-size: 2rem;
+      margin-bottom: 5px;
     }
 
     .hero p {
-      font-size: 1.2rem;
+      font-size: 1rem;
       color: #ccc;
     }
 
@@ -150,14 +151,13 @@
       border-top: 1px solid #333;
     }
 
-    /* TABLET */
+    /* RESPONSIVE */
     @media (max-width: 1024px) {
       .video-grid {
         grid-template-columns: repeat(2, 1fr);
       }
     }
 
-    /* MÓVIL */
     @media (max-width: 768px) {
       .container {
         flex-direction: column;
@@ -167,8 +167,9 @@
         width: 100%;
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: space-around;
+        justify-content: center;
         align-items: center;
+        padding: 10px;
       }
 
       .sidebar nav ul {
@@ -179,11 +180,24 @@
       }
 
       .sidebar .logo {
-        width: 100px;
+        width: 80px;
       }
 
       .content {
         padding: 20px;
+      }
+
+      .hero img {
+        max-height: 220px;
+        border-radius: 5px;
+      }
+
+      .hero h1 {
+        font-size: 1.3rem;
+      }
+
+      .hero p {
+        font-size: 0.95rem;
       }
 
       .video-grid {
@@ -232,14 +246,45 @@
       <section class="predicas-section">
         <h2>Último Retiro Espiritual - 2, 3 y 4 de Julio 2025 | El Cinco</h2>
         <div class="video-grid">
-          <!-- Aquí van los videos -->
-          <!-- VIDEO 1 al 4 ya están -->
-          <!-- Agrega 5 más: -->
 
+          <!-- VIDEOS ORIGINALES -->
+          <!-- VIDEO 1 -->
+          <div class="video-card">
+            <div class="fb-video">
+              <iframe src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/IglesiaelCinco/videos/1061091769330149" allowfullscreen></iframe>
+            </div>
+            <p class="video-title">Retiro Día 1</p>
+          </div>
+
+          <!-- VIDEO 2 -->
+          <div class="video-card">
+            <div class="fb-video">
+              <iframe src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/IglesiaelCinco/videos/715897551227418" allowfullscreen></iframe>
+            </div>
+            <p class="video-title">Retiro Día 1 - Noche</p>
+          </div>
+
+          <!-- VIDEO 3 -->
+          <div class="video-card">
+            <div class="fb-video">
+              <iframe src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/IglesiaelCinco/videos/1637913600229265" allowfullscreen></iframe>
+            </div>
+            <p class="video-title">Retiro Día 2</p>
+          </div>
+
+          <!-- VIDEO 4 -->
+          <div class="video-card">
+            <div class="fb-video">
+              <iframe src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/MMMzona31/videos/591539113996238" allowfullscreen></iframe>
+            </div>
+            <p class="video-title">Retiro Día 2 - Tarde</p>
+          </div>
+
+          <!-- VIDEOS NUEVOS -->
           <!-- VIDEO 5 -->
           <div class="video-card">
             <div class="fb-video">
-              <iframe src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/IglesiaelCinco/videos/xxxxx1&show_text=false" allowfullscreen></iframe>
+              <iframe src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/IglesiaelCinco/videos/123456789001" allowfullscreen></iframe>
             </div>
             <p class="video-title">Retiro Día 2 - Noche</p>
           </div>
@@ -247,7 +292,7 @@
           <!-- VIDEO 6 -->
           <div class="video-card">
             <div class="fb-video">
-              <iframe src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/IglesiaelCinco/videos/xxxxx2&show_text=false" allowfullscreen></iframe>
+              <iframe src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/IglesiaelCinco/videos/123456789002" allowfullscreen></iframe>
             </div>
             <p class="video-title">Retiro Día 3 - Mañana</p>
           </div>
@@ -255,7 +300,7 @@
           <!-- VIDEO 7 -->
           <div class="video-card">
             <div class="fb-video">
-              <iframe src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/IglesiaelCinco/videos/xxxxx3&show_text=false" allowfullscreen></iframe>
+              <iframe src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/IglesiaelCinco/videos/123456789003" allowfullscreen></iframe>
             </div>
             <p class="video-title">Retiro Día 3 - Tarde</p>
           </div>
@@ -263,18 +308,12 @@
           <!-- VIDEO 8 -->
           <div class="video-card">
             <div class="fb-video">
-              <iframe src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/IglesiaelCinco/videos/xxxxx4&show_text=false" allowfullscreen></iframe>
+              <iframe src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/IglesiaelCinco/videos/123456789004" allowfullscreen></iframe>
             </div>
             <p class="video-title">Retiro Día 3 - Clausura</p>
           </div>
 
-          <!-- VIDEO 9 -->
-          <div class="video-card">
-            <div class="fb-video">
-              <iframe src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/IglesiaelCinco/videos/xxxxx5&show_text=false" allowfullscreen></iframe>
-            </div>
-            <p class="video-title">Resumen Retiro Completo</p>
-          </div>
+          
 
         </div>
       </section>
