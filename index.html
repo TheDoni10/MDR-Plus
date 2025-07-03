@@ -337,30 +337,59 @@ img {
                 <p>NOS LLEVA A GRANDES VICTORIAS</p>
             </div>
 
-     <div class="channel-info">
+  <div class="channel-info">
     <div class="channel-avatar">
         <img src="https://i.ibb.co/p6TgwrW4/logo.png" alt="Avatar del Canal" loading="lazy">
     </div>
     <div class="channel-details">
         <h2>Movimiento Misionero Mundial El Cinco</h2>
         <p>Escucha Nuestra Emisora En Vivo</p>
+        
+        <div class="player-container"> 
+            <img src="https://i.ibb.co/R4Hdnx1Y/Atras.png" alt="Retroceder" loading="lazy">
 
-        <!-- Botón de reproducción funcional -->
-        <button id="playButtonPlayer">▶️ Reproducir / Pausar</button>
+            <!-- Este es tu botón Play/Pause -->
+            <img 
+                src="https://i.ibb.co/KjM64x6K/Play.png" 
+                alt="Reproducir" 
+                id="playButtonPlayer" 
+                loading="lazy"
+                style="cursor: pointer;"
+            >
 
+            <img src="https://i.ibb.co/hxQ04hzP/siguiente.png" alt="Adelantar" loading="lazy">
+
+            <div class="timeline">
+                <div class="timeline-progress">
+                    <div class="timeline-handle"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reproductor de audio oculto -->
         <audio id="audioPlayer" src="https://stream.zeno.fm/wkqjqojf49wtv" preload="none"></audio>
     </div>
 </div>
 
+<!-- SCRIPT para que funcione el botón -->
 <script>
-document.getElementById("playButtonPlayer").addEventListener("click", function() {
-    const audio = document.getElementById("audioPlayer");
-    if (audio.paused) {
-        audio.play();
-    } else {
-        audio.pause();
-    }
-});
+    const playButton = document.getElementById("playButtonPlayer");
+    const audioPlayer = document.getElementById("audioPlayer");
+
+    let isPlaying = false;
+
+    playButton.addEventListener("click", function () {
+        if (audioPlayer.paused) {
+            audioPlayer.play();
+            isPlaying = true;
+            // Cambia a imagen de pausa si la tienes
+            playButton.src = "https://i.ibb.co/yWqvz0r/Pause.png"; // Asegúrate de tener esta imagen
+        } else {
+            audioPlayer.pause();
+            isPlaying = false;
+            playButton.src = "https://i.ibb.co/KjM64x6K/Play.png";
+        }
+    });
 </script>
 
                 <div class="social-links">
