@@ -337,25 +337,32 @@ img {
                 <p>NOS LLEVA A GRANDES VICTORIAS</p>
             </div>
 
-            <div class="channel-info">
-                <div class="channel-avatar">
-                    <img src="https://i.ibb.co/p6TgwrW4/logo.png" alt="Avatar del Canal" loading="lazy">
-                </div>
-                <div class="channel-details">
-                    <h2>Movimiento Misionero Mundial El Cinco</h2>
-                    <p>Escucha Nuestra Emisora En Vivo</p>
-                    <div class="player-container"> 
-                        <img src="https://i.ibb.co/R4Hdnx1Y/Atras.png" alt="Retroceder" loading="lazy">
-                        <img src="https://i.ibb.co/KjM64x6K/Play.png" alt="Reproducir" id="playButtonPlayer" loading="lazy">
-                        <img src="https://i.ibb.co/hxQ04hzP/siguiente.png" alt="Adelantar" loading="lazy">
-                        <div class="timeline">
-                            <div class="timeline-progress">
-                                <div class="timeline-handle"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <audio id="audioPlayer" src="https://stream.zeno.fm/wkqjqojf49wtv" preload="none"></audio>
-                </div>
+     <div class="channel-info">
+    <div class="channel-avatar">
+        <img src="https://i.ibb.co/p6TgwrW4/logo.png" alt="Avatar del Canal" loading="lazy">
+    </div>
+    <div class="channel-details">
+        <h2>Movimiento Misionero Mundial El Cinco</h2>
+        <p>Escucha Nuestra Emisora En Vivo</p>
+
+        <!-- Botón de reproducción funcional -->
+        <button id="playButtonPlayer">▶️ Reproducir / Pausar</button>
+
+        <audio id="audioPlayer" src="https://stream.zeno.fm/wkqjqojf49wtv" preload="none"></audio>
+    </div>
+</div>
+
+<script>
+document.getElementById("playButtonPlayer").addEventListener("click", function() {
+    const audio = document.getElementById("audioPlayer");
+    if (audio.paused) {
+        audio.play();
+    } else {
+        audio.pause();
+    }
+});
+</script>
+
                 <div class="social-links">
                     <a href="https://www.facebook.com/IglesiaelCinco" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="https://www.instagram.com/iglesiaelcinco" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
