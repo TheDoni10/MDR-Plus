@@ -1,273 +1,260 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
- <link rel="icon" type="image/png" href="Icon/favicon.ico">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Confraternidades Zona 31</title>
   
-  <title>Confraternidades Zona 31 </title>
-  <style>
- /* RESET Y ESTILO GENERAL */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #111;
-  color: #fff;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-/* CONTENEDORES PRINCIPALES */
-.container {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: row;
-}
-
-.sidebar {
-  background-color: #000;
-  width: 250px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.sidebar .logo img {
-  width: 100%;
-}
-
-.sidebar nav ul {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.sidebar nav ul li a {
-  display: flex;
-  gap: 10px;
-  padding: 10px;
-  border-radius: 8px;
-  transition: background 0.3s;
-}
-
-.sidebar nav ul li a:hover {
-  background-color: #333;
-}
-
-.download-app {
-  margin-top: auto;
-}
-
-.content {
-  flex: 1;
-  padding: 30px;
-  overflow-x: hidden;
-}
-
-/* SECCIÓN HERO */
-.hero {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.hero img {
-  width: 100%;
-  height: 400px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-
-.hero h1 {
-  font-size: 3rem;
-  margin-bottom: 10px;
-}
-
-.hero p {
-  font-size: 1.3rem;
-  color: #ccc;
-}
-
-/* CONTENEDOR DE VIDEOS */
-.video-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 columnas fijas */
-  gap: 16px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-/* TARJETA DE VIDEO */
-.video-card {
-  background-color: #1a1a1a;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.video-card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 10px 24px rgba(255, 255, 255, 0.1);
-}
-
-/* VIDEO EMBEBIDO */
-.fb-video {
-  position: relative;
-  width: 100%;
-  padding-bottom: 56.25%;
-  background: #000;
-}
-
-.fb-video iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-/* TÍTULO DEL VIDEO */
-.video-title {
-  text-align: center;
-  color: #ddd;
-  font-size: 1rem;
-  padding: 12px;
-  background-color: #111;
-  border-top: 1px solid #333;
-}
-
-/* TABLET (2 columnas) */
-@media (max-width: 1024px) {
-  .video-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* MÓVIL (1 columna) */
-@media (max-width: 768px) {
-  .video-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .video-card {
-    max-width: 95%;
-    margin: auto;
-  }
-
-  .fb-video {
-    padding-bottom: 62%;
-  }
-
-  .video-title {
-    font-size: 1rem;
-    padding: 0.8rem;
-  }
-}
-
-  </style>
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  <!-- Icono de pestaña -->
+  <!-- Íconos -->
   <link rel="icon" type="image/png" href="Icon/favicon.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <!-- Tu CSS -->
-  <link rel="stylesheet" href="estilos.css">
+  <style>
+    /* RESET GENERAL */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #111;
+      color: #fff;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* LAYOUT */
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background-color: #000;
+      width: 250px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .sidebar .logo img {
+      width: 100%;
+    }
+
+    .sidebar nav ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .sidebar nav ul li a {
+      display: flex;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+
+    .sidebar nav ul li a:hover {
+      background-color: #333;
+    }
+
+    .download-app {
+      margin-top: auto;
+    }
+
+    .content {
+      flex: 1;
+      padding: 30px;
+      overflow-x: hidden;
+    }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .hero img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #ccc;
+    }
+
+    /* VIDEOS */
+    .predicas-section h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .video-card {
+      background-color: #1a1a1a;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .video-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 24px rgba(255, 255, 255, 0.1);
+    }
+
+    .fb-video {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      background: #000;
+    }
+
+    .fb-video iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-title {
+      text-align: center;
+      color: #ddd;
+      font-size: 1rem;
+      padding: 12px;
+      background-color: #111;
+      border-top: 1px solid #333;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .video-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .video-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .video-card {
+        max-width: 95%;
+        margin: auto;
+      }
+
+      .fb-video {
+        padding-bottom: 62%;
+      }
+
+      .video-title {
+        font-size: 1rem;
+        padding: 0.8rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <aside class="sidebar">
-            <div class="logo">
-                <img src="img/logo.png" alt="Logo de la Radio">
-                <link rel="icon" type="image/png" href="Icon/favicon.png">
-
-
-                
-
-            </div>
-            <nav>
-                <ul>
-                       <li><a href="index.html"><i class="fas fa-home fa-fw"></i> Inicio</a></li>
-                    <li><a href="Confraternidades.html"><i class="fas fa-calendar-check fa-fw"></i>Conf-Zona31</a></li>
-                    <li><a href="Religion.html"><i class="fas fa-church fa-fw"></i> Religion</a></li>
-                    <li><a href="Musica.html"><i class="fas fa-music fa-fw"></i> Musica</a></li>
-                    <li><a href="news.html"><i class="fas fa-newspaper fa-fw"></i> News</a></li>
-                    <li><a href="podcasts.html"><i class="fas fa-podcast fa-fw"></i> Podcasts</a></li>
-                    <li><a href="Biblia.html"><i class="fas fa-bible fa-fw"></i> Biblia</a></li>
-                    <li><a href="Ubicacion.html"><i class="fas fa-map-marker-alt fa-fw"></i> Ubicacion</a></li>
-                </ul>
-            </nav>
-            <div class="download-app">
-                <a href="#"><i class="fas fa-download fa-fw"></i> Download app</a>
-            </div>
-        </aside>
-
-  <!-- Contenido principal -->
-  <main class="content">
-
-    <!-- Hero -->
-    <section class="hero">
-      <img src="img/Confraternidad20deMayo2025.png" alt="Portada">
-      <h1>Confraternidades Zona 31  Movimiento Misionero Mundial </h1>
-      <p>Edifícate con las transmisiones más recientes</p>
-    </section>
-
-<!-- Sección de videos de Facebook -->
-<section class="predicas-section">
-  <h2>Último Retiro Espiritual - 02/2,3,4 de Julio 2025| Elcinco.</h2>
-  <div class="video-grid">
-    
-    <!-- Video 1 -->
-    <div class="video-card">
-      <div class="fb-video">
-        <iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FIglesiaelCinco%2Fvideos%2F1061091769330149%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
+  <div class="container">
+    <!-- BARRA LATERAL -->
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="img/logo.png" alt="Logo de la Radio">
       </div>
-      <p class="video-title">Retiro Espiritual Día 1 </p>
-    </div>
-
-    <!-- Video 2 -->
-    <div class="video-card">
-      <div class="fb-video">
-       <iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FIglesiaelCinco%2Fvideos%2F715897551227418%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
+      <nav>
+        <ul>
+          <li><a href="index.html"><i class="fas fa-home fa-fw"></i> Inicio</a></li>
+          <li><a href="Confraternidades.html"><i class="fas fa-calendar-check fa-fw"></i>Conf-Zona31</a></li>
+          <li><a href="Religion.html"><i class="fas fa-church fa-fw"></i> Religion</a></li>
+          <li><a href="Musica.html"><i class="fas fa-music fa-fw"></i> Musica</a></li>
+          <li><a href="news.html"><i class="fas fa-newspaper fa-fw"></i> News</a></li>
+          <li><a href="podcasts.html"><i class="fas fa-podcast fa-fw"></i> Podcasts</a></li>
+          <li><a href="Biblia.html"><i class="fas fa-bible fa-fw"></i> Biblia</a></li>
+          <li><a href="Ubicacion.html"><i class="fas fa-map-marker-alt fa-fw"></i> Ubicación</a></li>
+        </ul>
+      </nav>
+      <div class="download-app">
+        <a href="#"><i class="fas fa-download fa-fw"></i> Download app</a>
       </div>
-      <p class="video-title">Retiro Espiritual Día 1-Noche</p>
-    </div>
+    </aside>
 
-    <!-- Video 3 -->
-    <div class="video-card">
-      <div class="fb-video">
-       <iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FIglesiaelCinco%2Fvideos%2F1637913600229265%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
-      <p class="video-title">| Retiro Espiritual Día 2</p>
-    </div>
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="content">
+      <section class="hero">
+        <img src="img/Confraternidad20deMayo2025.png" alt="Portada">
+        <h1>Confraternidades Zona 31 - Movimiento Misionero Mundial</h1>
+        <p>Edifícate con las transmisiones más recientes</p>
+      </section>
 
-<div class="video-card">
-  <div class="fb-video">
-    <iframe 
-      src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FMMMzona31%2Fvideos%2F621535674262898%2F&show_text=false&width=560&t=0" 
-      frameborder="0" 
-      allowfullscreen="true" 
-      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
-    </iframe>
+      <section class="predicas-section">
+        <h2>Último Retiro Espiritual - 2, 3 y 4 de Julio 2025 | El Cinco</h2>
+        <div class="video-grid">
+          <!-- VIDEO 1 -->
+          <div class="video-card">
+            <div class="fb-video">
+              <iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FIglesiaelCinco%2Fvideos%2F1061091769330149%2F&show_text=false&width=560&t=0"
+                allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+            </div>
+            <p class="video-title">Retiro Espiritual Día 1</p>
+          </div>
+
+          <!-- VIDEO 2 -->
+          <div class="video-card">
+            <div class="fb-video">
+              <iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FIglesiaelCinco%2Fvideos%2F715897551227418%2F&show_text=false&width=560&t=0"
+                allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+            </div>
+            <p class="video-title">Retiro Espiritual Día 1 - Noche</p>
+          </div>
+
+          <!-- VIDEO 3 -->
+          <div class="video-card">
+            <div class="fb-video">
+              <iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FIglesiaelCinco%2Fvideos%2F1637913600229265%2F&show_text=false&width=560&t=0"
+                allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+            </div>
+            <p class="video-title">Retiro Espiritual Día 2</p>
+          </div>
+
+          <!-- VIDEO 4 -->
+          <div class="video-card">
+            <div class="fb-video">
+              <iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FMMMzona31%2Fvideos%2F621535674262898%2F&show_text=false&width=560&t=0"
+                allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+            </div>
+            <p class="video-title">Confraternidad Zona 31 Último servicio</p>
+          </div>
+        </div>
+      </section>
+    </main>
   </div>
-  <p class="video-title">Confraternidad Zona 31 Ultimo servicio</p>
-</div>
-
-</section>
-
-  </main>
-</div>
-
 </body>
 </html>
