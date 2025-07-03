@@ -98,47 +98,36 @@ a {
   color: #ccc;
 }
 
-/* SECCIÓN PREDICAS */
-.predicas-section {
-  margin-top: 2rem;
-  padding: 2rem;
-  background-color: #111;
-  color: #fff;
-}
-
-.predicas-section h2 {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  text-align: center;
-  color: #fff;
-}
-
 /* GRID DE VIDEOS */
 .video-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 20px;
+  gap: 24px;
   justify-items: center;
+  padding: 1rem;
 }
 
 /* TARJETA DE VIDEO */
 .video-card {
   width: 100%;
-  max-width: 560px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  max-width: 500px;
+  background-color: #1c1c1c;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+.video-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 12px 30px rgba(255, 255, 255, 0.1);
 }
 
 /* VIDEO EMBEBIDO (Facebook o YouTube) */
 .fb-video {
   position: relative;
   width: 100%;
-  padding-bottom: 56.25%;
-  height: 0;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+  padding-bottom: 56.25%; /* relación 16:9 */
   background-color: #000;
 }
 
@@ -153,97 +142,42 @@ a {
 
 /* TÍTULO DE VIDEO */
 .video-title {
-  margin-top: 0.8rem;
-  font-size: 1rem;
-  color: #ccc;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: 500;
   text-align: center;
-  max-width: 100%;
+  color: #e0e0e0;
+  background-color: #151515;
+  border-top: 1px solid #333;
   line-height: 1.4;
 }
 
 /* ESTILOS RESPONSIVOS PARA MÓVIL */
 @media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-  }
-
-  .sidebar {
-    width: 100%;
-    flex-direction: row;
-    padding: 10px;
-    overflow-x: auto;
-  }
-
-  .sidebar nav ul {
-    flex-direction: row;
-    gap: 10px;
-  }
-
-  .sidebar nav ul li a {
-    font-size: 0.9rem;
-    padding: 5px;
-  }
-
-  .download-app {
-    display: none;
-  }
-
-  .hero h1 {
-    font-size: 1.5rem;
-  }
-
-  .hero p {
-    font-size: 1rem;
-  }
-
-  .predicas-section {
-    padding: 1rem;
-  }
-
   .video-grid {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 2rem;
+    gap: 1.5rem;
+    padding: 0.5rem;
   }
 
   .video-card {
     width: 100%;
     max-width: 95%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .fb-video {
-    width: 100%;
-    position: relative;
-    padding-bottom: 67.5%; /* Aumenta el alto (16:9 + 20%) */
-    height: 0;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    background-color: #000;
-  }
-
-  .fb-video iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
+    margin: auto;
+    border-radius: 14px;
   }
 
   .video-title {
-    margin-top: 0.8rem;
-    font-size: 1.1rem;
-    color: #ccc;
-    text-align: center;
-    max-width: 100%;
-    line-height: 1.4;
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+
+  .fb-video {
+    padding-bottom: 62%; /* más alto para móviles */
   }
 }
+
 
   </style>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
