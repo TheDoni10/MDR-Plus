@@ -98,29 +98,28 @@ a {
   color: #ccc;
 }
 
-/* GRID DE VIDEOS */
+/* CONTENEDOR DE VIDEOS */
 .video-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 por fila en escritorio */
-  gap: 24px;
-  padding: 1rem;
-  justify-items: center;
+  grid-template-columns: repeat(4, 1fr); /* 4 columnas fijas */
+  gap: 16px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 /* TARJETA DE VIDEO */
 .video-card {
-  width: 100%;
-  max-width: 100%;
-  background-color: #1c1c1c;
-  border-radius: 16px;
+  background-color: #1a1a1a;
+  border-radius: 12px;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .video-card:hover {
   transform: scale(1.02);
-  box-shadow: 0 12px 30px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 24px rgba(255, 255, 255, 0.1);
 }
 
 /* VIDEO EMBEBIDO */
@@ -128,7 +127,7 @@ a {
   position: relative;
   width: 100%;
   padding-bottom: 56.25%;
-  background-color: #000;
+  background: #000;
 }
 
 .fb-video iframe {
@@ -140,26 +139,24 @@ a {
   border: none;
 }
 
-/* TÍTULO DE VIDEO */
+/* TÍTULO DEL VIDEO */
 .video-title {
-  padding: 1rem;
-  font-size: 1.1rem;
-  font-weight: 500;
   text-align: center;
-  color: #e0e0e0;
-  background-color: #151515;
+  color: #ddd;
+  font-size: 1rem;
+  padding: 12px;
+  background-color: #111;
   border-top: 1px solid #333;
-  line-height: 1.4;
 }
 
-/* RESPONSIVE TABLET */
+/* TABLET (2 columnas) */
 @media (max-width: 1024px) {
   .video-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-/* RESPONSIVE CELULAR */
+/* MÓVIL (1 columna) */
 @media (max-width: 768px) {
   .video-grid {
     grid-template-columns: 1fr;
@@ -168,7 +165,6 @@ a {
   .video-card {
     max-width: 95%;
     margin: auto;
-    border-radius: 14px;
   }
 
   .fb-video {
@@ -180,7 +176,6 @@ a {
     padding: 0.8rem;
   }
 }
-
 
   </style>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
