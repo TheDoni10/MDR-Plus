@@ -101,16 +101,16 @@ a {
 /* GRID DE VIDEOS */
 .video-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(4, 1fr); /* 4 por fila en escritorio */
   gap: 24px;
-  justify-items: center;
   padding: 1rem;
+  justify-items: center;
 }
 
 /* TARJETA DE VIDEO */
 .video-card {
   width: 100%;
-  max-width: 500px;
+  max-width: 100%;
   background-color: #1c1c1c;
   border-radius: 16px;
   overflow: hidden;
@@ -123,11 +123,11 @@ a {
   box-shadow: 0 12px 30px rgba(255, 255, 255, 0.1);
 }
 
-/* VIDEO EMBEBIDO (Facebook o YouTube) */
+/* VIDEO EMBEBIDO */
 .fb-video {
   position: relative;
   width: 100%;
-  padding-bottom: 56.25%; /* relación 16:9 */
+  padding-bottom: 56.25%;
   background-color: #000;
 }
 
@@ -152,29 +152,32 @@ a {
   line-height: 1.4;
 }
 
-/* ESTILOS RESPONSIVOS PARA MÓVIL */
+/* RESPONSIVE TABLET */
+@media (max-width: 1024px) {
+  .video-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* RESPONSIVE CELULAR */
 @media (max-width: 768px) {
   .video-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    padding: 0.5rem;
+    grid-template-columns: 1fr;
   }
 
   .video-card {
-    width: 100%;
     max-width: 95%;
     margin: auto;
     border-radius: 14px;
   }
 
+  .fb-video {
+    padding-bottom: 62%;
+  }
+
   .video-title {
     font-size: 1rem;
     padding: 0.8rem;
-  }
-
-  .fb-video {
-    padding-bottom: 62%; /* más alto para móviles */
   }
 }
 
