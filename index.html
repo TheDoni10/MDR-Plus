@@ -13,12 +13,13 @@
     --netflix-black: #141414;
     --netflix-dark-gray: #222222;
     --netflix-light-gray: #808080;
-    --netflix-accent-color: #FFFFFF; /* Color de acento principal (blanco) */
+    /* --- CAMBIADO: Antes --netflix-red: #E50914; --- */
+    --netflix-accent-color: #FFFFFF; /* Nuevo color de acento principal (blanco) */
     --text-white: #FFFFFF;
     --text-light-grey: #B3B3B3;
 }
 
-/* Reset básico */
+/* Reset básico (mantener las mismas) */
 * {
     margin: 0;
     padding: 0;
@@ -37,14 +38,14 @@ a {
     text-decoration: none;
 }
 
-/* Layout principal */
+/* Layout principal (mantener las mismas) */
 .container {
     display: flex;
     min-height: 100vh;
     flex-direction: row;
 }
 
-/* Sidebar estilo Netflix */
+/* Sidebar estilo Netflix (mantener las mismas) */
 .sidebar {
     background-color: var(--netflix-black);
     width: 250px;
@@ -110,7 +111,8 @@ a {
 
 .download-app a {
     display: block;
-    background-color: var(--netflix-dark-gray);
+    /* --- CAMBIADO: Antes background-color: var(--netflix-red); --- */
+    background-color: var(--netflix-dark-gray); /* Fondo oscuro para el botón */
     color: var(--text-white);
     padding: 10px 15px;
     border-radius: 5px;
@@ -119,10 +121,11 @@ a {
 }
 
 .download-app a:hover {
-    background-color: #333333;
+    /* --- CAMBIADO: Antes background-color: #F40612; --- */
+    background-color: #333333; /* Un gris un poco más claro al pasar el ratón */
 }
 
-/* Contenido Principal */
+/* Contenido Principal (mantener las mismas) */
 .content {
     flex: 1;
     padding: 30px;
@@ -130,7 +133,7 @@ a {
     -webkit-overflow-scrolling: touch;
 }
 
-/* Hero Section (Portada) */
+/* Hero Section (Portada) (mantener las mismas) */
 .hero {
     position: relative;
     width: 100%;
@@ -201,9 +204,11 @@ a {
     height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    border: 4px solid var(--netflix-accent-color);
+    /* --- CAMBIADO: Antes border: 4px solid var(--netflix-red); --- */
+    border: 4px solid var(--netflix-accent-color); /* Borde blanco */
     margin-bottom: 20px;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    /* --- CAMBIADO: Antes box-shadow: 0 0 15px rgba(229, 9, 20, 0.5); --- */
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); /* Sombra blanca */
 }
 
 .channel-details {
@@ -256,14 +261,16 @@ a {
 .timeline-handle {
     width: 18px;
     height: 18px;
-    background: var(--netflix-accent-color);
+    /* --- CAMBIADO: Antes background: var(--netflix-red); --- */
+    background: var(--netflix-accent-color); /* Handle blanco */
     border-radius: 50%;
     position: absolute;
     top: -6px;
     left: 0;
     transform: translateX(-50%);
     border: 2px solid var(--text-white);
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+    /* --- CAMBIADO: Antes box-shadow: 0 0 8px rgba(229, 9, 20, 0.7); --- */
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.7); /* Sombra blanca */
 }
 
 /* Redes sociales */
@@ -280,39 +287,12 @@ a {
 }
 
 .social-links a:hover {
-    color: var(--netflix-accent-color);
+    /* --- CAMBIADO: Antes color: var(--netflix-red); --- */
+    color: var(--netflix-accent-color); /* Color blanco al pasar el ratón */
     transform: scale(1.2);
 }
 
-/* --- ESTILO GLOBAL PARA CONTENEDORES DE VIDEO --- */
-/* Esta clase se aplicará a CUALQUIER div que envuelva un iframe/video */
-.responsive-video-wrapper {
-    position: relative;
-    width: 100%; /* Ocupa el 100% del ancho disponible de su padre */
-    padding-bottom: 56.25%; /* Proporción 16:9 (altura es 56.25% del ancho) */
-    height: 0;
-    overflow: hidden;
-    border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
-    margin: 0 auto; /* Centrar el video si su padre lo permite */
-    background-color: #000; /* Fondo negro mientras carga el video */
-    max-width: 1200px; /* Tamaño máximo para el video en PC */
-}
-
-/* Estilo para el iframe o video DENTRO del wrapper */
-.responsive-video-wrapper iframe,
-.responsive-video-wrapper video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 12px;
-    display: block;
-}
-
-/* --- CONTENEDOR ESPECÍFICO DE TRANSMISIÓN EN VIVO --- */
+/* --- CONTENEDOR GENERAL DE TRANSMISIÓN EN VIVO --- */
 .live-stream-container {
     padding: 2rem;
     background-color: var(--netflix-dark-gray);
@@ -325,7 +305,8 @@ a {
 /* TÍTULOS */
 .live-stream-container header h1 {
     font-size: 2.5rem;
-    color: var(--netflix-accent-color);
+    /* --- CAMBIADO: Antes color: var(--netflix-red); --- */
+    color: var(--netflix-accent-color); /* Título blanco */
     margin-bottom: 1.5rem;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     font-weight: bold;
@@ -336,6 +317,30 @@ a {
     color: var(--text-light-grey);
     margin-top: -1rem;
     margin-bottom: 1rem;
+}
+
+/* CONTENEDOR DE VIDEO 16:9 (RESPONSIVE) */
+.video-frame-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+    margin: 0 auto;
+    background-color: #000;
+}
+
+/* APLICADO A TODOS LOS VIDEOS (iframe, video) */
+.video-frame-wrapper iframe,
+.video-frame-wrapper video {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 12px;
+    display: block;
+    object-fit: cover;
 }
 
 /* --- Responsivo --- */
@@ -366,9 +371,8 @@ a {
         font-size: 3.5rem;
     }
 
-    /* Puedes ajustar el max-width aquí si quieres que los videos sean ligeramente más pequeños en PC */
-    .responsive-video-wrapper {
-        max-width: 950px; /* Un tamaño grande pero no tan extremo para PC */
+    .video-frame-wrapper {
+        max-width: 1200px;
     }
 }
 
@@ -474,7 +478,8 @@ a {
 
     .live-stream-container header h1 {
         font-size: 2.2rem;
-        color: var(--netflix-accent-color);
+        /* --- CAMBIADO: Antes margin-bottom: 0.8rem; --- */
+        color: var(--netflix-accent-color); /* Título blanco en móvil */
         margin-bottom: 0.8rem;
     }
 
@@ -483,13 +488,12 @@ a {
         margin-top: -0.5rem;
     }
 
-    .responsive-video-wrapper {
-        max-width: 100%; /* En móvil, que ocupe todo el ancho disponible */
+    .video-frame-wrapper {
+        max-width: 100%;
         border-radius: 8px;
     }
 }
 </style>
-
 </head>
 <body>
     <div class="container">
