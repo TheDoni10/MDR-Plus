@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <style>
-/* Variables de color al estilo Netflix */
+/* Variables de color al estilo Netflix (mantener las mismas) */
 :root {
     --netflix-black: #141414;
     --netflix-dark-gray: #222222;
@@ -18,7 +18,7 @@
     --text-light-grey: #B3B3B3;
 }
 
-/* Reset básico */
+/* Reset básico (mantener las mismas) */
 * {
     margin: 0;
     padding: 0;
@@ -37,32 +37,32 @@ a {
     text-decoration: none;
 }
 
-/* Layout principal */
+/* Layout principal (mantener las mismas) */
 .container {
     display: flex;
     min-height: 100vh;
     flex-direction: row;
 }
 
-/* --- Sidebar estilo Netflix --- */
+/* Sidebar estilo Netflix (mantener las mismas) */
 .sidebar {
     background-color: var(--netflix-black);
     width: 250px;
-    padding: 20px 0; /* Ajuste de padding */
+    padding: 20px 0;
     display: flex;
     flex-direction: column;
     gap: 15px;
-    border-right: 1px solid var(--netflix-dark-gray); /* Pequeña separación */
+    border-right: 1px solid var(--netflix-dark-gray);
 }
 
 .sidebar .logo {
-    padding: 0 20px; /* Padding para el logo */
+    padding: 0 20px;
     margin-bottom: 20px;
 }
 
 .sidebar .logo img {
     width: 100%;
-    max-width: 150px; /* Tamaño máximo para el logo */
+    max-width: 150px;
     display: block;
     margin: 0 auto;
 }
@@ -71,27 +71,27 @@ a {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 5px; /* Menor espacio entre ítems */
+    gap: 5px;
 }
 
 .sidebar nav ul li a {
     display: flex;
     align-items: center;
-    gap: 15px; /* Espacio entre icono y texto */
-    padding: 12px 20px; /* Padding para los ítems del menú */
-    border-radius: 0; /* Sin bordes redondeados en los ítems */
+    gap: 15px;
+    padding: 12px 20px;
+    border-radius: 0;
     transition: background-color 0.3s ease, color 0.3s ease;
     font-size: 1.1rem;
-    color: var(--text-light-grey); /* Color de texto más suave */
+    color: var(--text-light-grey);
 }
 
 .sidebar nav ul li a:hover,
-.sidebar nav ul li a.active { /* Clase active para el ítem seleccionado */
+.sidebar nav ul li a.active {
     background-color: var(--netflix-dark-gray);
     color: var(--text-white);
 }
 
-.sidebar nav ul li a i { /* Estilo para los íconos (asumiendo Font Awesome u similar) */
+.sidebar nav ul li a i {
     font-size: 1.3rem;
     color: var(--netflix-light-gray);
 }
@@ -102,7 +102,7 @@ a {
 }
 
 .download-app {
-    margin-top: auto; /* Empuja al final */
+    margin-top: auto;
     padding: 20px;
     border-top: 1px solid var(--netflix-dark-gray);
     text-align: center;
@@ -119,27 +119,27 @@ a {
 }
 
 .download-app a:hover {
-    background-color: #F40612; /* Rojo un poco más claro al pasar el ratón */
+    background-color: #F40612;
 }
 
-/* --- Contenido Principal --- */
+/* Contenido Principal (mantener las mismas) */
 .content {
     flex: 1;
     padding: 30px;
-    overflow-y: auto; /* Habilitar scroll solo en el contenido */
-    -webkit-overflow-scrolling: touch; /* Suavizar el scroll en iOS */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
-/* --- Hero Section (Portada) --- */
+/* Hero Section (Portada) (mantener las mismas) */
 .hero {
     position: relative;
     width: 100%;
-    height: 500px; /* Altura más prominente para el hero */
+    height: 500px;
     margin-bottom: 40px;
     border-radius: 12px;
     overflow: hidden;
     display: flex;
-    align-items: flex-end; /* Alinear contenido al final */
+    align-items: flex-end;
     padding: 30px;
 }
 
@@ -169,7 +169,7 @@ a {
     position: relative;
     z-index: 3;
     text-align: left;
-    max-width: 70%; /* Limitar ancho del contenido */
+    max-width: 70%;
 }
 
 .hero h1 {
@@ -184,7 +184,7 @@ a {
     text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
 }
 
-/* --- Información del canal --- */
+/* Información del canal (mantener las mismas) */
 .channel-info {
     background: var(--netflix-dark-gray);
     padding: 30px;
@@ -201,9 +201,9 @@ a {
     height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    border: 4px solid var(--netflix-red); /* Borde distintivo */
+    border: 4px solid var(--netflix-red);
     margin-bottom: 20px;
-    box-shadow: 0 0 15px rgba(229, 9, 20, 0.5); /* Sombra roja */
+    box-shadow: 0 0 15px rgba(229, 9, 20, 0.5);
 }
 
 .channel-details {
@@ -232,9 +232,9 @@ a {
 }
 
 .player-container img {
-    width: 50px; /* Iconos de control más grandes */
+    width: 50px;
     cursor: pointer;
-    filter: invert(100%); /* Si los iconos son negros y necesitas que se vean blancos */
+    filter: invert(100%);
     transition: transform 0.2s ease;
 }
 
@@ -246,7 +246,7 @@ a {
     background: #444;
     height: 6px;
     width: 100%;
-    max-width: 400px; /* Timeline más ancho */
+    max-width: 400px;
     border-radius: 3px;
     position: relative;
     cursor: pointer;
@@ -260,13 +260,13 @@ a {
     border-radius: 50%;
     position: absolute;
     top: -6px;
-    left: 0; /* Se asume que esto se controlaría con JS para la posición real */
-    transform: translateX(-50%); /* Centrar el handle */
+    left: 0;
+    transform: translateX(-50%);
     border: 2px solid var(--text-white);
     box-shadow: 0 0 8px rgba(229, 9, 20, 0.7);
 }
 
-/* --- Redes sociales --- */
+/* Redes sociales (mantener las mismas) */
 .social-links {
     display: flex;
     gap: 20px;
@@ -274,57 +274,67 @@ a {
 }
 
 .social-links a {
-    font-size: 1.8rem; /* Iconos más grandes */
+    font-size: 1.8rem;
     color: var(--text-light-grey);
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .social-links a:hover {
-    color: var(--netflix-red); /* Color de Netflix al pasar el ratón */
+    color: var(--netflix-red);
     transform: scale(1.2);
 }
 
 /* --- CONTENEDOR GENERAL DE TRANSMISIÓN EN VIVO --- */
 .live-stream-container {
     padding: 2rem;
-    background-color: var(--netflix-dark-gray); /* Fondo oscuro similar a Netflix */
+    background-color: var(--netflix-dark-gray);
     border-radius: 12px;
     margin-bottom: 2.5rem;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-    text-align: center; /* Centrar el contenido */
+    text-align: center;
 }
 
 /* TÍTULOS */
 .live-stream-container header h1 {
-    font-size: 2.2rem; /* Tamaño de fuente más grande para el título */
-    color: var(--netflix-red); /* Color rojo distintivo */
+    /* Ajuste el tamaño de la fuente para que sea más grande y prominente */
+    font-size: 2.5rem; /* Aumentado para PC */
+    color: var(--netflix-red);
     margin-bottom: 1.5rem;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     font-weight: bold;
 }
 
+.live-stream-container header p#live-status {
+    font-size: 1.1rem;
+    color: var(--text-light-grey);
+    margin-top: -1rem; /* Acercar al título */
+    margin-bottom: 1rem;
+}
+
+
 /* CONTENEDOR DE VIDEO 16:9 (RESPONSIVE) */
-.video-container {
+.video-frame-wrapper { /* Cambiado de .video-container a .video-frame-wrapper */
     position: relative;
     width: 100%;
-    max-width: 900px; /* Aumentado el max-width para pantallas grandes */
-    aspect-ratio: 16 / 9;
-    overflow: hidden; /* Oculta cualquier desbordamiento del video */
+    /* Aumentado el max-width para que el video sea más grande en PC */
+    max-width: 1000px; /* Incrementado para ser más grande */
+    aspect-ratio: 16 / 9; /* Mantiene la proporción 16:9 */
+    overflow: hidden;
     border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6); /* Sombra más pronunciada */
-    margin: 0 auto; /* Centrar el contenedor de video */
-    background-color: #000; /* Fondo negro mientras carga el video */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+    margin: 0 auto;
+    background-color: #000;
 }
 
 /* APLICADO A TODOS LOS VIDEOS (iframe, video) */
-.video-container iframe,
-.video-container video {
+.video-frame-wrapper iframe, /* Cambiado el selector */
+.video-frame-wrapper video {  /* Cambiado el selector */
     width: 100%;
     height: 100%;
     border: none;
-    border-radius: 12px; /* Mantiene los bordes redondeados del contenedor */
+    border-radius: 12px;
     display: block;
-    object-fit: cover; /* Asegura que el video cubra el espacio */
+    object-fit: cover;
 }
 
 /* --- Responsivo --- */
@@ -332,15 +342,15 @@ a {
 /* Ajustes para PC (escritorio y tablets grandes) */
 @media (min-width: 769px) {
     .container {
-        flex-direction: row; /* Asegura la barra lateral a la izquierda */
+        flex-direction: row;
     }
 
     .sidebar {
-        min-height: 100vh; /* Asegura que la sidebar ocupe toda la altura */
+        min-height: 100vh;
     }
 
     .hero {
-        height: 550px; /* Altura un poco mayor para pantallas grandes */
+        height: 550px;
     }
 
     .hero h1 {
@@ -352,40 +362,44 @@ a {
     }
 
     .live-stream-container header h1 {
-        font-size: 2.8rem; /* Tamaño más grande para el título en PC */
+        font-size: 3rem; /* Tamaño grande para el título en PC */
+    }
+
+    .video-frame-wrapper {
+        max-width: 900px; /* Mantener un buen tamaño en PC */
     }
 }
 
 /* Ajustes para Móviles (smartphones y tablets pequeñas) */
 @media (max-width: 768px) {
     .container {
-        flex-direction: column; /* Apila los elementos verticalmente */
+        flex-direction: column;
     }
 
     .sidebar {
         width: 100%;
-        height: auto; /* Altura automática para la barra lateral */
-        flex-direction: row; /* Elementos de la barra lateral en fila */
-        overflow-x: auto; /* Permite scroll horizontal si hay muchos ítems */
-        padding: 10px 0; /* Menor padding para el sidebar */
-        justify-content: space-around; /* Distribuye los ítems uniformemente */
+        height: auto;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 10px 0;
+        justify-content: space-around;
         border-right: none;
-        border-bottom: 1px solid var(--netflix-dark-gray); /* Borde inferior en móvil */
+        border-bottom: 1px solid var(--netflix-dark-gray);
     }
 
     .sidebar .logo {
-        display: none; /* Oculta el logo en móvil para ahorrar espacio */
+        display: none;
     }
 
     .sidebar nav ul {
         flex-direction: row;
-        gap: 5px; /* Espacio mínimo entre ítems de navegación */
+        gap: 5px;
     }
 
     .sidebar nav ul li a {
-        font-size: 0.85rem; /* Fuente más pequeña para ítems de navegación */
+        font-size: 0.85rem;
         padding: 8px 10px;
-        flex-direction: column; /* Ícono encima del texto */
+        flex-direction: column;
         gap: 5px;
         text-align: center;
     }
@@ -395,15 +409,15 @@ a {
     }
 
     .download-app {
-        display: none; /* Ocultar el botón de descarga en móvil */
+        display: none;
     }
 
     .content {
-        padding: 20px 15px; /* Menor padding en el contenido para móvil */
+        padding: 20px 15px;
     }
 
     .hero {
-        height: 250px; /* Altura más compacta para el hero en móvil */
+        height: 250px;
         border-radius: 8px;
         margin-bottom: 30px;
         padding: 20px;
@@ -439,15 +453,15 @@ a {
     }
 
     .player-container {
-        gap: 10px; /* Menor espacio entre controles del reproductor */
+        gap: 10px;
     }
 
     .player-container img {
-        width: 40px; /* Iconos más pequeños en móvil */
+        width: 40px;
     }
 
     .timeline {
-        max-width: 250px; /* Timeline más estrecho en móvil */
+        max-width: 250px;
     }
 
     .live-stream-container {
@@ -457,11 +471,16 @@ a {
     }
 
     .live-stream-container header h1 {
-        font-size: 1.8rem; /* Tamaño de fuente ajustado para el título en móvil */
-        margin-bottom: 1rem;
+        font-size: 2rem; /* Tamaño ajustado para el título en móvil */
+        margin-bottom: 0.8rem;
     }
 
-    .video-container {
+    .live-stream-container header p#live-status {
+        font-size: 0.9rem;
+        margin-top: -0.5rem;
+    }
+
+    .video-frame-wrapper {
         max-width: 100%; /* El video ocupa todo el ancho disponible en móvil */
         border-radius: 8px;
     }
